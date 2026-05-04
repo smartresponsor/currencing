@@ -1,0 +1,226 @@
+openapi: 3.1.0
+info:
+  title: Currencing API
+  version: "1.0.0"
+  description: >
+    Read and normalization API for the Currencing shared monetary capability.
+    Currencing owns currency metadata, ISO code validation, minor units,
+    formatting, monetary normalization, and conversion-boundary validation.
+servers:
+  - url: /
+paths:
+  /currencing/currencies:
+    get:
+      operationId: listCurrencingCurrencies
+      summary: List active currency metadata
+      tags: [Currencing]
+      responses:
+        "200":
+          description: Active currency metadata list
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CurrencyMetadataView'
+  /currencing/currencies/{code}:
+    get:
+      operationId: getCurrencingCurrency
+      summary: Read one currency metadata entry by ISO code
+      tags: [Currencing]
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '^[A-Za-z]{3}$'
+            examples: [USD, EUR, JPY]
+      responses:
+        "200":
+          description: Currency metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrencyMetadataView'
+        "404":
+          description: Currency metadata not found
+  /currencing/currency-selector:
+    get:
+      operationId: getCurrencingCurrencySelector
+      summary: Read template-safe currency selector data
+      tags: [Currencing]
+      responses:
+        "200":
+          description: Currency selector view
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrencySelectorView'
+  /currencing/money/normalize:
+    post:
+      operationId: normalizeCurrencingMoney
+      summary: Normalize decimal monetary input to minor units
+      tags: [Currencing]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoneyNormalizeRequest'
+            examples:
+              usd:
+                value:
+                  amount: "12.34"
+                  currencyCode: "USD"
+                  consumerName: "Ordering"
+                  roundingContext: "ordering"
+      responses:
+        "200":
+          description: Normalized monetary amount
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonetaryAmountResolution'
+        "400":
+          description: Invalid amount, unsupported currency, or invalid policy
+  /currencing/conversion-boundary:
+    get:
+      operationId: getCurrencingConversionBoundary
+      summary: Read Currencing versus Exchanging responsibility boundary
+      tags: [Currencing]
+      responses:
+        "200":
+          description: Boundary metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrencyConversionBoundary'
+components:
+  schemas:
+    CurrencyMetadataView:
+      type: object
+      required: [code, name, symbol, minorUnit, active]
+      properties:
+        code:
+          type: string
+          pattern: '^[A-Z]{3}$'
+        name:
+          type: string
+        symbol:
+          type: string
+          nullable: true
+        minorUnit:
+          type: integer
+          minimum: 0
+          maximum: 8
+        active:
+          type: boolean
+    CurrencyChoice:
+      type: object
+      required: [code, label, symbol, minorUnit]
+      properties:
+        code:
+          type: string
+          pattern: '^[A-Z]{3}$'
+        label:
+          type: string
+        symbol:
+          type: string
+          nullable: true
+        minorUnit:
+          type: integer
+          minimum: 0
+          maximum: 8
+    CurrencySelectorView:
+      type: object
+      required: [selectedCode, choices]
+      properties:
+        selectedCode:
+          type: string
+          nullable: true
+          pattern: '^[A-Z]{3}$'
+        choices:
+          type: array
+          items:
+            $ref: '#/components/schemas/CurrencyChoice'
+    MoneyNormalizeRequest:
+      type: object
+      required: [amount, currencyCode]
+      properties:
+        amount:
+          type: string
+          examples: ["12.34", "100", "-5.00"]
+        currencyCode:
+          type: string
+          pattern: '^[A-Za-z]{3}$'
+        consumerName:
+          type: string
+          nullable: true
+        roundingContext:
+          type: string
+          nullable: true
+          enum: [canonical, ordering, paying, taxating, subscription, formatting, discounting, cash]
+        roundingPolicyName:
+          type: string
+          nullable: true
+    MoneyAmount:
+      type: object
+      required: [minorAmount, currencyCode]
+      properties:
+        minorAmount:
+          type: integer
+        currencyCode:
+          type: string
+          pattern: '^[A-Z]{3}$'
+    MoneyDisplay:
+      type: object
+      required: [formatted, decimalAmount, currencyCode]
+      properties:
+        formatted:
+          type: string
+        decimalAmount:
+          type: string
+        currencyCode:
+          type: string
+          pattern: '^[A-Z]{3}$'
+    MonetaryAmountResolution:
+      type: object
+      required: [moneyAmount, moneyDisplay, currencyCode, minorUnit, decimalAmount]
+      properties:
+        moneyAmount:
+          $ref: '#/components/schemas/MoneyAmount'
+        moneyDisplay:
+          $ref: '#/components/schemas/MoneyDisplay'
+        currencyCode:
+          type: string
+          pattern: '^[A-Z]{3}$'
+        minorUnit:
+          type: integer
+          minimum: 0
+          maximum: 8
+        decimalAmount:
+          type: string
+    CurrencyConversionBoundary:
+      type: object
+      required:
+        - currencingResponsibilities
+        - exchangingResponsibilities
+        - forbiddenCurrencingResponsibilities
+        - dependencyDirection
+      properties:
+        currencingResponsibilities:
+          type: array
+          items: { type: string }
+        exchangingResponsibilities:
+          type: array
+          items: { type: string }
+        forbiddenCurrencingResponsibilities:
+          type: array
+          items: { type: string }
+        dependencyDirection:
+          type: string

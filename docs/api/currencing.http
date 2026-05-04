@@ -1,0 +1,27 @@
+### List active currency metadata
+GET http://localhost:8000/currencing/currencies
+Accept: application/json
+
+### Read one currency by ISO code
+GET http://localhost:8000/currencing/currencies/USD
+Accept: application/json
+
+### Read selector data
+GET http://localhost:8000/currencing/currency-selector
+Accept: application/json
+
+### Normalize money amount
+POST http://localhost:8000/currencing/money/normalize
+Content-Type: application/json
+Accept: application/json
+
+{
+  "amount": "12.34",
+  "currencyCode": "USD",
+  "consumerName": "Ordering",
+  "roundingContext": "ordering"
+}
+
+### Read Currencing/Exchanging boundary
+GET http://localhost:8000/currencing/conversion-boundary
+Accept: application/json

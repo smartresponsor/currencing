@@ -1,0 +1,42 @@
+services:
+  App\ServiceInterface\Currency\CurrencyMetadataProviderInterface:
+    alias: App\Service\Currency\IntlCurrencyMetadataProvider
+
+  App\ServiceInterface\Currency\CurrencyCodeValidatorInterface:
+    alias: App\Service\Currency\CurrencyCodeValidator
+
+  App\ServiceInterface\Currency\CurrencyPrecisionResolverInterface:
+    alias: App\Service\Currency\CurrencyPrecisionResolver
+
+  App\ServiceInterface\Currency\DecimalMoneyParserInterface:
+    alias: App\Service\Currency\DecimalMoneyParser
+
+  App\ServiceInterface\Currency\MoneyAmountNormalizerInterface:
+    alias: App\Service\Currency\CanonicalMoneyAmountNormalizer
+
+  App\ServiceInterface\Currency\MoneyNormalizerInterface:
+    alias: App\Service\Currency\MinorUnitMoneyNormalizer
+
+  App\ServiceInterface\Currency\CurrencyFormatterInterface:
+    alias: App\Service\Currency\IntlCurrencyFormatter
+
+  App\ServiceInterface\Currency\MoneyDisplayFormatterInterface:
+    alias: App\Service\Currency\MoneyDisplayFormatter
+
+  App\ServiceInterface\Currency\CurrencyChoiceProviderInterface:
+    alias: App\Service\Currency\CurrencyChoiceProvider
+
+  App\ServiceInterface\Currency\CurrencyMetadataViewProviderInterface:
+    alias: App\Service\Currency\CurrencyMetadataViewProvider
+
+  App\ServiceInterface\Currency\CurrencySelectorViewProviderInterface:
+    alias: App\Service\Currency\CurrencySelectorViewProvider
+
+  App\ServiceInterface\Currency\MonetaryAmountInputResolverInterface:
+    alias: App\Service\Currency\MonetaryAmountInputResolver
+
+
+  App\ServiceInterface\Currency\MoneyRoundingPolicyResolverInterface:
+    alias: App\Service\Currency\MoneyRoundingPolicyResolver
+  App\ServiceInterface\Currency\CurrencyConversionBoundaryProviderInterface:
+    alias: App\Service\Currency\CurrencyConversionBoundaryProvider

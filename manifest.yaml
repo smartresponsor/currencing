@@ -1,0 +1,90 @@
+schema_version: "1.0"
+component:
+  name: "Currencing"
+  package_name: "smart-responsor/currencing"
+  namespace: "App"
+  type: "symfony-component"
+  status: "architecture-business-ready"
+  responsibility: "Shared monetary capability for currency metadata, ISO codes, minor units, formatting, money normalization, and conversion-boundary validation."
+canonical_rules:
+  default_namespace: true
+  component_namespace: "App"
+  source_tree:
+    entity: "src/Entity/Currency"
+    repository: "src/Repository/Currency"
+    dto: "src/Dto/Currency"
+    value_object: "src/ValueObject/Currency"
+    service: "src/Service/Currency"
+    service_interface: "src/ServiceInterface/Currency"
+    controller: "src/Controller/Currency"
+    form: "src/Form/Currency"
+    validator: "src/Validator/Currency"
+  doctrine_table_prefix: "currency"
+  canonical_entity_table: "currency_currency"
+  forbidden:
+    - "FX rate provider inside Currencing"
+    - "CurrencyConverter service with live exchange rates inside Currencing"
+    - "Doctrine Entity leakage to neighboring components"
+    - "Port/Adapter pattern"
+    - "src/Domain"
+owned_capabilities:
+  - "ISO currency code validation"
+  - "currency metadata"
+  - "minor unit precision"
+  - "money amount normalization"
+  - "money display formatting"
+  - "rounding policy selection"
+  - "currency selector/read output"
+  - "conversion intent validation"
+not_owned_capabilities:
+  - "exchange-rate sourcing"
+  - "historical FX lookup"
+  - "conversion quote pricing"
+  - "payment provider behavior"
+  - "order totals"
+  - "tax calculation"
+  - "discount business rules"
+integration_direction:
+  consumers:
+    - "Ordering"
+    - "Paying"
+    - "Taxating"
+    - "Subscription"
+    - "Shipping"
+    - "Discounting"
+    - "Coupon"
+    - "Promotion"
+    - "Interfacing"
+  dependency_rule: "Consumers depend on Currencing service interfaces/DTOs. Exchanging may depend on Currencing. Currencing must not depend on Exchanging."
+
+
+quality_gates:
+  release_candidate_gate: "php tools/currencing-release-candidate-check.php"
+  api_contract_gate: "php tools/currencing-api-contract-check.php"
+  autoload_smoke_gate: "php tools/currencing-autoload-smoke-check.php"
+  runtime_smoke_gate: "php tools/currencing-runtime-smoke-check.php"
+  structural_gate: "php tools/currencing-structure-check.php"
+  checks:
+    - "canonical component namespace"
+    - "required Symfony-oriented type layers"
+    - "forbidden legacy directories"
+    - "currency_ Doctrine table prefix"
+    - "no FX provider responsibility inside Currencing"
+
+
+symfony_config:
+  services: "config/services/currencing.yaml"
+  doctrine_mapping: "config/packages/doctrine_currencing.yaml"
+  twig: "config/packages/twig.yaml"
+
+
+api_contract:
+  openapi: "docs/api/currencing.openapi.yaml"
+  http_examples: "docs/api/currencing.http"
+  endpoints_manifest: "delivery/release/currencing-endpoints.json"
+
+
+release_candidate:
+  readiness: "delivery/release/currencing-rc-readiness.json"
+  checklist: "docs/currencing/release-candidate-checklist.md"
+  command_matrix: "docs/currencing/command-matrix.md"

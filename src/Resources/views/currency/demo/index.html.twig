@@ -1,0 +1,70 @@
+{% extends '@Currencing/layout.html.twig' %}
+
+{% block title %}Currencing demo{% endblock %}
+
+{% block body %}
+    <section class="currencing-panel">
+        <h1>Currencing capability demo</h1>
+        <p>
+            Currency selector, money normalization, minor-unit precision, and display formatting are resolved
+            through Currencing service contracts.
+        </p>
+    </section>
+
+    <section class="currencing-panel">
+        <h2>Currency selector</h2>
+        <p>Default currency: <strong>{{ selector.selectedCode }}</strong></p>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Code</th>
+                <th>Label</th>
+                <th>Symbol</th>
+                <th>Minor units</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for choice in selector.choices %}
+                <tr>
+                    <td><code>{{ choice.code }}</code></td>
+                    <td>{{ choice.label }}</td>
+                    <td>{{ choice.symbol }}</td>
+                    <td>{{ choice.minorUnit }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">No active currencies are available.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <section class="currencing-panel">
+        <h2>Normalization examples</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Currency</th>
+                <th>Decimal</th>
+                <th>Minor units</th>
+                <th>Display</th>
+                <th>Precision</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for example in examples %}
+                <tr>
+                    <td><code>{{ example.currencyCode }}</code></td>
+                    <td>{{ example.decimalAmount }}</td>
+                    <td>{{ example.moneyAmount.minorAmount }}</td>
+                    <td>{{ example.moneyDisplay.formatted }}</td>
+                    <td>{{ example.minorUnit }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}

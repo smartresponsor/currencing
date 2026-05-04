@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "1.0",
+  "component": "Currencing",
+  "namespace": "App",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/currencing/currencies",
+      "route": "currencing_currency_catalog",
+      "purpose": "list active currency metadata"
+    },
+    {
+      "method": "GET",
+      "path": "/currencing/currencies/{code}",
+      "route": "currencing_currency_metadata",
+      "purpose": "read one currency metadata entry"
+    },
+    {
+      "method": "GET",
+      "path": "/currencing/currency-selector",
+      "route": "currencing_currency_selector",
+      "purpose": "read selector view"
+    },
+    {
+      "method": "POST",
+      "path": "/currencing/money/normalize",
+      "route": "currencing_money_normalize",
+      "purpose": "normalize money input"
+    },
+    {
+      "method": "GET",
+      "path": "/currencing/conversion-boundary",
+      "route": "currencing_conversion_boundary",
+      "purpose": "read Currencing/Exchanging boundary"
+    },
+    {
+      "method": "GET",
+      "path": "/currencing/demo",
+      "route": "currencing_demo_index",
+      "purpose": "demo surface"
+    },
+    {
+      "method": "GET",
+      "path": "/currencing/admin-preview/currencies",
+      "route": "currencing_admin_preview_currencies",
+      "purpose": "catalog preview"
+    }
+  ]
+}

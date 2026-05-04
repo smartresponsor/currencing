@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "1.0",
+  "component": "Currencing",
+  "status": "release-candidate-architecture-business-complete",
+  "readiness": {
+    "architectureBusinessCompletenessPercent": 92,
+    "runtimeProofIncluded": false,
+    "runtimeProofStatus": "pending-local-host-app-proof",
+    "notes": [
+      "Score excludes runtime proof, PHPStan, PHPUnit execution, vendor-backed CI, and browser proof.",
+      "Currencing has a stable Entity-first Symfony-oriented model, DTO/VO boundary, API contract, structural gates, and Exchanging boundary."
+    ]
+  },
+  "implementedMilestones": [
+    "M1 Symfony component foundation",
+    "M2 Currency metadata contracts",
+    "M3 Money normalization",
+    "M4 Formatting and UI bridge readiness",
+    "M5 Doctrine Entity-first hardening",
+    "M6 Neighbor integration contracts",
+    "M7 Monetary policy layer",
+    "M8 API/read endpoints",
+    "M9 Admin/demo surface",
+    "M10 Exchanging boundary handshake",
+    "M11 Release/readiness manifests",
+    "M12 Structural gates",
+    "M13 Runtime/container smoke readiness",
+    "M14 Service/autowiring and Doctrine mapping readiness",
+    "M15 API contract readiness",
+    "M16 Release candidate closure package"
+  ],
+  "ownedCapabilities": [
+    "ISO currency code validation",
+    "Currency metadata",
+    "Minor-unit precision",
+    "Money amount normalization",
+    "Money display formatting",
+    "Currency selector output",
+    "Monetary rounding policy selection",
+    "Neighbor monetary input resolution",
+    "Currencing/Exchanging boundary metadata",
+    "Read/API contract documentation"
+  ],
+  "explicitNonGoals": [
+    "Exchange-rate sourcing",
+    "Historical FX",
+    "Conversion quote calculation",
+    "Payment provider behavior",
+    "Order/tax/discount business rules",
+    "Heavy admin CRUD"
+  ],
+  "requiredLocalProofCommands": [
+    "composer dump-autoload",
+    "php tools/currencing-structure-check.php",
+    "php tools/currencing-runtime-smoke-check.php",
+    "php tools/currencing-autoload-smoke-check.php",
+    "php tools/currencing-api-contract-check.php",
+    "php bin/console cache:clear",
+    "php bin/console debug:router | findstr currencing",
+    "php bin/console debug:container App\\ServiceInterface\\Currency",
+    "php bin/console doctrine:mapping:info",
+    "php bin/console doctrine:schema:validate"
+  ],
+  "riskRegister": [
+    {
+      "risk": "Host app does not import config/services/currencing.yaml",
+      "severity": "medium",
+      "mitigation": "Import or merge explicit service config."
+    },
+    {
+      "risk": "Host app Doctrine mapping ignores config/packages/doctrine_currencing.yaml",
+      "severity": "medium",
+      "mitigation": "Register src/Entity/Currency attribute mapping."
+    },
+    {
+      "risk": "Twig bundle/config not available",
+      "severity": "low",
+      "mitigation": "M9 demo surface requires Twig namespace only; API remains independent."
+    },
+    {
+      "risk": "Fixtures not executed in target environment",
+      "severity": "medium",
+      "mitigation": "Load CurrencyFixtures or seed currency_currency by migration/installer."
+    },
+    {
+      "risk": "Route attribute import not enabled for component controllers",
+      "severity": "medium",
+      "mitigation": "Import src/Controller/Currency attributes in host app routing."
+    }
+  ]
+}

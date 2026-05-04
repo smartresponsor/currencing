@@ -1,0 +1,9 @@
+doctrine:
+  orm:
+    mappings:
+      Currencing:
+        is_bundle: false
+        type: attribute
+        dir: '%kernel.project_dir%/src/Entity/Currency'
+        prefix: 'App\Entity\Currency'
+        alias: Currencing

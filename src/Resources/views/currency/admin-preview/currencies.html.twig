@@ -1,0 +1,41 @@
+{% extends '@Currencing/layout.html.twig' %}
+
+{% block title %}Currencing currency catalog{% endblock %}
+
+{% block body %}
+    <section class="currencing-panel">
+        <h1>Currency catalog preview</h1>
+        <p>
+            Read-only component preview. Doctrine entities remain internal; this screen renders metadata views.
+        </p>
+    </section>
+
+    <section class="currencing-panel">
+        <table>
+            <thead>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Symbol</th>
+                <th>Minor units</th>
+                <th>Active</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for currency in currencies %}
+                <tr>
+                    <td><code>{{ currency.code }}</code></td>
+                    <td>{{ currency.name }}</td>
+                    <td>{{ currency.symbol }}</td>
+                    <td>{{ currency.minorUnit }}</td>
+                    <td>{{ currency.active ? 'yes' : 'no' }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">No currency metadata is available.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}
