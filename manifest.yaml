@@ -63,6 +63,8 @@ quality_gates:
   api_contract_gate: "php tools/currencing-api-contract-check.php"
   autoload_smoke_gate: "php tools/currencing-autoload-smoke-check.php"
   runtime_smoke_gate: "php tools/currencing-runtime-smoke-check.php"
+  service_alias_closure_gate: "php tools/currencing-service-alias-closure-check.php"
+  console_runtime_proof_gate: "php tools/currencing-console-runtime-proof-check.php"
   structural_gate: "php tools/currencing-structure-check.php"
   checks:
     - "canonical component namespace"
@@ -88,3 +90,29 @@ release_candidate:
   readiness: "delivery/release/currencing-rc-readiness.json"
   checklist: "docs/currencing/release-candidate-checklist.md"
   command_matrix: "docs/currencing/command-matrix.md"
+
+runtime_foundation:
+  milestone: m17_runtime_rc_proof_foundation
+  namespace: App\\
+  database_platform: postgresql_first
+  status: file_config_ready_pending_local_bin_console_proof
+
+service_alias_closure:
+  milestone: m18_service_alias_closure_gate
+  status: framework_free_gate_added_pending_local_container_proof
+  gate: "php tools/currencing-service-alias-closure-check.php"
+
+console_runtime_proof:
+  milestone: m19_console_runtime_proof_gate
+  status: static_gate_added_pending_vendor_backed_bin_console_proof
+  gate: "php tools/currencing-console-runtime-proof-check.php"
+
+
+lazyghost_runtime_fix:
+  milestone: m20_lazyghost_var_exporter_runtime_fix
+  dependency: symfony/var-exporter
+  status: dependency_added_pending_local_cache_clear_retry
+  reason: "Doctrine LazyGhost requires Symfony VarExporter support unless the running stack uses PHP 8.4 native lazy objects."
+
+# M21 Database Runtime Proof Closure
+# Adds .env.local.example, local PostgreSQL proof docs, and database runtime proof gate.

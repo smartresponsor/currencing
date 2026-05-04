@@ -56,7 +56,7 @@ foreach ($phpFiles as $file) {
         continue;
     }
 
-    if (!str_contains($contents, 'namespace App\\')) {
+    if (!str_contains($contents, 'namespace App;') && !str_contains($contents, 'namespace App\\')) {
         $errors[] = 'Non-canonical namespace in: ' . $relative;
     }
 

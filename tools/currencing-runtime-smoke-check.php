@@ -32,8 +32,11 @@ function read_file_required(string $root, string $relative, array &$errors): str
     return $contents;
 }
 
-$services = read_file_required($root, 'config/packages/currencing.yaml', $errors);
-$serviceResources = read_file_required($root, 'config/services/currencing.yaml', $errors);
+$componentPackage = read_file_required($root, 'config/packages/currencing.yaml', $errors);
+$services = read_file_required($root, 'config/services/currencing.yaml', $errors);
+$rootServices = read_file_required($root, 'config/services.yaml', $errors);
+$rootRoutes = read_file_required($root, 'config/routes.yaml', $errors);
+$currencingRoutes = read_file_required($root, 'config/routes/currencing.yaml', $errors);
 $doctrine = read_file_required($root, 'config/packages/doctrine_currencing.yaml', $errors);
 $twig = read_file_required($root, 'config/packages/twig.yaml', $errors);
 
@@ -58,6 +61,23 @@ foreach ($requiredAliases as $interface => $implementation) {
     }
 }
 
+
+if ($componentPackage !== '' && str_contains($componentPackage, 'services:')) {
+    $errors[] = 'config/packages/currencing.yaml must not duplicate service aliases; aliases belong in config/services/currencing.yaml.';
+}
+
+if ($rootServices !== '' && !str_contains($rootServices, 'services/currencing.yaml')) {
+    $errors[] = 'Root services.yaml must import config/services/currencing.yaml.';
+}
+
+if ($rootRoutes !== '' && !str_contains($rootRoutes, 'routes/currencing.yaml')) {
+    $errors[] = 'Root routes.yaml must import config/routes/currencing.yaml.';
+}
+
+if ($currencingRoutes !== '' && (!str_contains($currencingRoutes, 'src/Controller/Currency') || !str_contains($currencingRoutes, 'type: attribute'))) {
+    $errors[] = 'Currencing route import must load src/Controller/Currency attribute routes.';
+}
+
 if (!str_contains($twig, 'src/Resources/views') || !str_contains($twig, 'Currencing')) {
     $errors[] = 'Twig namespace Currencing is not configured for src/Resources/views.';
 }
@@ -70,7 +90,7 @@ foreach ([
     'App\\Service\\Currency\\',
     'App\\Validator\\Currency\\',
 ] as $resourceNamespace) {
-    if (!str_contains($serviceResources, $resourceNamespace)) {
+    if (!str_contains($services, $resourceNamespace)) {
         $errors[] = 'Missing explicit service resource namespace: ' . $resourceNamespace;
     }
 }

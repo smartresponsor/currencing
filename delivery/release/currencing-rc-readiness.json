@@ -8,7 +8,10 @@
     "runtimeProofStatus": "pending-local-host-app-proof",
     "notes": [
       "Score excludes runtime proof, PHPStan, PHPUnit execution, vendor-backed CI, and browser proof.",
-      "Currencing has a stable Entity-first Symfony-oriented model, DTO/VO boundary, API contract, structural gates, and Exchanging boundary."
+      "Currencing has a stable Entity-first Symfony-oriented model, DTO/VO boundary, API contract, structural gates, and Exchanging boundary.",
+      "M19 adds a static console runtime proof gate for composer/bin/console/front-controller/config/template coherence before vendor-backed Symfony boot.",
+      "M20 fixes the first local Symfony boot blocker by adding symfony/var-exporter for Doctrine LazyGhost compatibility.",
+      "M21 closes the local database proof handoff after Symfony boot/routes/container/mapping passed and only PostgreSQL credentials remained unresolved."
     ]
   },
   "implementedMilestones": [
@@ -27,7 +30,12 @@
     "M13 Runtime/container smoke readiness",
     "M14 Service/autowiring and Doctrine mapping readiness",
     "M15 API contract readiness",
-    "M16 Release candidate closure package"
+    "M16 Release candidate closure package",
+    "M17 Runtime RC Proof Foundation",
+    "M18 Service alias closure gate",
+    "M19 Console runtime proof gate",
+    "M20 LazyGhost VarExporter runtime fix",
+    "M21 Database runtime proof closure"
   ],
   "ownedCapabilities": [
     "ISO currency code validation",
@@ -50,14 +58,22 @@
     "Heavy admin CRUD"
   ],
   "requiredLocalProofCommands": [
+    "composer update symfony/var-exporter --with-dependencies",
     "composer dump-autoload",
     "php tools/currencing-structure-check.php",
     "php tools/currencing-runtime-smoke-check.php",
     "php tools/currencing-autoload-smoke-check.php",
+    "php tools/currencing-service-alias-closure-check.php",
+    "php tools/currencing-console-runtime-proof-check.php",
+    "php tools/currencing-database-runtime-proof-check.php",
     "php tools/currencing-api-contract-check.php",
+    "php tools/currencing-release-candidate-check.php",
+    "php tools/currencing-standalone-runtime-foundation-check.php",
     "php bin/console cache:clear",
     "php bin/console debug:router | findstr currencing",
     "php bin/console debug:container App\\ServiceInterface\\Currency",
+    "php bin/console doctrine:database:create --if-not-exists",
+    "php bin/console doctrine:migrations:migrate --no-interaction",
     "php bin/console doctrine:mapping:info",
     "php bin/console doctrine:schema:validate"
   ],
@@ -65,7 +81,7 @@
     {
       "risk": "Host app does not import config/services/currencing.yaml",
       "severity": "medium",
-      "mitigation": "Import or merge explicit service config."
+      "mitigation": "Import or merge explicit service config; run php tools/currencing-service-alias-closure-check.php before cache:clear."
     },
     {
       "risk": "Host app Doctrine mapping ignores config/packages/doctrine_currencing.yaml",
@@ -86,6 +102,18 @@
       "risk": "Route attribute import not enabled for component controllers",
       "severity": "medium",
       "mitigation": "Import src/Controller/Currency attributes in host app routing."
+    },
+    {
+      "risk": "Doctrine LazyGhost runtime dependency missing",
+      "severity": "high",
+      "mitigation": "M20 requires symfony/var-exporter and extends the static console runtime proof gate."
+    },
+    {
+      "risk": "Local PostgreSQL credentials still point to placeholder app/app",
+      "severity": "medium",
+      "mitigation": "Copy .env.local.example to .env.local and configure a valid local PostgreSQL role/database before doctrine:schema:validate."
     }
-  ]
+  ],
+  "latestMilestone": "M21 Database Runtime Proof Closure",
+  "runtimeFoundationStatus": "symfony-boot-routes-container-mapping-proven-pending-local-postgresql-credentials-and-schema-sync"
 }

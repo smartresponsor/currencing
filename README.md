@@ -220,3 +220,51 @@ Run:
 ```bash
 php tools/currencing-release-candidate-check.php
 ```
+
+## M17 Runtime RC Proof Foundation
+
+Currencing now includes a minimal default-Symfony runtime foundation for local RC proof: `composer.json`, `src/Kernel.php`, `bin/console`, explicit route/service imports, Doctrine configuration, and PostgreSQL-first migrations. Run `php tools/currencing-standalone-runtime-foundation-check.php` before the Symfony container proof commands.
+
+
+## M18 Service alias closure gate
+
+Currencing now includes a framework-free service alias closure gate:
+
+```bash
+php tools/currencing-service-alias-closure-check.php
+```
+
+It scans constructor-injected `App\ServiceInterface\Currency\*Interface` contracts and verifies explicit aliases in `config/services/currencing.yaml` before local Symfony container proof.
+
+## M19 Console Runtime Proof Gate
+
+Currencing now includes a static console-runtime proof gate:
+
+```bash
+php tools/currencing-console-runtime-proof-check.php
+```
+
+It verifies Composer runtime requirements, `bin/console`, `public/index.php`, Kernel, route imports, service imports, Doctrine mapping, Twig namespace, templates, and `.env` markers before vendor-backed Symfony boot.
+
+## M20 LazyGhost VarExporter runtime fix
+
+M20 closes the first real local runtime blocker found during `cache:clear`:
+
+```text
+Symfony LazyGhost is not available.
+```
+
+`composer.json` now requires `symfony/var-exporter` and the console/runtime gates verify the dependency before the Symfony container boot proof.
+
+
+
+## M21 database runtime proof
+
+After M20, the Symfony runtime proof reaches Doctrine database validation. If PostgreSQL rejects the placeholder `app/app` credentials, copy `.env.local.example` to `.env.local` and configure a valid local PostgreSQL DSN. See `docs/currencing/local-postgresql-proof.md`.
+
+```powershell
+php tools/currencing-database-runtime-proof-check.php
+php bin/console doctrine:database:create --if-not-exists
+php bin/console doctrine:migrations:migrate --no-interaction
+php bin/console doctrine:schema:validate
+```

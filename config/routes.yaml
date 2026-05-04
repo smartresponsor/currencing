@@ -1,0 +1,2 @@
+currencing:
+  resource: routes/currencing.yaml
