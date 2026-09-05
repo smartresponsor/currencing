@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Currency;
 
-use App\Dto\Currency\CurrencyChoice;
+use App\Dto\Currency\CurrencyChoiceDTO;
 use App\ServiceInterface\Currency\CurrencyChoiceProviderInterface;
 use App\ServiceInterface\Currency\CurrencyMetadataProviderInterface;
 
@@ -22,7 +22,7 @@ final class CurrencyChoiceProvider implements CurrencyChoiceProviderInterface
             $metadata = $this->currencyMetadataProvider->metadataFor($code, $locale);
             $label = $this->buildLabel($metadata['code'], $metadata['displayName'], $metadata['symbol']);
 
-            $choices[] = new CurrencyChoice(
+            $choices[] = new CurrencyChoiceDTO(
                 $metadata['code'],
                 $label,
                 $metadata['symbol'],
@@ -32,7 +32,7 @@ final class CurrencyChoiceProvider implements CurrencyChoiceProviderInterface
 
         usort(
             $choices,
-            static fn (CurrencyChoice $left, CurrencyChoice $right): int => $left->getCode() <=> $right->getCode(),
+            static fn (CurrencyChoiceDTO $left, CurrencyChoiceDTO $right): int => $left->getCode() <=> $right->getCode(),
         );
 
         return $choices;

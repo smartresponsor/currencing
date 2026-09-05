@@ -3,15 +3,16 @@
   "component": "Currencing",
   "status": "release-candidate-architecture-business-complete",
   "readiness": {
-    "architectureBusinessCompletenessPercent": 92,
-    "runtimeProofIncluded": false,
-    "runtimeProofStatus": "pending-local-host-app-proof",
+    "architectureBusinessCompletenessPercent": 94,
+    "runtimeProofIncluded": true,
+    "runtimeProofStatus": "green-local-runtime-proof-reported",
     "notes": [
       "Score excludes runtime proof, PHPStan, PHPUnit execution, vendor-backed CI, and browser proof.",
       "Currencing has a stable Entity-first Symfony-oriented model, DTO/VO boundary, API contract, structural gates, and Exchanging boundary.",
       "M19 adds a static console runtime proof gate for composer/bin/console/front-controller/config/template coherence before vendor-backed Symfony boot.",
       "M20 fixes the first local Symfony boot blocker by adding symfony/var-exporter for Doctrine LazyGhost compatibility.",
-      "M21 closes the local database proof handoff after Symfony boot/routes/container/mapping passed and only PostgreSQL credentials remained unresolved."
+      "M21 closes the local database proof handoff after Symfony boot/routes/container/mapping passed and only PostgreSQL credentials remained unresolved.",
+      "M22 adds an explicit outbound template bridge contract for Bridge/Interfacing integration without coupling Currencing to UI implementation details."
     ]
   },
   "implementedMilestones": [
@@ -35,7 +36,8 @@
     "M18 Service alias closure gate",
     "M19 Console runtime proof gate",
     "M20 LazyGhost VarExporter runtime fix",
-    "M21 Database runtime proof closure"
+    "M21 Database runtime proof closure",
+    "M22 Template bridge output contract"
   ],
   "ownedCapabilities": [
     "ISO currency code validation",
@@ -47,7 +49,8 @@
     "Monetary rounding policy selection",
     "Neighbor monetary input resolution",
     "Currencing/Exchanging boundary metadata",
-    "Read/API contract documentation"
+    "Read/API contract documentation",
+    "Template bridge output context"
   ],
   "explicitNonGoals": [
     "Exchange-rate sourcing",
@@ -64,6 +67,7 @@
     "php tools/currencing-runtime-smoke-check.php",
     "php tools/currencing-autoload-smoke-check.php",
     "php tools/currencing-service-alias-closure-check.php",
+    "php tools/currencing-template-bridge-contract-check.php",
     "php tools/currencing-console-runtime-proof-check.php",
     "php tools/currencing-database-runtime-proof-check.php",
     "php tools/currencing-api-contract-check.php",
@@ -73,7 +77,7 @@
     "php bin/console debug:router | findstr currencing",
     "php bin/console debug:container App\\ServiceInterface\\Currency",
     "php bin/console doctrine:database:create --if-not-exists",
-    "php bin/console doctrine:migrations:migrate --no-interaction",
+    "php bin/console doctrine:schema:create",
     "php bin/console doctrine:mapping:info",
     "php bin/console doctrine:schema:validate"
   ],
@@ -101,7 +105,7 @@
     {
       "risk": "Route attribute import not enabled for component controllers",
       "severity": "medium",
-      "mitigation": "Import src/Controller/Currency attributes in host app routing."
+      "mitigation": "Use the declarative Currencing route map in host app routing."
     },
     {
       "risk": "Doctrine LazyGhost runtime dependency missing",
@@ -111,9 +115,14 @@
     {
       "risk": "Local PostgreSQL credentials still point to placeholder app/app",
       "severity": "medium",
-      "mitigation": "Copy .env.local.example to .env.local and configure a valid local PostgreSQL role/database before doctrine:schema:validate."
+      "mitigation": "Copy .env.local.example to .env.local, generate schema from entities, and configure a valid local PostgreSQL role/database before doctrine:schema:validate."
+    },
+    {
+      "risk": "Bridge consumes API response instead of service contract without preserving route-name indirection",
+      "severity": "low",
+      "mitigation": "Use CurrencyTemplateContextProviderInterface for in-process composition or /currencing/template-context for HTTP read models; Bridge resolves route names to concrete URLs."
     }
   ],
-  "latestMilestone": "M21 Database Runtime Proof Closure",
-  "runtimeFoundationStatus": "symfony-boot-routes-container-mapping-proven-pending-local-postgresql-credentials-and-schema-sync"
+  "latestMilestone": "M22 Template Bridge Output Contract",
+  "runtimeFoundationStatus": "green-local-runtime-proof-reported-with-template-bridge-contract-added"
 }

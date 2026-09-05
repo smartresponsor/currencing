@@ -10,6 +10,7 @@ composer.phar
 /phpunit.xml
 /.phpunit.cache/
 /.idea/
+/.codebase-memory/
 .vscode/
 .DS_Store
 

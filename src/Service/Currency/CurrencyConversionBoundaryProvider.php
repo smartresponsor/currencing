@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Currency;
 
-use App\Dto\Currency\CurrencyConversionBoundary;
+use App\Dto\Currency\CurrencyConversionBoundaryDTO;
 use App\ServiceInterface\Currency\CurrencyConversionBoundaryProviderInterface;
 
 /**
@@ -12,9 +12,9 @@ use App\ServiceInterface\Currency\CurrencyConversionBoundaryProviderInterface;
  */
 final readonly class CurrencyConversionBoundaryProvider implements CurrencyConversionBoundaryProviderInterface
 {
-    public function provideBoundary(): CurrencyConversionBoundary
+    public function provideBoundary(): CurrencyConversionBoundaryDTO
     {
-        return new CurrencyConversionBoundary(
+        return new CurrencyConversionBoundaryDTO(
             currencingResponsibilities: [
                 'ISO currency code validation',
                 'currency metadata',

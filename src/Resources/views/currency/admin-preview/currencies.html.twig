@@ -18,17 +18,17 @@
                 <th>Name</th>
                 <th>Symbol</th>
                 <th>Minor units</th>
-                <th>Active</th>
+                <th>Numeric code</th>
             </tr>
             </thead>
             <tbody>
             {% for currency in currencies %}
                 <tr>
                     <td><code>{{ currency.code }}</code></td>
-                    <td>{{ currency.name }}</td>
+                    <td>{{ currency.displayName }}</td>
                     <td>{{ currency.symbol }}</td>
                     <td>{{ currency.minorUnit }}</td>
-                    <td>{{ currency.active ? 'yes' : 'no' }}</td>
+                    <td>{{ currency.numericCode }}</td>
                 </tr>
             {% else %}
                 <tr>

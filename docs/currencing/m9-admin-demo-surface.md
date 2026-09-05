@@ -26,7 +26,7 @@ Currencing presentation uses service contracts and DTOs:
 
 - `CurrencySelectorViewProviderInterface`
 - `CurrencyMetadataViewProviderInterface`
-- `MonetaryAmountInputResolverInterface`
+- `CurrencyAmountInputResolverInterface`
 
 The catalog remains Entity-first internally through Doctrine, but rendered output is
 view/DTO-derived.

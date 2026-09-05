@@ -89,3 +89,14 @@ This gate checks Composer runtime package coverage, Symfony runtime entrypoints,
 
 
 - `currencing-database-runtime-proof-check.php` — verifies PostgreSQL-first local runtime proof files, DSN templates, Doctrine DBAL wiring, and database proof command documentation.
+
+## M22 template bridge contract gate
+
+```bash
+php tools/currencing-template-bridge-contract-check.php
+```
+
+Verifies the outbound `CurrencyTemplateContextProviderInterface` bridge contract, DTO payload,
+provider, controller route, service alias, endpoint manifest, and OpenAPI coverage. The gate
+also prevents the bridge output contract from coupling to Doctrine entities, Twig, FormView,
+Interfacing classes, or Bridge classes.

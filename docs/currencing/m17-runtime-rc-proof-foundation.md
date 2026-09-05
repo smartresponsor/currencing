@@ -7,10 +7,10 @@ M17 moves Currencing from an architecture/business-complete component slice towa
 This wave does not add new business responsibility. It hardens the runtime surface required to prove the existing Currencing responsibilities in a local Symfony application:
 
 - default `App\...` Symfony application foundation;
-- explicit controller route import for `src/Controller/Currency`;
+- explicit controller route import for `src/Service/Http/Currency`;
 - explicit service import through `config/services.yaml`;
 - deduplicated component package configuration;
-- PostgreSQL-first Doctrine migrations;
+- entity-first Doctrine schema generation;
 - standalone runtime foundation gate.
 
 ## Canonical runtime commands
@@ -37,11 +37,11 @@ PowerShell equivalent for route filtering:
 php bin/console debug:router | findstr currencing
 ```
 
-## PostgreSQL-first decision
+## Entity-first decision
 
 Currencing-owned Doctrine tables remain prefixed with `currency_`. The canonical table for the ISO currency catalog is `currency_currency`.
 
-M17 removes MySQL-specific migration syntax such as `AUTO_INCREMENT`, `TINYINT`, `ENGINE = InnoDB`, and `RENAME TABLE`.
+M17 removes MySQL-specific DDL syntax such as `AUTO_INCREMENT`, `TINYINT`, `ENGINE = InnoDB`, and `RENAME TABLE`.
 
 ## Remaining proof boundary
 

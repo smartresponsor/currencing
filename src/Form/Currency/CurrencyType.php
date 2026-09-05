@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Currency;
 
-use App\Entity\Currency\Currency;
+use App\Entity\Currency\CurrencyEntity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -27,7 +27,7 @@ final class CurrencyType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => Currency::class]);
+        $resolver->setDefaults(['data_class' => CurrencyEntity::class]);
     }
 
     public function getBlockPrefix(): string

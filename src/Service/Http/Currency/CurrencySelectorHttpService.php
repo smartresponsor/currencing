@@ -1,0 +1,43 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Service\Http\Currency;
+
+use App\ServiceInterface\Currency\CurrencySelectorViewProviderInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * Read API for a template-safe currency selector model.
+ */
+final readonly class CurrencySelectorHttpService
+{
+    public function __construct(
+        private CurrencySelectorViewProviderInterface $currencySelectorViewProvider,
+    ) {
+    }
+
+    public function __invoke(Request $request): JsonResponse
+    {
+        $selectedCode = $this->optionalString($request->query->get('selectedCode'));
+        $locale = $this->optionalString($request->query->get('locale'));
+
+        return new JsonResponse([
+            'component' => 'currencing',
+            'resource' => 'currency_selector',
+            'item' => $this->currencySelectorViewProvider->selector($selectedCode, $locale)->toArray(),
+        ]);
+    }
+
+    private function optionalString(mixed $value): ?string
+    {
+        if (!is_string($value)) {
+            return null;
+        }
+
+        $value = trim($value);
+
+        return '' === $value ? null : $value;
+    }
+}

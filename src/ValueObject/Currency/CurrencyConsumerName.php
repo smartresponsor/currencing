@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\ValueObject\Currency;
 
-use InvalidArgumentException;
-
 /**
  * Small value object for documenting/validating neighboring component names
  * that consume Currencing contracts.
@@ -21,15 +19,15 @@ final readonly class CurrencyConsumerName
         $value = trim($value);
 
         if ('' === $value) {
-            throw new InvalidArgumentException('Currency consumer name cannot be empty.');
+            throw new \InvalidArgumentException('Currency consumer nameEntity cannot be empty.');
         }
 
         if (self::MAX_LENGTH < mb_strlen($value)) {
-            throw new InvalidArgumentException('Currency consumer name cannot be longer than 64 characters.');
+            throw new \InvalidArgumentException('Currency consumer nameEntity cannot be longer than 64 characters.');
         }
 
         if (1 !== preg_match('/^[A-Za-z][A-Za-z0-9_\\-]*$/', $value)) {
-            throw new InvalidArgumentException('Currency consumer name must start with a letter and contain only letters, numbers, underscore, or dash.');
+            throw new \InvalidArgumentException('Currency consumer nameEntity must start with a letter and contain only letters, numbers, underscore, or dash.');
         }
 
         $this->value = $value;

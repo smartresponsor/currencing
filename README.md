@@ -34,26 +34,26 @@ It intentionally does not own FX conversion. Exchange rates and historical conve
 - `App\ServiceInterface\Currency\CurrencyMetadataProviderInterface`
 - `App\ServiceInterface\Currency\CurrencyCodeValidatorInterface`
 - `App\ServiceInterface\Currency\CurrencyPrecisionResolverInterface`
-- `App\ServiceInterface\Currency\MoneyAmountNormalizerInterface`
-- `App\ServiceInterface\Currency\MoneyNormalizerInterface`
+- `App\ServiceInterface\Currency\CurrencyAmountNormalizerInterface`
+- `App\ServiceInterface\Currency\CurrencyNormalizerInterface`
 - `App\ServiceInterface\Currency\CurrencyFormatterInterface`
-- `App\ServiceInterface\Currency\MoneyDisplayFormatterInterface`
+- `App\ServiceInterface\Currency\CurrencyDisplayFormatterInterface`
 - `App\ServiceInterface\Currency\CurrencyChoiceProviderInterface`
 - `App\ServiceInterface\Currency\CurrencyMetadataViewProviderInterface`
 - `App\ServiceInterface\Currency\CurrencySelectorViewProviderInterface`
-- `App\ServiceInterface\Currency\MonetaryAmountInputResolverInterface`
+- `App\ServiceInterface\Currency\CurrencyAmountInputResolverInterface`
 
 ## Main model
 
-- `App\Entity\Currency\Currency`
+- `App\Entity\Currency\CurrencyEntity`
 - `App\ValueObject\Currency\CurrencyCode`
-- `App\Dto\Currency\MoneyAmount`
-- `App\Dto\Currency\MoneyDisplay`
-- `App\Dto\Currency\CurrencyChoice`
-- `App\Dto\Currency\CurrencyMetadataView`
-- `App\Dto\Currency\CurrencySelectorView`
-- `App\Dto\Currency\MonetaryAmountInput`
-- `App\Dto\Currency\MonetaryAmountResolution`
+- `App\Dto\Currency\CurrencyAmountDTO`
+- `App\Dto\Currency\CurrencyDisplayDTO`
+- `App\Dto\Currency\CurrencyChoiceDTO`
+- `App\Dto\Currency\CurrencyMetadataViewDTO`
+- `App\Dto\Currency\CurrencySelectorViewDTO`
+- `App\Dto\Currency\CurrencyAmountInputDTO`
+- `App\Dto\Currency\CurrencyAmountResolutionDTO`
 
 ## Boundary
 
@@ -62,7 +62,7 @@ Currencing validates and normalizes money values. Exchanging should own rates, l
 
 ## Neighbor integration flow
 
-Use `MonetaryAmountInputResolverInterface` when Ordering, Paying, Taxating,
+Use `CurrencyAmountInputResolverInterface` when Ordering, Paying, Taxating,
 Shipping, Subscription, Discounting, Coupon, or Promotion needs to hand raw
 monetary input to Currencing and receive a canonical minor-unit amount plus a
 UI-safe display DTO.
@@ -74,9 +74,9 @@ Currencing now includes a Symfony-first monetary policy layer for selecting roun
 
 Canonical boundaries:
 
-- `MoneyRoundingPolicyResolverInterface` resolves named/context policies.
-- `MonetaryAmountInput` may specify a policy name or a business context.
-- `MonetaryAmountInputResolverInterface` returns `MonetaryAmountResolution` with the selected policy.
+- `CurrencyRoundingPolicyResolverInterface` resolves named/context policies.
+- `CurrencyAmountInputDTO` may specify a policy name or a business context.
+- `CurrencyAmountInputResolverInterface` returns `CurrencyAmountResolutionDTO` with the selected policy.
 - Default canonical behavior remains strict/reject.
 
 Named policy examples:
@@ -223,7 +223,7 @@ php tools/currencing-release-candidate-check.php
 
 ## M17 Runtime RC Proof Foundation
 
-Currencing now includes a minimal default-Symfony runtime foundation for local RC proof: `composer.json`, `src/Kernel.php`, `bin/console`, explicit route/service imports, Doctrine configuration, and PostgreSQL-first migrations. Run `php tools/currencing-standalone-runtime-foundation-check.php` before the Symfony container proof commands.
+Currencing now includes a minimal default-Symfony runtime foundation for local RC proof: `composer.json`, `src/Kernel.php`, `bin/console`, explicit route/service imports, Doctrine configuration, and entity-first Doctrine schema generation. Run `php tools/currencing-standalone-runtime-foundation-check.php` before the Symfony container proof commands.
 
 
 ## M18 Service alias closure gate
@@ -265,6 +265,33 @@ After M20, the Symfony runtime proof reaches Doctrine database validation. If Po
 ```powershell
 php tools/currencing-database-runtime-proof-check.php
 php bin/console doctrine:database:create --if-not-exists
-php bin/console doctrine:migrations:migrate --no-interaction
+php bin/console doctrine:schema:create
 php bin/console doctrine:schema:validate
 ```
+
+## M22 template bridge output contract
+
+Currencing exposes an outbound templates/UI composition contract for Bridge/Interfacing-style
+integration:
+
+```text
+App\ServiceInterface\Currency\CurrencyTemplateContextProviderInterface
+```
+
+The contract returns `App\Dto\Currency\CurrencyTemplateContextDTO`, a DTO-derived output model
+containing selector data, currency metadata views, route names, and capabilities. It does not
+return Doctrine entities, Twig markup, Symfony FormView objects, or Bridge-specific classes.
+
+HTTP read surface:
+
+```text
+GET /currencing/template-context
+route: currencing_template_context
+```
+
+Gate:
+
+```bash
+php tools/currencing-template-bridge-contract-check.php
+```
+

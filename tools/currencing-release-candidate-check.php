@@ -8,7 +8,6 @@ declare(strict_types=1);
  * This gate checks that RC closure artifacts exist and reference the required local
  * proof commands. It does not boot Symfony.
  */
-
 $root = dirname(__DIR__);
 $errors = [];
 
@@ -21,6 +20,8 @@ $requiredFiles = [
     'tools/currencing-standalone-runtime-foundation-check.php',
     'tools/currencing-service-alias-closure-check.php',
     'docs/currencing/m18-service-alias-closure-gate.md',
+    'tools/currencing-template-bridge-contract-check.php',
+    'docs/currencing/m22-template-bridge-output-contract.md',
     'tools/currencing-console-runtime-proof-check.php',
     'docs/currencing/m19-console-runtime-proof-gate.md',
     'docs/currencing/m20-lazyghost-var-exporter-runtime-fix.md',
@@ -31,12 +32,12 @@ $requiredFiles = [
 ];
 
 foreach ($requiredFiles as $relative) {
-    if (!is_file($root . '/' . $relative)) {
-        $errors[] = 'Missing RC artifact: ' . $relative;
+    if (!is_file($root.'/'.$relative)) {
+        $errors[] = 'Missing RC artifact: '.$relative;
     }
 }
 
-$readinessPath = $root . '/delivery/release/currencing-rc-readiness.json';
+$readinessPath = $root.'/delivery/release/currencing-rc-readiness.json';
 if (is_file($readinessPath)) {
     $decoded = json_decode((string) file_get_contents($readinessPath), true);
 
@@ -57,6 +58,7 @@ if (is_file($readinessPath)) {
             'php tools/currencing-runtime-smoke-check.php',
             'php tools/currencing-autoload-smoke-check.php',
             'php tools/currencing-service-alias-closure-check.php',
+            'php tools/currencing-template-bridge-contract-check.php',
             'php tools/currencing-console-runtime-proof-check.php',
             'php tools/currencing-database-runtime-proof-check.php',
             'php tools/currencing-api-contract-check.php',
@@ -64,14 +66,13 @@ if (is_file($readinessPath)) {
             'php bin/console cache:clear',
         ] as $expectedCommand) {
             if (!is_array($commands) || !in_array($expectedCommand, $commands, true)) {
-                $errors[] = 'RC readiness JSON missing command: ' . $expectedCommand;
+                $errors[] = 'RC readiness JSON missing command: '.$expectedCommand;
             }
         }
     }
 }
 
-
-$composerPath = $root . '/composer.json';
+$composerPath = $root.'/composer.json';
 if (is_file($composerPath)) {
     $composer = json_decode((string) file_get_contents($composerPath), true);
     if (!is_array($composer) || !isset($composer['require']['symfony/var-exporter'])) {
@@ -79,8 +80,7 @@ if (is_file($composerPath)) {
     }
 }
 
-
-$envLocalExamplePath = $root . '/.env.local.example';
+$envLocalExamplePath = $root.'/.env.local.example';
 if (is_file($envLocalExamplePath)) {
     $envLocalExample = (string) file_get_contents($envLocalExamplePath);
     foreach ([
@@ -88,30 +88,30 @@ if (is_file($envLocalExamplePath)) {
         'postgresql://postgres:postgres@127.0.0.1:5432/currencing',
     ] as $needle) {
         if (!str_contains($envLocalExample, $needle)) {
-            $errors[] = '.env.local.example missing local PostgreSQL proof DSN marker: ' . $needle;
+            $errors[] = '.env.local.example missing local PostgreSQL proof DSN marker: '.$needle;
         }
     }
 }
 
-$localPostgresqlProofPath = $root . '/docs/currencing/local-postgresql-proof.md';
+$localPostgresqlProofPath = $root.'/docs/currencing/local-postgresql-proof.md';
 if (is_file($localPostgresqlProofPath)) {
     $localPostgresqlProof = (string) file_get_contents($localPostgresqlProofPath);
     foreach ([
         'CREATE USER currencing WITH PASSWORD',
         'php bin/console doctrine:database:create --if-not-exists',
-        'php bin/console doctrine:migrations:migrate --no-interaction',
+        'php bin/console doctrine:schema:create',
         'php bin/console doctrine:schema:validate',
     ] as $needle) {
         if (!str_contains($localPostgresqlProof, $needle)) {
-            $errors[] = 'local PostgreSQL proof doc missing marker: ' . $needle;
+            $errors[] = 'local PostgreSQL proof doc missing marker: '.$needle;
         }
     }
 }
 
-if ($errors !== []) {
+if ([] !== $errors) {
     fwrite(STDERR, "Currencing release-candidate gate failed:\n");
     foreach ($errors as $error) {
-        fwrite(STDERR, ' - ' . $error . "\n");
+        fwrite(STDERR, ' - '.$error."\n");
     }
 
     exit(1);

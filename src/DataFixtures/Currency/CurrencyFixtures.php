@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Currency;
 
-use App\Entity\Currency\Currency;
+use App\Entity\Currency\CurrencyEntity;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -12,13 +12,13 @@ final class CurrencyFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $repository = $manager->getRepository(Currency::class);
+        $repository = $manager->getRepository(CurrencyEntity::class);
 
         foreach ($this->currencies() as $row) {
             $currency = $repository->findOneBy(['code' => $row['code']]);
 
-            if (!$currency instanceof Currency) {
-                $currency = new Currency($row['code']);
+            if (!$currency instanceof CurrencyEntity) {
+                $currency = new CurrencyEntity($row['code']);
                 $manager->persist($currency);
             }
 
@@ -29,7 +29,7 @@ final class CurrencyFixtures extends Fixture
                 ->setDisplayName($row['displayName'])
                 ->setActive(true);
 
-            $this->addReference('currency_' . $row['code'], $currency);
+            $this->addReference('currency_'.$row['code'], $currency);
         }
 
         $manager->flush();

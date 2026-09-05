@@ -3,7 +3,7 @@
 ## Main entity
 
 ```text
-App\Entity\Currency\Currency
+App\Entity\Currency\CurrencyEntity
 ```
 
 Canonical table:
@@ -15,16 +15,16 @@ currency_currency
 ## Key DTOs
 
 ```text
-CurrencyChoice
-CurrencyMetadataView
-CurrencySelectorView
-MoneyAmount
-MoneyDisplay
-MonetaryAmountInput
-MonetaryAmountResolution
-MoneyRoundingPolicy
-CurrencyConversionIntent
-CurrencyConversionBoundary
+CurrencyChoiceDTO
+CurrencyMetadataViewDTO
+CurrencySelectorViewDTO
+CurrencyAmountDTO
+CurrencyDisplayDTO
+CurrencyAmountInputDTO
+CurrencyAmountResolutionDTO
+CurrencyRoundingPolicyDTO
+CurrencyConversionIntentDTO
+CurrencyConversionBoundaryDTO
 ```
 
 ## Key value objects
@@ -32,7 +32,7 @@ CurrencyConversionBoundary
 ```text
 CurrencyCode
 CurrencyConsumerName
-MoneyRoundingPolicyName
+CurrencyRoundingPolicyName
 ```
 
 ## Key services
@@ -43,11 +43,11 @@ CurrencyPrecisionResolver
 CurrencyChoiceProvider
 CurrencyMetadataViewProvider
 CurrencySelectorViewProvider
-DecimalMoneyParser
+CurrencyDecimalParser
 MoneyAmountNormalizer
-MonetaryAmountInputResolver
-MoneyDisplayFormatter
-MoneyRoundingPolicyResolver
+CurrencyAmountInputResolver
+CurrencyDisplayFormatter
+CurrencyRoundingPolicyResolver
 CurrencyConversionBoundaryProvider
 ```
 
@@ -60,11 +60,11 @@ CurrencyCodeValidatorInterface
 CurrencyChoiceProviderInterface
 CurrencyMetadataViewProviderInterface
 CurrencySelectorViewProviderInterface
-DecimalMoneyParserInterface
-MoneyAmountNormalizerInterface
-MonetaryAmountInputResolverInterface
-MoneyDisplayFormatterInterface
-MoneyRoundingPolicyResolverInterface
+CurrencyDecimalParserInterface
+CurrencyAmountNormalizerInterface
+CurrencyAmountInputResolverInterface
+CurrencyDisplayFormatterInterface
+CurrencyRoundingPolicyResolverInterface
 CurrencyConversionBoundaryProviderInterface
 ```
 

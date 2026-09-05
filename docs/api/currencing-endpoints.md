@@ -6,6 +6,7 @@
 GET /currencing/currencies
 GET /currencing/currencies/{code}
 GET /currencing/currency-selector
+GET /currencing/template-context
 GET /currencing/conversion-boundary
 ```
 
@@ -25,6 +26,7 @@ database rows.
 currencing_currency_catalog
 currencing_currency_metadata
 currencing_currency_selector
+currencing_template_context
 currencing_money_normalize
 currencing_conversion_boundary
 ```
@@ -47,3 +49,8 @@ docs/api/currencing.http
 
 The API exposes DTO/view-derived data. It does not expose Doctrine entities as API
 contracts.
+
+## Template bridge context
+
+`GET /currencing/template-context` exposes a DTO-derived, Bridge-safe output model for templates/UI composition. It contains selector data, metadata views, route names, and capabilities. It does not expose Doctrine entities, Twig markup, FormView objects, or Bridge-specific classes.
+

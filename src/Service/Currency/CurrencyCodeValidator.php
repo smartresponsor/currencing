@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Currency;
 
-use App\Exception\Currency\UnsupportedCurrencyCodeException;
+use App\Exception\Currency\CurrencyUnsupportedCodeException;
 use App\ServiceInterface\Currency\CurrencyCodeValidatorInterface;
 use App\ServiceInterface\Currency\CurrencyMetadataProviderInterface;
 
@@ -22,7 +22,7 @@ final class CurrencyCodeValidator implements CurrencyCodeValidatorInterface
     public function assertSupported(string $currencyCode): void
     {
         if (!$this->supports($currencyCode)) {
-            throw UnsupportedCurrencyCodeException::forCode($currencyCode);
+            throw CurrencyUnsupportedCodeException::forCode($currencyCode);
         }
     }
 }

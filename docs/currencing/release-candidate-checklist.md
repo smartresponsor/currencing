@@ -56,5 +56,5 @@ Currencing can be treated as RC when:
 - Symfony container compiles;
 - routes are visible;
 - Doctrine mapping is visible;
-- `currency_currency` schema is valid or migration is generated/applied;
+- `currency_currency` schema is valid after being generated from entities;
 - demo/API endpoints render in the host app.
