@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Service\Currency;
 
+use App\ServiceInterface\Currency\CurrencyDisplayFormatterInterface;
 use App\ServiceInterface\Currency\CurrencyFormatterInterface;
-use App\ServiceInterface\Currency\MoneyDisplayFormatterInterface;
 
-final class IntlCurrencyFormatter implements CurrencyFormatterInterface
+final class CurrencyIntlFormatter implements CurrencyFormatterInterface
 {
-    public function __construct(private readonly MoneyDisplayFormatterInterface $moneyDisplayFormatter)
+    public function __construct(private readonly CurrencyDisplayFormatterInterface $moneyDisplayFormatter)
     {
     }
 

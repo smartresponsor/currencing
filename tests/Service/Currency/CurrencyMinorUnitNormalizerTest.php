@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Tests\Service\Currency;
 
-use App\Exception\Currency\UnsupportedCurrencyCodeException;
+use App\Exception\Currency\CurrencyUnsupportedCodeException;
 use App\Service\Currency\CurrencyCodeValidator;
+use App\Service\Currency\CurrencyDecimalParser;
+use App\Service\Currency\CurrencyMinorUnitNormalizer;
 use App\Service\Currency\CurrencyPrecisionResolver;
-use App\Service\Currency\DecimalMoneyParser;
-use App\Service\Currency\MinorUnitMoneyNormalizer;
 use App\ServiceInterface\Currency\CurrencyMetadataProviderInterface;
 use PHPUnit\Framework\TestCase;
 
-final class MinorUnitMoneyNormalizerTest extends TestCase
+final class CurrencyMinorUnitNormalizerTest extends TestCase
 {
     public function testNormalizeDecimalAmountToMinorUnits(): void
     {
@@ -29,7 +29,7 @@ final class MinorUnitMoneyNormalizerTest extends TestCase
         };
 
         $precisionResolver = new CurrencyPrecisionResolver($provider, new CurrencyCodeValidator($provider));
-        $normalizer = new MinorUnitMoneyNormalizer($precisionResolver, new DecimalMoneyParser());
+        $normalizer = new CurrencyMinorUnitNormalizer($precisionResolver, new CurrencyDecimalParser());
 
         self::assertSame(1234, $normalizer->normalizeToMinorUnits('12.34', 'USD'));
         self::assertSame(12, $normalizer->normalizeToMinorUnits('12.34', 'JPY'));
@@ -52,9 +52,9 @@ final class MinorUnitMoneyNormalizerTest extends TestCase
         };
 
         $precisionResolver = new CurrencyPrecisionResolver($provider, new CurrencyCodeValidator($provider));
-        $normalizer = new MinorUnitMoneyNormalizer($precisionResolver, new DecimalMoneyParser());
+        $normalizer = new CurrencyMinorUnitNormalizer($precisionResolver, new CurrencyDecimalParser());
 
-        $this->expectException(UnsupportedCurrencyCodeException::class);
+        $this->expectException(CurrencyUnsupportedCodeException::class);
         $normalizer->normalizeToMinorUnits('10.00', 'EUR');
     }
 }

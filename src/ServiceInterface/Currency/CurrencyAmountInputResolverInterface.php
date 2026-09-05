@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Currency;
 
-use App\Dto\Currency\MonetaryAmountInput;
-use App\Dto\Currency\MonetaryAmountResolution;
+use App\Dto\Currency\CurrencyAmountInputDTO;
+use App\Dto\Currency\CurrencyAmountResolutionDTO;
 
 /**
  * Entry-point contract for neighboring components that need canonical money
  * normalization without coupling to Currencing Doctrine entities.
  */
-interface MonetaryAmountInputResolverInterface
+interface CurrencyAmountInputResolverInterface
 {
-    public function resolve(MonetaryAmountInput $input): MonetaryAmountResolution;
+    public function resolve(CurrencyAmountInputDTO $input): CurrencyAmountResolutionDTO;
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Currency;
 
-use App\Dto\Currency\CurrencySelectorView;
+use App\Dto\Currency\CurrencySelectorViewDTO;
 use App\ServiceInterface\Currency\CurrencyChoiceProviderInterface;
 use App\ServiceInterface\Currency\CurrencySelectorViewProviderInterface;
 
@@ -14,9 +14,9 @@ final class CurrencySelectorViewProvider implements CurrencySelectorViewProvider
     {
     }
 
-    public function selector(?string $selectedCode = null, ?string $locale = null): CurrencySelectorView
+    public function selector(?string $selectedCode = null, ?string $locale = null): CurrencySelectorViewDTO
     {
-        return new CurrencySelectorView(
+        return new CurrencySelectorViewDTO(
             $this->currencyChoiceProvider->choices($locale),
             $selectedCode,
         );

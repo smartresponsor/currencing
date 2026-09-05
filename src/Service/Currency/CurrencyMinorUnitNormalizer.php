@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Service\Currency;
 
-use App\Enum\Currency\MoneyRoundingMode;
+use App\Enum\Currency\CurrencyRoundingMode;
+use App\ServiceInterface\Currency\CurrencyDecimalParserInterface;
+use App\ServiceInterface\Currency\CurrencyNormalizerInterface;
 use App\ServiceInterface\Currency\CurrencyPrecisionResolverInterface;
-use App\ServiceInterface\Currency\DecimalMoneyParserInterface;
-use App\ServiceInterface\Currency\MoneyNormalizerInterface;
 
-final class MinorUnitMoneyNormalizer implements MoneyNormalizerInterface
+final class CurrencyMinorUnitNormalizer implements CurrencyNormalizerInterface
 {
     public function __construct(
         private readonly CurrencyPrecisionResolverInterface $currencyPrecisionResolver,
-        private readonly DecimalMoneyParserInterface $decimalMoneyParser,
+        private readonly CurrencyDecimalParserInterface $decimalMoneyParser,
     ) {
     }
 
@@ -21,7 +21,7 @@ final class MinorUnitMoneyNormalizer implements MoneyNormalizerInterface
     {
         $minorUnit = $this->currencyPrecisionResolver->minorUnitFor($currencyCode);
 
-        return $this->decimalMoneyParser->parseToMinorUnits($amount, $currencyCode, $minorUnit, MoneyRoundingMode::HalfUp);
+        return $this->decimalMoneyParser->parseToMinorUnits($amount, $currencyCode, $minorUnit, CurrencyRoundingMode::HalfUp);
     }
 
     public function minorUnitsToDecimalString(int $amountMinor, string $currencyCode): string

@@ -8,7 +8,7 @@ use App\Repository\Currency\CurrencyRepository;
 use App\ServiceInterface\Currency\CurrencyMetadataProviderInterface;
 use Symfony\Component\Intl\Currencies;
 
-final class IntlCurrencyMetadataProvider implements CurrencyMetadataProviderInterface
+final class CurrencyIntlMetadataProvider implements CurrencyMetadataProviderInterface
 {
     public function __construct(private readonly CurrencyRepository $currencyRepository)
     {

@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Service\Currency;
 
-use App\Enum\Currency\MoneyRoundingMode;
-use App\Exception\Currency\InvalidMoneyAmountException;
-use App\ServiceInterface\Currency\DecimalMoneyParserInterface;
+use App\Enum\Currency\CurrencyRoundingMode;
+use App\Exception\Currency\CurrencyInvalidAmountException;
+use App\ServiceInterface\Currency\CurrencyDecimalParserInterface;
 
-final class DecimalMoneyParser implements DecimalMoneyParserInterface
+final class CurrencyDecimalParser implements CurrencyDecimalParserInterface
 {
     public function parseToMinorUnits(
         string|int|float $amount,
         string $currencyCode,
         int $minorUnit,
-        MoneyRoundingMode $roundingMode,
+        CurrencyRoundingMode $roundingMode,
     ): int {
         $decimal = $this->normalizeInput($amount);
         $negative = str_starts_with($decimal, '-');
@@ -22,8 +22,8 @@ final class DecimalMoneyParser implements DecimalMoneyParserInterface
         [$whole, $fraction] = array_pad(explode('.', $unsigned, 2), 2, '');
 
         if (strlen($fraction) > $minorUnit) {
-            if (MoneyRoundingMode::Reject === $roundingMode) {
-                throw InvalidMoneyAmountException::tooPrecise($decimal, $currencyCode, $minorUnit);
+            if (CurrencyRoundingMode::Reject === $roundingMode) {
+                throw CurrencyInvalidAmountException::tooPrecise($decimal, $currencyCode, $minorUnit);
             }
 
             $unsigned = $this->roundUnsignedDecimal($whole, $fraction, $minorUnit, $roundingMode);
@@ -45,7 +45,7 @@ final class DecimalMoneyParser implements DecimalMoneyParserInterface
         $fraction = $absolute % $factor;
 
         if (0 === $minorUnit) {
-            return ($negative ? '-' : '') . (string) $whole;
+            return ($negative ? '-' : '').(string) $whole;
         }
 
         return sprintf('%s%d.%s', $negative ? '-' : '', $whole, str_pad((string) $fraction, $minorUnit, '0', STR_PAD_LEFT));
@@ -61,21 +61,21 @@ final class DecimalMoneyParser implements DecimalMoneyParserInterface
         $amount = str_replace([' ', ','], ['', '.'], $amount);
 
         if (!preg_match('/^[+-]?\d+(?:\.\d+)?$/', $amount)) {
-            throw InvalidMoneyAmountException::forAmount($amount);
+            throw CurrencyInvalidAmountException::forAmount($amount);
         }
 
         return $amount;
     }
 
-    private function roundUnsignedDecimal(string $whole, string $fraction, int $minorUnit, MoneyRoundingMode $roundingMode): string
+    private function roundUnsignedDecimal(string $whole, string $fraction, int $minorUnit, CurrencyRoundingMode $roundingMode): string
     {
         $kept = substr($fraction, 0, $minorUnit);
         $discarded = substr($fraction, $minorUnit);
         $increment = match ($roundingMode) {
-            MoneyRoundingMode::Down => false,
-            MoneyRoundingMode::Up => '' !== trim($discarded, '0'),
-            MoneyRoundingMode::HalfUp => '' !== $discarded && ((int) $discarded[0]) >= 5,
-            MoneyRoundingMode::Reject => false,
+            CurrencyRoundingMode::Down => false,
+            CurrencyRoundingMode::Up => '' !== trim($discarded, '0'),
+            CurrencyRoundingMode::HalfUp => '' !== $discarded && ((int) $discarded[0]) >= 5,
+            CurrencyRoundingMode::Reject => false,
         };
 
         $minor = ((int) $whole) * (10 ** $minorUnit) + ('' === $kept ? 0 : (int) str_pad($kept, $minorUnit, '0'));
@@ -88,6 +88,7 @@ final class DecimalMoneyParser implements DecimalMoneyParserInterface
         }
 
         $factor = 10 ** $minorUnit;
-        return intdiv($minor, $factor) . '.' . str_pad((string) ($minor % $factor), $minorUnit, '0', STR_PAD_LEFT);
+
+        return intdiv($minor, $factor).'.'.str_pad((string) ($minor % $factor), $minorUnit, '0', STR_PAD_LEFT);
     }
 }

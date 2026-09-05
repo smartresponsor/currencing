@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Tests\Service\Currency;
 
-use App\Service\Currency\MoneyDisplayFormatter;
-use App\ServiceInterface\Currency\MoneyNormalizerInterface;
+use App\Service\Currency\CurrencyDisplayFormatter;
+use App\ServiceInterface\Currency\CurrencyNormalizerInterface;
 use PHPUnit\Framework\TestCase;
 
-final class MoneyDisplayFormatterTest extends TestCase
+final class CurrencyDisplayFormatterTest extends TestCase
 {
     public function testBuildsTemplateSafeMoneyDisplay(): void
     {
-        $formatter = new MoneyDisplayFormatter(new class implements MoneyNormalizerInterface {
-            public function decimalStringToMinorUnits(string $amount, string $currencyCode): int
+        $formatter = new CurrencyDisplayFormatter(new class implements CurrencyNormalizerInterface {
+            public function normalizeToMinorUnits(string|int|float $amount, string $currencyCode): int
             {
                 return 1234;
             }
