@@ -10,7 +10,7 @@ namespace App\Enum\Currency;
  * The enum is intentionally business-facing and does not model exchange-rate or
  * payment-provider behavior. FX conversion remains outside Currencing.
  */
-enum MoneyRoundingContext: string
+enum CurrencyRoundingContext: string
 {
     case Canonical = 'canonical';
     case Ordering = 'ordering';

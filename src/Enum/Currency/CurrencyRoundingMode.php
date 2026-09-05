@@ -8,7 +8,7 @@ namespace App\Enum\Currency;
  * Business-level rounding modes used when decimal input has more fractional
  * digits than the target currency supports.
  */
-enum MoneyRoundingMode: string
+enum CurrencyRoundingMode: string
 {
     case Reject = 'reject';
     case HalfUp = 'half_up';

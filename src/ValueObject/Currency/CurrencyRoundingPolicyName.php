@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\ValueObject\Currency;
 
-use InvalidArgumentException;
-
 /**
- * Canonical policy name used to select monetary rounding behavior.
+ * Canonical policy nameEntity used to select monetary rounding behavior.
  */
-final readonly class MoneyRoundingPolicyName
+final readonly class CurrencyRoundingPolicyName
 {
     private string $value;
 
@@ -18,7 +16,7 @@ final readonly class MoneyRoundingPolicyName
         $value = strtolower(trim($value));
 
         if (!preg_match('/^[a-z][a-z0-9_.-]{1,63}$/', $value)) {
-            throw new InvalidArgumentException(sprintf('Invalid money rounding policy name "%s".', $value));
+            throw new \InvalidArgumentException(sprintf('Invalid money rounding policy nameEntity "%s".', $value));
         }
 
         $this->value = $value;

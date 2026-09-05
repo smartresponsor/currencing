@@ -7,10 +7,12 @@ namespace App\Dto\Currency;
 /**
  * Template/form-safe currency choice item.
  */
-final readonly class CurrencyChoice
+final readonly class CurrencyChoiceDTO
 {
+    private string $code;
+
     public function __construct(
-        private string $code,
+        string $code,
         private string $label,
         private ?string $symbol = null,
         private int $minorUnit = 2,

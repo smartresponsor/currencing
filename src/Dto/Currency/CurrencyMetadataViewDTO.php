@@ -7,10 +7,12 @@ namespace App\Dto\Currency;
 /**
  * Read-only currency metadata view for forms, APIs, and UI bridges.
  */
-final readonly class CurrencyMetadataView
+final readonly class CurrencyMetadataViewDTO
 {
+    private string $code;
+
     public function __construct(
-        private string $code,
+        string $code,
         private ?string $numericCode,
         private int $minorUnit,
         private ?string $symbol,

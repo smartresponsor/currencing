@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Dto\Currency;
 
-use App\Enum\Currency\MoneyRoundingContext;
-use App\Enum\Currency\MoneyRoundingMode;
+use App\Enum\Currency\CurrencyRoundingContext;
+use App\Enum\Currency\CurrencyRoundingMode;
 
 /**
  * Input DTO used by neighboring components when they hand monetary values to
@@ -14,28 +14,28 @@ use App\Enum\Currency\MoneyRoundingMode;
  * The DTO deliberately accepts string/int/float because UI forms, imported CSV
  * rows, provider payloads, and internal commands may arrive in different shapes.
  * The resolver is responsible for converting this input into a canonical
- * MoneyAmount DTO.
+ * CurrencyAmountDTO DTO.
  */
-final readonly class MonetaryAmountInput
+final readonly class CurrencyAmountInputDTO
 {
     private string|int|float $amount;
     private string $currencyCode;
-    private MoneyRoundingMode $roundingMode;
+    private CurrencyRoundingMode $roundingMode;
     private ?string $sourceComponent;
     private ?string $sourceReference;
     private ?string $locale;
     private ?string $roundingPolicyName;
-    private ?MoneyRoundingContext $roundingContext;
+    private ?CurrencyRoundingContext $roundingContext;
 
     public function __construct(
         string|int|float $amount,
         string $currencyCode,
-        MoneyRoundingMode $roundingMode = MoneyRoundingMode::Reject,
+        CurrencyRoundingMode $roundingMode = CurrencyRoundingMode::Reject,
         ?string $sourceComponent = null,
         ?string $sourceReference = null,
         ?string $locale = null,
         ?string $roundingPolicyName = null,
-        ?MoneyRoundingContext $roundingContext = null,
+        ?CurrencyRoundingContext $roundingContext = null,
     ) {
         $this->amount = $amount;
         $this->currencyCode = strtoupper(trim($currencyCode));
@@ -57,7 +57,7 @@ final readonly class MonetaryAmountInput
         return $this->currencyCode;
     }
 
-    public function getRoundingMode(): MoneyRoundingMode
+    public function getRoundingMode(): CurrencyRoundingMode
     {
         return $this->roundingMode;
     }
@@ -82,7 +82,7 @@ final readonly class MonetaryAmountInput
         return $this->roundingPolicyName;
     }
 
-    public function getRoundingContext(): ?MoneyRoundingContext
+    public function getRoundingContext(): ?CurrencyRoundingContext
     {
         return $this->roundingContext;
     }

@@ -13,19 +13,19 @@ use App\ValueObject\Currency\CurrencyCode;
  * it must not fetch exchange rates or calculate FX quotes. Exchanging is the component
  * that should consume this DTO after the monetary amount is normalized.
  */
-final readonly class CurrencyConversionIntent
+final readonly class CurrencyConversionIntentDTO
 {
     public CurrencyCode $sourceCurrencyCode;
 
     public CurrencyCode $targetCurrencyCode;
 
     public function __construct(
-        public MoneyAmount $sourceMoneyAmount,
+        public CurrencyAmountDTO $sourceMoneyAmount,
         CurrencyCode|string $targetCurrencyCode,
         public ?string $consumerName = null,
         public ?string $correlationId = null,
     ) {
-        $this->sourceCurrencyCode = CurrencyCode::fromString($sourceMoneyAmount->currencyCode);
+        $this->sourceCurrencyCode = CurrencyCode::fromString($sourceMoneyAmount->getCurrencyCode());
 
         $targetCode = $targetCurrencyCode instanceof CurrencyCode
             ? $targetCurrencyCode
@@ -40,11 +40,11 @@ final readonly class CurrencyConversionIntent
 
     public function sourceCode(): string
     {
-        return $this->sourceCurrencyCode->value;
+        return $this->sourceCurrencyCode->value();
     }
 
     public function targetCode(): string
     {
-        return $this->targetCurrencyCode->value;
+        return $this->targetCurrencyCode->value();
     }
 }

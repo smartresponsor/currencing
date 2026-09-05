@@ -11,11 +11,13 @@ namespace App\Dto\Currency;
  * Ordering, Paying, Taxating, Shipping, Subscription, Discounting, and other
  * consumers.
  */
-final readonly class MoneyAmount
+final readonly class CurrencyAmountDTO
 {
+    private string $currencyCode;
+
     public function __construct(
         private int $minorUnits,
-        private string $currencyCode,
+        string $currencyCode,
     ) {
         $this->currencyCode = strtoupper($currencyCode);
     }

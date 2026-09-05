@@ -5,22 +5,21 @@ declare(strict_types=1);
 namespace App\Tests\ValueObject\Currency;
 
 use App\ValueObject\Currency\CurrencyConsumerName;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 final class CurrencyConsumerNameTest extends TestCase
 {
     public function testAcceptsCanonicalConsumerName(): void
     {
-        $name = new CurrencyConsumerName('Ordering');
+        $nameEntity = new CurrencyConsumerName('Ordering');
 
-        self::assertSame('Ordering', $name->value());
-        self::assertSame('Ordering', (string) $name);
+        self::assertSame('Ordering', $nameEntity->value());
+        self::assertSame('Ordering', (string) $nameEntity);
     }
 
     public function testRejectsEmptyConsumerName(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         new CurrencyConsumerName('');
     }

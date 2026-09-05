@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Exception\Currency;
 
-use InvalidArgumentException;
-
-final class UnsupportedCurrencyCodeException extends InvalidArgumentException
+final class CurrencyUnsupportedCodeException extends \InvalidArgumentException
 {
     public static function forCode(string $currencyCode): self
     {

@@ -7,21 +7,23 @@ namespace App\Dto\Currency;
 /**
  * Currency selector model consumed by templating/UI bridge layers.
  */
-final readonly class CurrencySelectorView
+final readonly class CurrencySelectorViewDTO
 {
+    private ?string $selectedCode;
+
     /**
-     * @param list<CurrencyChoice> $choices
+     * @param list<CurrencyChoiceDTO> $choices
      */
     public function __construct(
         private array $choices,
-        private ?string $selectedCode = null,
+        ?string $selectedCode = null,
         private string $placeholder = 'currency.form.placeholder',
     ) {
         $this->selectedCode = null === $selectedCode ? null : strtoupper($selectedCode);
     }
 
     /**
-     * @return list<CurrencyChoice>
+     * @return list<CurrencyChoiceDTO>
      */
     public function getChoices(): array
     {
@@ -44,7 +46,7 @@ final readonly class CurrencySelectorView
     public function toArray(): array
     {
         return [
-            'choices' => array_map(static fn (CurrencyChoice $choice): array => $choice->toArray(), $this->choices),
+            'choices' => array_map(static fn (CurrencyChoiceDTO $choice): array => $choice->toArray(), $this->choices),
             'selectedCode' => $this->selectedCode,
             'placeholder' => $this->placeholder,
         ];

@@ -7,31 +7,31 @@ namespace App\Dto\Currency;
 /**
  * Canonical resolved monetary output for neighboring components.
  *
- * Consumers should store/use the MoneyAmount minor-unit value for business
- * calculations and may pass MoneyDisplay to template/UI layers.
+ * Consumers should store/use the CurrencyAmountDTO minor-unit value for business
+ * calculations and may pass CurrencyDisplayDTO to templates/UI layers.
  */
-final readonly class MonetaryAmountResolution
+final readonly class CurrencyAmountResolutionDTO
 {
     public function __construct(
-        private MonetaryAmountInput $input,
-        private MoneyAmount $moneyAmount,
-        private MoneyDisplay $moneyDisplay,
+        private CurrencyAmountInputDTO $input,
+        private CurrencyAmountDTO $moneyAmount,
+        private CurrencyDisplayDTO $moneyDisplay,
         private int $minorUnit,
-        private ?MoneyRoundingPolicy $roundingPolicy = null,
+        private ?CurrencyRoundingPolicyDTO $roundingPolicy = null,
     ) {
     }
 
-    public function getInput(): MonetaryAmountInput
+    public function getInput(): CurrencyAmountInputDTO
     {
         return $this->input;
     }
 
-    public function getMoneyAmount(): MoneyAmount
+    public function getMoneyAmount(): CurrencyAmountDTO
     {
         return $this->moneyAmount;
     }
 
-    public function getMoneyDisplay(): MoneyDisplay
+    public function getMoneyDisplay(): CurrencyDisplayDTO
     {
         return $this->moneyDisplay;
     }
@@ -61,7 +61,7 @@ final readonly class MonetaryAmountResolution
         return $this->moneyDisplay->getFormatted();
     }
 
-    public function getRoundingPolicy(): ?MoneyRoundingPolicy
+    public function getRoundingPolicy(): ?CurrencyRoundingPolicyDTO
     {
         return $this->roundingPolicy;
     }

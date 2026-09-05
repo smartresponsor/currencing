@@ -7,12 +7,14 @@ namespace App\Dto\Currency;
 /**
  * Template-safe formatted monetary amount.
  */
-final readonly class MoneyDisplay
+final readonly class CurrencyDisplayDTO
 {
+    private string $currencyCode;
+
     public function __construct(
         private string $formatted,
         private int $minorUnits,
-        private string $currencyCode,
+        string $currencyCode,
         private string $decimalAmount,
         private ?string $locale = null,
     ) {

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Tests\Dto\Currency;
 
-use App\Dto\Currency\CurrencyConversionIntent;
-use App\Dto\Currency\MoneyAmount;
+use App\Dto\Currency\CurrencyAmountDTO;
+use App\Dto\Currency\CurrencyConversionIntentDTO;
 use PHPUnit\Framework\TestCase;
 
-final class CurrencyConversionIntentTest extends TestCase
+final class CurrencyConversionIntentDTOTest extends TestCase
 {
     public function testItNormalizesTargetCurrencyCode(): void
     {
-        $intent = new CurrencyConversionIntent(
-            new MoneyAmount(1234, 'usd'),
+        $intent = new CurrencyConversionIntentDTO(
+            new CurrencyAmountDTO(1234, 'usd'),
             'eur',
             'Ordering',
             'corr-1',
@@ -29,8 +29,8 @@ final class CurrencyConversionIntentTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        new CurrencyConversionIntent(
-            new MoneyAmount(1234, 'USD'),
+        new CurrencyConversionIntentDTO(
+            new CurrencyAmountDTO(1234, 'USD'),
             'usd',
         );
     }

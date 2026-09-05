@@ -10,7 +10,7 @@ namespace App\Dto\Currency;
  * This DTO is intentionally static/read-only. It helps agents, host apps, and future
  * integration code identify which component owns which monetary responsibility.
  */
-final readonly class CurrencyConversionBoundary
+final readonly class CurrencyConversionBoundaryDTO
 {
     /**
      * @param list<string> $currencingResponsibilities

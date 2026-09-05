@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Exception\Currency;
 
-use InvalidArgumentException;
-
-final class InvalidMoneyAmountException extends InvalidArgumentException
+final class CurrencyInvalidAmountException extends \InvalidArgumentException
 {
     public static function forAmount(string|int|float $amount): self
     {
