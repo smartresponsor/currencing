@@ -31,12 +31,12 @@ Currencing must not depend on Exchanging.
 ## New DTOs/contracts
 
 ```text
-CurrencyConversionIntent
-CurrencyConversionBoundary
+CurrencyConversionIntentDTO
+CurrencyConversionBoundaryDTO
 CurrencyConversionBoundaryProviderInterface
 ```
 
-`CurrencyConversionIntent` lets callers describe that a normalized amount should later be
+`CurrencyConversionIntentDTO` lets callers describe that a normalized amount should later be
 converted by Exchanging. It validates source/target currency shape and prevents same-currency
 conversion intents, but it does not fetch rates or calculate converted amounts.
 

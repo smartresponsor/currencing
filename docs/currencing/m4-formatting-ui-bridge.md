@@ -21,14 +21,14 @@ This milestone still does **not** introduce FX conversion, exchange-rate provide
 - `CurrencyChoiceProviderInterface`
 - `CurrencyMetadataViewProviderInterface`
 - `CurrencySelectorViewProviderInterface`
-- `MoneyDisplayFormatterInterface`
+- `CurrencyDisplayFormatterInterface`
 
 ## UI-safe DTOs
 
-- `CurrencyChoice`
-- `CurrencyMetadataView`
-- `CurrencySelectorView`
-- `MoneyDisplay`
+- `CurrencyChoiceDTO`
+- `CurrencyMetadataViewDTO`
+- `CurrencySelectorViewDTO`
+- `CurrencyDisplayDTO`
 
 These DTOs are intentionally read-only and expose `toArray()` for template bridges and generic UI contracts.
 

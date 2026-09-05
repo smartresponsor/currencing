@@ -22,6 +22,12 @@
       "purpose": "read selector view"
     },
     {
+      "method": "GET",
+      "path": "/currencing/template-context",
+      "route": "currencing_template_context",
+      "purpose": "read Bridge-safe template context"
+    },
+    {
       "method": "POST",
       "path": "/currencing/money/normalize",
       "route": "currencing_money_normalize",

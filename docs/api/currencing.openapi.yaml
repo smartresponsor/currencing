@@ -26,7 +26,7 @@ paths:
                   items:
                     type: array
                     items:
-                      $ref: '#/components/schemas/CurrencyMetadataView'
+                      $ref: '#/components/schemas/CurrencyMetadataViewDTO'
   /currencing/currencies/{code}:
     get:
       operationId: getCurrencingCurrency
@@ -46,7 +46,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CurrencyMetadataView'
+                $ref: '#/components/schemas/CurrencyMetadataViewDTO'
         "404":
           description: Currency metadata not found
   /currencing/currency-selector:
@@ -60,7 +60,32 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CurrencySelectorView'
+                $ref: '#/components/schemas/CurrencySelectorViewDTO'
+  /currencing/template-context:
+    get:
+      operationId: getCurrencingTemplateContext
+      x-route-name: currencing_template_context
+      summary: Read Bridge-safe template context for Currency UI composition
+      tags: [Currencing]
+      parameters:
+        - name: selectedCode
+          in: query
+          required: false
+          schema:
+            type: string
+            pattern: '^[A-Za-z]{3}$'
+        - name: locale
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Bridge-safe currency template context
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrencyTemplateContextEnvelope'
   /currencing/money/normalize:
     post:
       operationId: normalizeCurrencingMoney
@@ -85,7 +110,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MonetaryAmountResolution'
+                $ref: '#/components/schemas/CurrencyAmountResolutionDTO'
         "400":
           description: Invalid amount, unsupported currency, or invalid policy
   /currencing/conversion-boundary:
@@ -99,10 +124,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CurrencyConversionBoundary'
+                $ref: '#/components/schemas/CurrencyConversionBoundaryDTO'
 components:
   schemas:
-    CurrencyMetadataView:
+    CurrencyMetadataViewDTO:
       type: object
       required: [code, name, symbol, minorUnit, active]
       properties:
@@ -120,7 +145,7 @@ components:
           maximum: 8
         active:
           type: boolean
-    CurrencyChoice:
+    CurrencyChoiceDTO:
       type: object
       required: [code, label, symbol, minorUnit]
       properties:
@@ -136,7 +161,7 @@ components:
           type: integer
           minimum: 0
           maximum: 8
-    CurrencySelectorView:
+    CurrencySelectorViewDTO:
       type: object
       required: [selectedCode, choices]
       properties:
@@ -147,7 +172,47 @@ components:
         choices:
           type: array
           items:
-            $ref: '#/components/schemas/CurrencyChoice'
+            $ref: '#/components/schemas/CurrencyChoiceDTO'
+    CurrencyTemplateContextEnvelope:
+      type: object
+      required: [component, resource, item]
+      properties:
+        component:
+          type: string
+          const: currencing
+        resource:
+          type: string
+          const: currency_template_context
+        item:
+          $ref: '#/components/schemas/CurrencyTemplateContextDTO'
+    CurrencyTemplateContextDTO:
+      type: object
+      required: [componentKey, selector, currencies, routeNames, capabilities]
+      properties:
+        componentKey:
+          type: string
+          example: currencing.currency
+        selectedCode:
+          type: string
+          nullable: true
+          pattern: '^[A-Z]{3}$'
+        locale:
+          type: string
+          nullable: true
+        selector:
+          $ref: '#/components/schemas/CurrencySelectorViewDTO'
+        currencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/CurrencyMetadataViewDTO'
+        routeNames:
+          type: object
+          additionalProperties:
+            type: string
+        capabilities:
+          type: array
+          items:
+            type: string
     MoneyNormalizeRequest:
       type: object
       required: [amount, currencyCode]
@@ -168,7 +233,7 @@ components:
         roundingPolicyName:
           type: string
           nullable: true
-    MoneyAmount:
+    CurrencyAmountDTO:
       type: object
       required: [minorAmount, currencyCode]
       properties:
@@ -177,7 +242,7 @@ components:
         currencyCode:
           type: string
           pattern: '^[A-Z]{3}$'
-    MoneyDisplay:
+    CurrencyDisplayDTO:
       type: object
       required: [formatted, decimalAmount, currencyCode]
       properties:
@@ -188,14 +253,14 @@ components:
         currencyCode:
           type: string
           pattern: '^[A-Z]{3}$'
-    MonetaryAmountResolution:
+    CurrencyAmountResolutionDTO:
       type: object
       required: [moneyAmount, moneyDisplay, currencyCode, minorUnit, decimalAmount]
       properties:
         moneyAmount:
-          $ref: '#/components/schemas/MoneyAmount'
+          $ref: '#/components/schemas/CurrencyAmountDTO'
         moneyDisplay:
-          $ref: '#/components/schemas/MoneyDisplay'
+          $ref: '#/components/schemas/CurrencyDisplayDTO'
         currencyCode:
           type: string
           pattern: '^[A-Z]{3}$'
@@ -205,7 +270,7 @@ components:
           maximum: 8
         decimalAmount:
           type: string
-    CurrencyConversionBoundary:
+    CurrencyConversionBoundaryDTO:
       type: object
       required:
         - currencingResponsibilities

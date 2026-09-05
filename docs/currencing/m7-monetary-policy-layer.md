@@ -32,11 +32,11 @@ Those belong to Exchanging.
 
 ## Naming convention
 
-- DTO: `src/Dto/Currency/MoneyRoundingPolicy.php`
-- Enum: `src/Enum/Currency/MoneyRoundingContext.php`
-- VO: `src/ValueObject/Currency/MoneyRoundingPolicyName.php`
-- Service: `src/Service/Currency/MoneyRoundingPolicyResolver.php`
-- Interface: `src/ServiceInterface/Currency/MoneyRoundingPolicyResolverInterface.php`
+- DTO: `src/Dto/Currency/CurrencyRoundingPolicyDTO.php`
+- Enum: `src/Enum/Currency/CurrencyRoundingContext.php`
+- VO: `src/ValueObject/Currency/CurrencyRoundingPolicyName.php`
+- Service: `src/Service/Currency/CurrencyRoundingPolicyResolver.php`
+- Interface: `src/ServiceInterface/Currency/CurrencyRoundingPolicyResolverInterface.php`
 
 ## Default behavior
 

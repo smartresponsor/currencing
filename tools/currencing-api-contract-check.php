@@ -8,22 +8,21 @@ declare(strict_types=1);
  * The gate keeps API docs, endpoint manifest, and controller route declarations aligned
  * without requiring Symfony to boot.
  */
-
 $root = dirname(__DIR__);
 $errors = [];
 
 function must_read(string $root, string $relative, array &$errors): string
 {
-    $path = $root . '/' . $relative;
+    $path = $root.'/'.$relative;
     if (!is_file($path)) {
-        $errors[] = 'Missing required API contract file: ' . $relative;
+        $errors[] = 'Missing required API contract file: '.$relative;
 
         return '';
     }
 
     $contents = file_get_contents($path);
     if (!is_string($contents)) {
-        $errors[] = 'Unreadable API contract file: ' . $relative;
+        $errors[] = 'Unreadable API contract file: '.$relative;
 
         return '';
     }
@@ -39,22 +38,23 @@ $expectedPaths = [
     '/currencing/currencies',
     '/currencing/currencies/{code}',
     '/currencing/currency-selector',
+    '/currencing/template-context',
     '/currencing/money/normalize',
     '/currencing/conversion-boundary',
 ];
 
 foreach ($expectedPaths as $path) {
-    if ($openapi !== '' && !str_contains($openapi, $path . ':')) {
-        $errors[] = 'OpenAPI contract is missing path: ' . $path;
+    if ('' !== $openapi && !str_contains($openapi, $path.':')) {
+        $errors[] = 'OpenAPI contract is missing path: '.$path;
     }
 
     $httpPath = str_replace('{code}', 'USD', $path);
-    if ($http !== '' && !str_contains($http, $httpPath)) {
-        $errors[] = 'HTTP examples are missing path: ' . $httpPath;
+    if ('' !== $http && !str_contains($http, $httpPath)) {
+        $errors[] = 'HTTP examples are missing path: '.$httpPath;
     }
 
-    if ($manifestContents !== '' && !str_contains($manifestContents, $path)) {
-        $errors[] = 'Endpoint manifest is missing path: ' . $path;
+    if ('' !== $manifestContents && !str_contains($manifestContents, $path)) {
+        $errors[] = 'Endpoint manifest is missing path: '.$path;
     }
 }
 
@@ -62,27 +62,28 @@ $expectedRoutes = [
     'currencing_currency_catalog',
     'currencing_currency_metadata',
     'currencing_currency_selector',
+    'currencing_template_context',
     'currencing_money_normalize',
     'currencing_conversion_boundary',
 ];
 
 foreach ($expectedRoutes as $route) {
-    if ($manifestContents !== '' && !str_contains($manifestContents, $route)) {
-        $errors[] = 'Endpoint manifest is missing route: ' . $route;
+    if ('' !== $manifestContents && !str_contains($manifestContents, $route)) {
+        $errors[] = 'Endpoint manifest is missing route: '.$route;
     }
 }
 
-if ($manifestContents !== '') {
+if ('' !== $manifestContents) {
     $decoded = json_decode($manifestContents, true);
     if (!is_array($decoded)) {
         $errors[] = 'Endpoint manifest is not valid JSON.';
     }
 }
 
-if ($errors !== []) {
+if ([] !== $errors) {
     fwrite(STDERR, "Currencing API contract gate failed:\n");
     foreach ($errors as $error) {
-        fwrite(STDERR, ' - ' . $error . "\n");
+        fwrite(STDERR, ' - '.$error."\n");
     }
 
     exit(1);

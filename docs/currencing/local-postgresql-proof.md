@@ -1,6 +1,6 @@
 # Currencing local PostgreSQL proof
 
-Currencing user data is PostgreSQL-first. SQLite is not used for Currencing-owned user-data entities.
+Currencing user data is PostgreSQL-backed and entity-first. SQLite is not used for Currencing-owned user-data entities.
 
 The default `.env` intentionally contains a placeholder-style PostgreSQL DSN. On a fresh workstation, `doctrine:schema:validate` can fail with an authentication error for user `app`. That is not a mapping failure; it means local PostgreSQL credentials are not configured yet.
 
@@ -31,7 +31,7 @@ cd D:\PhpstormProjects\www\Currencing
 
 php bin/console cache:clear
 php bin/console doctrine:database:create --if-not-exists
-php bin/console doctrine:migrations:migrate --no-interaction
+php bin/console doctrine:schema:create
 php bin/console doctrine:mapping:info
 php bin/console doctrine:schema:validate
 ```
@@ -39,10 +39,10 @@ php bin/console doctrine:schema:validate
 Expected mapped entity:
 
 ```text
-App\Entity\Currency\Currency
+App\Entity\Currency\CurrencyEntity
 ```
 
-Expected schema validation result after database credentials are correct and migrations are applied:
+Expected schema validation result after database credentials are correct and the schema is generated from entities:
 
 ```text
 [OK] The mapping files are correct.

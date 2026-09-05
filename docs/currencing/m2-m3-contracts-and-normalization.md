@@ -30,10 +30,10 @@ Those responsibilities should consume Currencing contracts instead of duplicatin
 - `CurrencyMetadataProviderInterface`
 - `CurrencyCodeValidatorInterface`
 - `CurrencyPrecisionResolverInterface`
-- `MoneyAmountNormalizerInterface`
-- `MoneyNormalizerInterface`
+- `CurrencyAmountNormalizerInterface`
+- `CurrencyNormalizerInterface`
 - `CurrencyFormatterInterface`
 
 ## Rounding boundary
 
-`MoneyAmountNormalizerInterface` defaults to reject over-precise decimal input. This is safer for business workflows. The legacy `MoneyNormalizerInterface` keeps half-up behavior for compatibility with the first foundation wave.
+`CurrencyAmountNormalizerInterface` defaults to reject over-precise decimal input. This is safer for business workflows. The legacy `CurrencyNormalizerInterface` keeps half-up behavior for compatibility with the first foundation wave.
