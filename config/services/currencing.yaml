@@ -3,8 +3,8 @@ services:
     autowire: true
     autoconfigure: true
 
-  App\Controller\Currency\:
-    resource: '../../src/Controller/Currency/'
+  App\Service\Http\Currency\:
+    resource: '../../src/Service/Http/Currency/'
     tags: ['controller.service_arguments']
 
   App\DataFixtures\Currency\:
@@ -23,7 +23,7 @@ services:
     resource: '../../src/Validator/Currency/'
 
   App\ServiceInterface\Currency\CurrencyMetadataProviderInterface:
-    alias: App\Service\Currency\IntlCurrencyMetadataProvider
+    alias: App\Service\Currency\CurrencyIntlMetadataProvider
 
   App\ServiceInterface\Currency\CurrencyCodeValidatorInterface:
     alias: App\Service\Currency\CurrencyCodeValidator
@@ -31,20 +31,20 @@ services:
   App\ServiceInterface\Currency\CurrencyPrecisionResolverInterface:
     alias: App\Service\Currency\CurrencyPrecisionResolver
 
-  App\ServiceInterface\Currency\DecimalMoneyParserInterface:
-    alias: App\Service\Currency\DecimalMoneyParser
+  App\ServiceInterface\Currency\CurrencyDecimalParserInterface:
+    alias: App\Service\Currency\CurrencyDecimalParser
 
-  App\ServiceInterface\Currency\MoneyAmountNormalizerInterface:
-    alias: App\Service\Currency\CanonicalMoneyAmountNormalizer
+  App\ServiceInterface\Currency\CurrencyAmountNormalizerInterface:
+    alias: App\Service\Currency\CurrencyCanonicalAmountNormalizer
 
-  App\ServiceInterface\Currency\MoneyNormalizerInterface:
-    alias: App\Service\Currency\MinorUnitMoneyNormalizer
+  App\ServiceInterface\Currency\CurrencyNormalizerInterface:
+    alias: App\Service\Currency\CurrencyMinorUnitNormalizer
 
   App\ServiceInterface\Currency\CurrencyFormatterInterface:
-    alias: App\Service\Currency\IntlCurrencyFormatter
+    alias: App\Service\Currency\CurrencyIntlFormatter
 
-  App\ServiceInterface\Currency\MoneyDisplayFormatterInterface:
-    alias: App\Service\Currency\MoneyDisplayFormatter
+  App\ServiceInterface\Currency\CurrencyDisplayFormatterInterface:
+    alias: App\Service\Currency\CurrencyDisplayFormatter
 
   App\ServiceInterface\Currency\CurrencyChoiceProviderInterface:
     alias: App\Service\Currency\CurrencyChoiceProvider
@@ -55,11 +55,14 @@ services:
   App\ServiceInterface\Currency\CurrencySelectorViewProviderInterface:
     alias: App\Service\Currency\CurrencySelectorViewProvider
 
-  App\ServiceInterface\Currency\MonetaryAmountInputResolverInterface:
-    alias: App\Service\Currency\MonetaryAmountInputResolver
+  App\ServiceInterface\Currency\CurrencyAmountInputResolverInterface:
+    alias: App\Service\Currency\CurrencyAmountInputResolver
 
-  App\ServiceInterface\Currency\MoneyRoundingPolicyResolverInterface:
-    alias: App\Service\Currency\MoneyRoundingPolicyResolver
+  App\ServiceInterface\Currency\CurrencyRoundingPolicyResolverInterface:
+    alias: App\Service\Currency\CurrencyRoundingPolicyResolver
 
   App\ServiceInterface\Currency\CurrencyConversionBoundaryProviderInterface:
     alias: App\Service\Currency\CurrencyConversionBoundaryProvider
+
+  App\ServiceInterface\Currency\CurrencyTemplateContextProviderInterface:
+    alias: App\Service\Currency\CurrencyTemplateContextProvider

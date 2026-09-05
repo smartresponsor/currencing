@@ -1,14 +1,14 @@
 {
-  "name": "smartresponsor/currencing",
-  "description": "Smart Responsor Currencing component for ISO currency metadata, minor units, money normalization, formatting, and conversion-boundary validation.",
+  "name": "currencing/currency",
+  "description": "Currencing process app",
   "type": "project",
   "license": "proprietary",
   "minimum-stability": "stable",
   "prefer-stable": true,
   "require": {
     "doctrine/dbal": "^4.2",
-    "doctrine/doctrine-bundle": "^2.13",
-    "doctrine/doctrine-migrations-bundle": "^3.3",
+    "doctrine/doctrine-bundle": "^3.2",
+    "doctrine/doctrine-migrations-bundle": "^4.0",
     "doctrine/orm": "^3.3",
     "ext-ctype": "*",
     "ext-iconv": "*",
@@ -23,17 +23,17 @@
     "symfony/runtime": "^7.3 || ^8.0",
     "symfony/twig-bundle": "^7.3 || ^8.0",
     "symfony/validator": "^7.3 || ^8.0",
-    "symfony/var-exporter": "^7.3",
+    "symfony/var-exporter": "^7.3 || ^8.0",
     "symfony/yaml": "^7.3 || ^8.0",
     "twig/extra-bundle": "^3.21",
-    "twig/twig": "^3.21"
+    "twig/twig": "^3.21",
+    "objecting/object": "dev-master"
   },
   "require-dev": {
     "doctrine/doctrine-fixtures-bundle": "^4.0",
     "friendsofphp/php-cs-fixer": "^3.94",
     "phpstan/phpstan": "^2.1",
-    "phpunit/phpunit": "^11.5 || ^12.0",
-    "symfony/maker-bundle": "^1.64"
+    "phpunit/phpunit": "^11.5 || ^12.0"
   },
   "autoload": {
     "psr-4": {
@@ -75,11 +75,21 @@
       "php tools/currencing-runtime-smoke-check.php",
       "php tools/currencing-autoload-smoke-check.php",
       "php tools/currencing-service-alias-closure-check.php",
+      "php tools/currencing-template-bridge-contract-check.php",
       "php tools/currencing-console-runtime-proof-check.php",
       "php tools/currencing-database-runtime-proof-check.php",
       "php tools/currencing-api-contract-check.php",
       "php tools/currencing-release-candidate-check.php",
       "php tools/currencing-standalone-runtime-foundation-check.php"
     ]
-  }
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../Objecting",
+      "options": {
+        "symlink": true
+      }
+    }
+  ]
 }

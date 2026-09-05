@@ -2,22 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Currency;
+namespace App\Service\Http\Currency;
 
-use App\ServiceInterface\Currency\CurrencySelectorViewProviderInterface;
+use App\ServiceInterface\Currency\CurrencyTemplateContextProviderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Attribute\Route;
 
 /**
- * Read API for a template-safe currency selector model.
+ * Read API for Bridge/Interfacing template composition.
  */
-#[Route('/currencing/currency-selector', name: 'currencing_currency_selector', methods: ['GET'])]
-final readonly class CurrencySelectorController
+final readonly class CurrencyTemplateContextHttpService
 {
-    public function __construct(
-        private CurrencySelectorViewProviderInterface $currencySelectorViewProvider,
-    ) {
+    public function __construct(private CurrencyTemplateContextProviderInterface $currencyTemplateContextProvider)
+    {
     }
 
     public function __invoke(Request $request): JsonResponse
@@ -27,8 +24,8 @@ final readonly class CurrencySelectorController
 
         return new JsonResponse([
             'component' => 'currencing',
-            'resource' => 'currency_selector',
-            'item' => $this->currencySelectorViewProvider->selector($selectedCode, $locale)->toArray(),
+            'resource' => 'currency_template_context',
+            'item' => $this->currencyTemplateContextProvider->context($selectedCode, $locale)->toArray(),
         ]);
     }
 

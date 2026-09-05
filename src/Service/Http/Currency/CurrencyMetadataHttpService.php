@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Currency;
+namespace App\Service\Http\Currency;
 
 use App\ServiceInterface\Currency\CurrencyMetadataViewProviderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Read API for currency metadata.
@@ -15,15 +14,13 @@ use Symfony\Component\Routing\Attribute\Route;
  * The controller exposes DTO arrays only. Doctrine entities stay inside the
  * Currencing persistence/model layer.
  */
-#[Route('/currencing/currencies', name: 'currencing_currency_')]
-final readonly class CurrencyMetadataController
+final readonly class CurrencyMetadataHttpService
 {
     public function __construct(
         private CurrencyMetadataViewProviderInterface $currencyMetadataViewProvider,
     ) {
     }
 
-    #[Route('', name: 'catalog', methods: ['GET'])]
     public function catalog(Request $request): JsonResponse
     {
         $locale = $this->optionalString($request->query->get('locale'));
@@ -38,7 +35,6 @@ final readonly class CurrencyMetadataController
         ]);
     }
 
-    #[Route('/{code}', name: 'metadata', requirements: ['code' => '[A-Za-z]{3}'], methods: ['GET'])]
     public function metadata(string $code, Request $request): JsonResponse
     {
         $locale = $this->optionalString($request->query->get('locale'));

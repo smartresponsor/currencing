@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-final class ValidCurrencyCodeValidator extends ConstraintValidator
+final class CurrencyCodeConstraintValidator extends ConstraintValidator
 {
     public function __construct(private readonly CurrencyCodeValidatorInterface $currencyCodeValidator)
     {
@@ -17,8 +17,8 @@ final class ValidCurrencyCodeValidator extends ConstraintValidator
 
     public function validate(mixed $value, Constraint $constraint): void
     {
-        if (!$constraint instanceof ValidCurrencyCode) {
-            throw new UnexpectedTypeException($constraint, ValidCurrencyCode::class);
+        if (!$constraint instanceof CurrencyCodeConstraint) {
+            throw new UnexpectedTypeException($constraint, CurrencyCodeConstraint::class);
         }
 
         if (null === $value || '' === $value) {

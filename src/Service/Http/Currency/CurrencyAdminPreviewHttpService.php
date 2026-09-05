@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Currency;
+namespace App\Service\Http\Currency;
 
 use App\ServiceInterface\Currency\CurrencyMetadataViewProviderInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Twig\Environment;
 
 /**
  * Displays a read-only currency catalog preview.
@@ -16,18 +15,18 @@ use Symfony\Component\Routing\Attribute\Route;
  * helps host applications confirm that metadata, fixtures, formatting, and selector data
  * are wired correctly.
  */
-final class CurrencyAdminPreviewController extends AbstractController
+final class CurrencyAdminPreviewHttpService
 {
     public function __construct(
         private readonly CurrencyMetadataViewProviderInterface $metadataViewProvider,
+        private readonly Environment $twig,
     ) {
     }
 
-    #[Route('/currencing/admin-preview/currencies', name: 'currencing_admin_preview_currencies', methods: ['GET'])]
     public function __invoke(): Response
     {
-        return $this->render('@Currencing/currency/admin-preview/currencies.html.twig', [
-            'currencies' => $this->metadataViewProvider->provideActiveCurrencyMetadataViews(),
-        ]);
+        return new Response($this->twig->render('@Currencing/currency/admin-preview/currencies.html.twig', [
+            'currencies' => $this->metadataViewProvider->allViews(),
+        ]));
     }
 }

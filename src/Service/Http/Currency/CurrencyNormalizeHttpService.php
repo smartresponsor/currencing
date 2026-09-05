@@ -2,24 +2,22 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Currency;
+namespace App\Service\Http\Currency;
 
-use App\Dto\Currency\MonetaryAmountInput;
-use App\Enum\Currency\MoneyRoundingContext;
-use App\Enum\Currency\MoneyRoundingMode;
-use App\ServiceInterface\Currency\MonetaryAmountInputResolverInterface;
+use App\Dto\Currency\CurrencyAmountInputDTO;
+use App\Enum\Currency\CurrencyRoundingContext;
+use App\Enum\Currency\CurrencyRoundingMode;
+use App\ServiceInterface\Currency\CurrencyAmountInputResolverInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Normalizes external monetary input into canonical minor-unit money output.
  */
-#[Route('/currencing/money/normalize', name: 'currencing_money_normalize', methods: ['POST'])]
-final readonly class MoneyNormalizeController
+final readonly class CurrencyNormalizeHttpService
 {
     public function __construct(
-        private MonetaryAmountInputResolverInterface $monetaryAmountInputResolver,
+        private CurrencyAmountInputResolverInterface $monetaryAmountInputResolver,
     ) {
     }
 
@@ -36,7 +34,7 @@ final readonly class MoneyNormalizeController
         }
 
         try {
-            $input = new MonetaryAmountInput(
+            $input = new CurrencyAmountInputDTO(
                 $payload['amount'],
                 $this->requiredString($payload['currencyCode'], 'currencyCode'),
                 $this->roundingMode($payload['roundingMode'] ?? null),
@@ -61,7 +59,7 @@ final readonly class MoneyNormalizeController
                     'formattedAmount' => $resolution->getFormattedAmount(),
                     'display' => $resolution->getMoneyDisplay()->toArray(),
                     'roundingPolicy' => null === $policy ? null : [
-                        'name' => $policy->getName(),
+                        'nameEntity' => $policy->getName(),
                         'roundingMode' => $policy->getRoundingMode()->value,
                         'context' => $policy->getContext()->value,
                         'cashIncrementMinorUnits' => $policy->getCashIncrementMinorUnits(),
@@ -125,21 +123,21 @@ final readonly class MoneyNormalizeController
         return '' === $value ? null : $value;
     }
 
-    private function roundingMode(mixed $value): MoneyRoundingMode
+    private function roundingMode(mixed $value): CurrencyRoundingMode
     {
         if (null === $value || '' === $value) {
-            return MoneyRoundingMode::Reject;
+            return CurrencyRoundingMode::Reject;
         }
 
         if (!is_string($value)) {
             throw new \InvalidArgumentException('roundingMode must be a string when provided.');
         }
 
-        return MoneyRoundingMode::tryFrom(strtolower(trim($value)))
+        return CurrencyRoundingMode::tryFrom(strtolower(trim($value)))
             ?? throw new \InvalidArgumentException(sprintf('Unsupported roundingMode "%s".', $value));
     }
 
-    private function roundingContext(mixed $value): ?MoneyRoundingContext
+    private function roundingContext(mixed $value): ?CurrencyRoundingContext
     {
         if (null === $value || '' === $value) {
             return null;
@@ -149,7 +147,7 @@ final readonly class MoneyNormalizeController
             throw new \InvalidArgumentException('roundingContext must be a string when provided.');
         }
 
-        return MoneyRoundingContext::tryFrom(strtolower(trim($value)))
+        return CurrencyRoundingContext::tryFrom(strtolower(trim($value)))
             ?? throw new \InvalidArgumentException(sprintf('Unsupported roundingContext "%s".', $value));
     }
 }

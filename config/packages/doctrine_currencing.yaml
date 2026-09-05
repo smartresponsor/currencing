@@ -7,3 +7,8 @@ doctrine:
         dir: '%kernel.project_dir%/src/Entity/Currency'
         prefix: 'App\Entity\Currency'
         alias: Currencing
+      ObjectingEmbeddable:
+        is_bundle: false
+        type: attribute
+        dir: '%kernel.project_dir%/vendor/objecting/object/src/Embeddable'
+        prefix: 'App\Objecting\Embeddable'

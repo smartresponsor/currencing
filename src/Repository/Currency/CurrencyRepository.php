@@ -4,27 +4,28 @@ declare(strict_types=1);
 
 namespace App\Repository\Currency;
 
-use App\Entity\Currency\Currency;
+use App\Entity\Currency\CurrencyEntity;
+use App\RepositoryInterface\Currency\CurrencyRepositoryInterface;
 use App\ValueObject\Currency\CurrencyCode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Currency>
+ * @extends ServiceEntityRepository<CurrencyEntity>
  */
-final class CurrencyRepository extends ServiceEntityRepository
+final class CurrencyRepository extends ServiceEntityRepository implements CurrencyRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Currency::class);
+        parent::__construct($registry, CurrencyEntity::class);
     }
 
-    public function findOneByCode(string|CurrencyCode $code): ?Currency
+    public function findOneByCode(string|CurrencyCode $code): ?CurrencyEntity
     {
         return $this->findOneBy(['code' => $this->normalizeCode($code)]);
     }
 
-    public function findOneActiveByCode(string|CurrencyCode $code): ?Currency
+    public function findOneActiveByCode(string|CurrencyCode $code): ?CurrencyEntity
     {
         return $this->findOneBy(['code' => $this->normalizeCode($code), 'active' => true]);
     }
@@ -41,7 +42,7 @@ final class CurrencyRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return list<Currency>
+     * @return list<CurrencyEntity>
      */
     public function findActiveOrderedByCode(): array
     {

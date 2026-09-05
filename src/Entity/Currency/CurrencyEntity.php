@@ -13,7 +13,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'currency_currency')]
 #[ORM\UniqueConstraint(name: 'uniq_currency_currency_code', columns: ['code'])]
 #[ORM\Index(name: 'idx_currency_currency_active_code', columns: ['active', 'code'])]
-class Currency
+#[ORM\Index(name: 'currency_idx', columns: ['code'])]
+class CurrencyEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -80,7 +81,7 @@ class Currency
     {
         $normalized = $this->nullableTrim($numericCode);
 
-        if ($normalized !== null && !preg_match('/^[0-9]{3}$/', $normalized)) {
+        if (null !== $normalized && !preg_match('/^[0-9]{3}$/', $normalized)) {
             throw new \InvalidArgumentException('Currency numeric code must contain exactly three digits.');
         }
 
@@ -157,12 +158,12 @@ class Currency
 
     private function nullableTrim(?string $value): ?string
     {
-        if ($value === null) {
+        if (null === $value) {
             return null;
         }
 
         $trimmed = trim($value);
 
-        return $trimmed === '' ? null : $trimmed;
+        return '' === $trimmed ? null : $trimmed;
     }
 }

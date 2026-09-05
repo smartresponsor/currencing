@@ -2,34 +2,34 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Controller\Currency;
+namespace App\Tests\Service\Http\Currency;
 
-use App\Controller\Currency\MoneyNormalizeController;
-use App\Dto\Currency\MonetaryAmountInput;
-use App\Dto\Currency\MonetaryAmountResolution;
-use App\Dto\Currency\MoneyAmount;
-use App\Dto\Currency\MoneyDisplay;
-use App\ServiceInterface\Currency\MonetaryAmountInputResolverInterface;
+use App\Dto\Currency\CurrencyAmountDTO;
+use App\Dto\Currency\CurrencyAmountInputDTO;
+use App\Dto\Currency\CurrencyAmountResolutionDTO;
+use App\Dto\Currency\CurrencyDisplayDTO;
+use App\Service\Http\Currency\CurrencyNormalizeHttpService;
+use App\ServiceInterface\Currency\CurrencyAmountInputResolverInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-final class MoneyNormalizeControllerTest extends TestCase
+final class CurrencyNormalizeHttpServiceTest extends TestCase
 {
     public function testItReturnsCanonicalMoneyNormalizationResponse(): void
     {
-        $resolver = new class implements MonetaryAmountInputResolverInterface {
-            public function resolve(MonetaryAmountInput $input): MonetaryAmountResolution
+        $resolver = new class implements CurrencyAmountInputResolverInterface {
+            public function resolve(CurrencyAmountInputDTO $input): CurrencyAmountResolutionDTO
             {
-                return new MonetaryAmountResolution(
+                return new CurrencyAmountResolutionDTO(
                     $input,
-                    new MoneyAmount(1234, 'USD'),
-                    new MoneyDisplay('$12.34', 1234, 'USD', '12.34', 'en_US'),
+                    new CurrencyAmountDTO(1234, 'USD'),
+                    new CurrencyDisplayDTO('$12.34', 1234, 'USD', '12.34', 'en_US'),
                     2,
                 );
             }
         };
 
-        $controller = new MoneyNormalizeController($resolver);
+        $controller = new CurrencyNormalizeHttpService($resolver);
         $response = $controller(new Request(content: json_encode([
             'amount' => '12.34',
             'currencyCode' => 'USD',
@@ -47,14 +47,14 @@ final class MoneyNormalizeControllerTest extends TestCase
 
     public function testItRejectsMissingRequiredPayloadFields(): void
     {
-        $resolver = new class implements MonetaryAmountInputResolverInterface {
-            public function resolve(MonetaryAmountInput $input): MonetaryAmountResolution
+        $resolver = new class implements CurrencyAmountInputResolverInterface {
+            public function resolve(CurrencyAmountInputDTO $input): CurrencyAmountResolutionDTO
             {
                 self::fail('Resolver should not be called for invalid payload.');
             }
         };
 
-        $controller = new MoneyNormalizeController($resolver);
+        $controller = new CurrencyNormalizeHttpService($resolver);
         $response = $controller(new Request(content: '{}'));
 
         self::assertSame(400, $response->getStatusCode());
