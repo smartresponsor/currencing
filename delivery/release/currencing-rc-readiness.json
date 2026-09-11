@@ -83,12 +83,12 @@
   ],
   "riskRegister": [
     {
-      "risk": "Host app does not import config/services/currencing.yaml",
+      "risk": "Host app does not import config/services/currency_services.yaml",
       "severity": "medium",
       "mitigation": "Import or merge explicit service config; run php tools/currencing-service-alias-closure-check.php before cache:clear."
     },
     {
-      "risk": "Host app Doctrine mapping ignores config/packages/doctrine_currencing.yaml",
+      "risk": "Host app Doctrine mapping ignores config/packages/currency_doctrine.yaml",
       "severity": "medium",
       "mitigation": "Register src/Entity/Currency attribute mapping."
     },

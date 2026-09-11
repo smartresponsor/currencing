@@ -1,5 +1,5 @@
 imports:
-  - { resource: services/currencing.yaml }
+  - { resource: services/currency_services.yaml }
 
 services:
   _defaults:

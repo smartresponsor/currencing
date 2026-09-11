@@ -10,7 +10,7 @@ final class CurrencingServiceDoctrineConfigTest extends TestCase
 {
     public function testExplicitServiceConfigExists(): void
     {
-        $contents = file_get_contents(__DIR__.'/../../config/services/currencing.yaml');
+        $contents = file_get_contents(__DIR__.'/../../config/services/currency_services.yaml');
 
         self::assertIsString($contents);
         self::assertStringContainsString('App\\Currencing\\Service\\', $contents);
@@ -20,7 +20,7 @@ final class CurrencingServiceDoctrineConfigTest extends TestCase
 
     public function testDoctrineMappingConfigExists(): void
     {
-        $contents = file_get_contents(__DIR__.'/../../config/packages/doctrine_currencing.yaml');
+        $contents = file_get_contents(__DIR__.'/../../config/packages/currency_doctrine.yaml');
 
         self::assertIsString($contents);
         self::assertStringContainsString('src/Entity/Currency', $contents);

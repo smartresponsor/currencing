@@ -130,12 +130,12 @@ if ('' !== $twig && !str_contains($twig, "'%kernel.project_dir%/src/Resources/vi
 }
 
 $routes = m19_read_required($root, 'config/routes.yaml', $errors);
-$currencyRoutes = m19_read_required($root, 'config/routes/currencing.yaml', $errors);
-if ('' !== $routes && !str_contains($routes, 'routes/currencing.yaml')) {
-    $errors[] = 'config/routes.yaml must import routes/currencing.yaml.';
+$currencyRoutes = m19_read_required($root, 'config/routes/currency_routes.yaml', $errors);
+if ('' !== $routes && !str_contains($routes, 'routes/currency_routes.yaml')) {
+    $errors[] = 'config/routes.yaml must import routes/currency_routes.yaml.';
 }
 if ('' !== $currencyRoutes && (!str_contains($currencyRoutes, 'currencing_admin_preview_currencies') && !str_contains($currencyRoutes, 'currencing_conversion_boundary') && !str_contains($currencyRoutes, 'currencing_demo_index') && !str_contains($currencyRoutes, 'currencing_currency_catalog') && !str_contains($currencyRoutes, 'currencing_currency_metadata') && !str_contains($currencyRoutes, 'currencing_currency_selector') && !str_contains($currencyRoutes, 'currencing_template_context') && !str_contains($currencyRoutes, 'currencing_money_normalize'))) {
-    $errors[] = 'config/routes/currencing.yaml must declare Currencing endpoint route names.';
+    $errors[] = 'config/routes/currency_routes.yaml must declare Currencing endpoint route names.';
 }
 
 $doctrine = m19_read_required($root, 'config/packages/doctrine.yaml', $errors);
@@ -145,21 +145,21 @@ foreach (['DATABASE_URL', "server_version: '16'", 'auto_mapping: false'] as $nee
     }
 }
 
-$mapping = m19_read_required($root, 'config/packages/doctrine_currencing.yaml', $errors);
+$mapping = m19_read_required($root, 'config/packages/currency_doctrine.yaml', $errors);
 foreach (["dir: '%kernel.project_dir%/src/Entity/Currency'", "prefix: 'App\\Currencing\\Entity\\Currency'", 'alias: Currencing'] as $needle) {
     if ('' !== $mapping && !str_contains($mapping, $needle)) {
-        $errors[] = 'config/packages/doctrine_currencing.yaml missing marker: '.$needle;
+        $errors[] = 'config/packages/currency_doctrine.yaml missing marker: '.$needle;
     }
 }
 
 $services = m19_read_required($root, 'config/services.yaml', $errors);
-$currencyServices = m19_read_required($root, 'config/services/currencing.yaml', $errors);
-if ('' !== $services && !str_contains($services, 'services/currencing.yaml')) {
-    $errors[] = 'config/services.yaml must import services/currencing.yaml.';
+$currencyServices = m19_read_required($root, 'config/services/currency_services.yaml', $errors);
+if ('' !== $services && !str_contains($services, 'services/currency_services.yaml')) {
+    $errors[] = 'config/services.yaml must import services/currency_services.yaml.';
 }
 foreach (['App\\Currencing\\Service\\Http\\Currency\\:', 'controller.service_arguments', 'App\\Currencing\\ServiceInterface\\CurrencyMetadataProviderInterface', 'App\\Currencing\\ServiceInterface\\CurrencyTemplateContextProviderInterface'] as $needle) {
     if ('' !== $currencyServices && !str_contains($currencyServices, $needle)) {
-        $errors[] = 'config/services/currencing.yaml missing marker: '.$needle;
+        $errors[] = 'config/services/currency_services.yaml missing marker: '.$needle;
     }
 }
 

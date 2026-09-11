@@ -28,6 +28,7 @@ class CurrencyEntity
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    // @phpstan-ignore property.unusedType (Doctrine assigns generated identifiers after persistence.)
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 3, unique: true)]

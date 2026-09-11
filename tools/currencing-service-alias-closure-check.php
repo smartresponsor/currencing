@@ -42,11 +42,11 @@ function m18_fqcn_to_path(string $root, string $fqcn): string
     return $root.'/src/'.str_replace('\\', '/', substr($fqcn, strlen($prefix))).'.php';
 }
 
-$services = m18_read_required($root, 'config/services/currencing.yaml', $errors);
-$componentPackage = m18_read_required($root, 'config/packages/currencing.yaml', $errors);
+$services = m18_read_required($root, 'config/services/currency_services.yaml', $errors);
+$componentPackage = m18_read_required($root, 'config/packages/currency_component.yaml', $errors);
 
 if ('' !== $componentPackage && str_contains($componentPackage, 'services:')) {
-    $errors[] = 'config/packages/currencing.yaml must not contain service definitions or aliases.';
+    $errors[] = 'config/packages/currency_component.yaml must not contain service definitions or aliases.';
 }
 
 preg_match_all(

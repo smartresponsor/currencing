@@ -27,6 +27,7 @@ final class CurrencyTranslationEntity
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    // @phpstan-ignore property.unusedType (Doctrine assigns generated identifiers after persistence.)
     private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: CurrencyEntity::class)]

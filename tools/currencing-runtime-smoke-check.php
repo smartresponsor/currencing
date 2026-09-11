@@ -31,12 +31,12 @@ function read_file_required(string $root, string $relative, array &$errors): str
     return $contents;
 }
 
-$componentPackage = read_file_required($root, 'config/packages/currencing.yaml', $errors);
-$services = read_file_required($root, 'config/services/currencing.yaml', $errors);
+$componentPackage = read_file_required($root, 'config/packages/currency_component.yaml', $errors);
+$services = read_file_required($root, 'config/services/currency_services.yaml', $errors);
 $rootServices = read_file_required($root, 'config/services.yaml', $errors);
 $rootRoutes = read_file_required($root, 'config/routes.yaml', $errors);
-$currencingRoutes = read_file_required($root, 'config/routes/currencing.yaml', $errors);
-$doctrine = read_file_required($root, 'config/packages/doctrine_currencing.yaml', $errors);
+$currencingRoutes = read_file_required($root, 'config/routes/currency_routes.yaml', $errors);
+$doctrine = read_file_required($root, 'config/packages/currency_doctrine.yaml', $errors);
 $twig = read_file_required($root, 'config/packages/twig.yaml', $errors);
 
 $requiredAliases = [
@@ -61,15 +61,15 @@ foreach ($requiredAliases as $interface => $implementation) {
 }
 
 if ('' !== $componentPackage && str_contains($componentPackage, 'services:')) {
-    $errors[] = 'config/packages/currencing.yaml must not duplicate service aliases; aliases belong in config/services/currencing.yaml.';
+    $errors[] = 'config/packages/currency_component.yaml must not duplicate service aliases; aliases belong in config/services/currency_services.yaml.';
 }
 
-if ('' !== $rootServices && !str_contains($rootServices, 'services/currencing.yaml')) {
-    $errors[] = 'Root services.yaml must import config/services/currencing.yaml.';
+if ('' !== $rootServices && !str_contains($rootServices, 'services/currency_services.yaml')) {
+    $errors[] = 'Root services.yaml must import config/services/currency_services.yaml.';
 }
 
-if ('' !== $rootRoutes && !str_contains($rootRoutes, 'routes/currencing.yaml')) {
-    $errors[] = 'Root routes.yaml must import config/routes/currencing.yaml.';
+if ('' !== $rootRoutes && !str_contains($rootRoutes, 'routes/currency_routes.yaml')) {
+    $errors[] = 'Root routes.yaml must import config/routes/currency_routes.yaml.';
 }
 
 if ('' !== $currencingRoutes && (!str_contains($currencingRoutes, 'currencing_money_normalize') || !str_contains($currencingRoutes, 'currencing_currency_catalog'))) {
@@ -117,7 +117,7 @@ $routeExpectations = [
 
 foreach ($routeExpectations as $needle) {
     if ('' !== $currencingRoutes && !str_contains($currencingRoutes, $needle)) {
-        $errors[] = 'Route expectation missing in config/routes/currencing.yaml: '.$needle;
+        $errors[] = 'Route expectation missing in config/routes/currency_routes.yaml: '.$needle;
     }
 }
 

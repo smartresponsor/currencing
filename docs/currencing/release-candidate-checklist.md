@@ -16,7 +16,7 @@ php bin/console cache:clear
 
 ```powershell
 php bin/console debug:router | findstr currencing
-php bin/console debug:container App\ServiceInterface\Currency
+php bin/console debug:container App\Currencing\ServiceInterface\Currency
 php bin/console doctrine:mapping:info
 php bin/console doctrine:schema:validate
 ```
@@ -42,9 +42,9 @@ currency_currency
 ## Expected config files
 
 ```text
-config/services/currencing.yaml
-config/packages/currencing.yaml
-config/packages/doctrine_currencing.yaml
+config/services/currency_services.yaml
+config/packages/currency_component.yaml
+config/packages/currency_doctrine.yaml
 config/packages/twig.yaml
 ```
 

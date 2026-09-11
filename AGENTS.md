@@ -41,7 +41,7 @@ Currencing does not own exchange-rate sourcing, historical FX, conversion quote 
 
 ## Doctrine
 
-Currencing is entity-first. `App\Entity\Currency\CurrencyEntity` maps the canonical `currency_currency` table. Neighboring components consume DTOs and service interfaces, not Currencing Doctrine entities.
+Currencing is entity-first. `App\Currencing\Entity\Currency\CurrencyEntity` maps the canonical `currency_currency` table. Neighboring components consume DTOs and service interfaces, not Currencing Doctrine entities.
 
 Objecting is the source of universal identity and reusable system-field semantics. Currencing entities compose logical Objecting field packs but expose a flat entity-native database row: `id`, `uuid`, `slug`, `created_at`, `modified_at`, `active`, `enabled`, `status`, title fields, and other selected system columns have no `object_` ownership prefix. The Doctrine primary key `id` remains Currencing-owned; `ObjectIdentityEmbeddableTrait` supplies reusable UUID/slug identity fields but does not own the consumer primary key.
 

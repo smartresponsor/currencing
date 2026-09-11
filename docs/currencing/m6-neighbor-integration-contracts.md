@@ -9,7 +9,7 @@ Doctrine entities.
 Neighboring components should pass monetary input through:
 
 - `App\Currencing\DTO\CurrencyAmountInputDTO`
-- `App\ServiceInterface\Currency\CurrencyAmountInputResolverInterface`
+- `App\Currencing\ServiceInterface\CurrencyAmountInputResolverInterface`
 
 The resolver returns:
 
@@ -29,7 +29,7 @@ The resolver returns:
 
 ## Boundary rule
 
-Consumers should not read or persist `App\Entity\Currency\CurrencyEntity` directly for
+Consumers should not read or persist `App\Currencing\Entity\Currency\CurrencyEntity` directly for
 money calculations. Doctrine entity access belongs inside Currencing persistence
 and catalog services.
 

@@ -11,7 +11,7 @@ Successful local proof:
 - `composer update symfony/var-exporter --with-dependencies`
 - `php bin/console cache:clear`
 - `php bin/console debug:router | findstr currencing`
-- `php bin/console debug:container App\ServiceInterface\Currency`
+- `php bin/console debug:container App\Currencing\ServiceInterface\Currency`
 - `php bin/console doctrine:mapping:info`
 
 Remaining blocker:

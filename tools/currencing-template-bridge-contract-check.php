@@ -35,8 +35,8 @@ $contextDto = m22_read_required($root, 'src/DTO/CurrencyTemplateContextDTO.php',
 $contextInterface = m22_read_required($root, 'src/ServiceInterface/CurrencyTemplateContextProviderInterface.php', $errors);
 $contextProvider = m22_read_required($root, 'src/Service/CurrencyTemplateContextProvider.php', $errors);
 $contextController = m22_read_required($root, 'src/Service/Http/Currency/CurrencyTemplateContextHttpService.php', $errors);
-$routes = m22_read_required($root, 'config/routes/currencing.yaml', $errors);
-$services = m22_read_required($root, 'config/services/currencing.yaml', $errors);
+$routes = m22_read_required($root, 'config/routes/currency_routes.yaml', $errors);
+$services = m22_read_required($root, 'config/services/currency_services.yaml', $errors);
 $apiDocs = m22_read_required($root, 'docs/api/currencing.openapi.yaml', $errors);
 $endpointManifest = m22_read_required($root, 'delivery/release/currencing-endpoints.json', $errors);
 

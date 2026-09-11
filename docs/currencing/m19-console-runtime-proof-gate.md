@@ -44,7 +44,7 @@ php tools/currencing-standalone-runtime-foundation-check.php
 
 php bin/console cache:clear
 php bin/console debug:router | findstr currencing
-php bin/console debug:container App\ServiceInterface\Currency
+php bin/console debug:container App\Currencing\ServiceInterface\Currency
 php bin/console doctrine:mapping:info
 php bin/console doctrine:schema:validate
 ```

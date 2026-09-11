@@ -12,7 +12,7 @@ php tools/currencing-autoload-smoke-check.php
 php tools/currencing-api-contract-check.php
 php tools/currencing-release-candidate-check.php
 php bin/console cache:clear
-php bin/console debug:container "App\ServiceInterface\Currency"
+php bin/console debug:container "App\Currencing\ServiceInterface\Currency"
 php bin/console debug:router | grep currencing
 ```
 
@@ -66,6 +66,6 @@ application cache after applying the patch.
 ## Config files added for explicit host-app readiness
 
 ```text
-config/services/currencing.yaml
-config/packages/doctrine_currencing.yaml
+config/services/currency_services.yaml
+config/packages/currency_doctrine.yaml
 ```
