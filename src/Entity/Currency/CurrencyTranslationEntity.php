@@ -2,25 +2,27 @@
 
 declare(strict_types=1);
 
-namespace App\Entity\Currency;
+namespace App\Currencing\Entity\Currency;
 
+use App\Currencing\Repository\CurrencyTranslationRepository;
 use App\Objecting\EntityTrait\Embeddable\ObjectAuditEmbeddableTrait;
 use App\Objecting\EntityTrait\Embeddable\ObjectIdentityEmbeddableTrait;
 use App\Objecting\EntityTrait\Embeddable\ObjectLocaleEmbeddableTrait;
 use App\Objecting\EntityTrait\Embeddable\ObjectStateEmbeddableTrait;
-use App\Repository\Currency\CurrencyTranslationRepository;
+use App\Objecting\EntityTrait\Embeddable\ObjectTitleEmbeddableTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CurrencyTranslationRepository::class)]
 #[ORM\Table(name: 'currency_translation')]
-#[ORM\UniqueConstraint(name: 'uniq_currency_translation_currency_locale', columns: ['currency_id', 'object_locale'])]
-#[ORM\Index(name: 'idx_currency_translation_locale', columns: ['object_locale'])]
+#[ORM\UniqueConstraint(name: 'uniq_currency_translation_currency_locale', columns: ['currency_id', 'locale'])]
+#[ORM\Index(name: 'idx_currency_translation_locale', columns: ['locale'])]
 final class CurrencyTranslationEntity
 {
     use ObjectIdentityEmbeddableTrait;
     use ObjectAuditEmbeddableTrait;
     use ObjectLocaleEmbeddableTrait;
     use ObjectStateEmbeddableTrait;
+    use ObjectTitleEmbeddableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -30,9 +32,6 @@ final class CurrencyTranslationEntity
     #[ORM\ManyToOne(targetEntity: CurrencyEntity::class)]
     #[ORM\JoinColumn(name: 'currency_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     private CurrencyEntity $currency;
-
-    #[ORM\Column(type: 'string', length: 128)]
-    private string $displayName;
 
     #[ORM\Column(type: 'string', length: 16, nullable: true)]
     private ?string $symbol = null;
@@ -46,8 +45,8 @@ final class CurrencyTranslationEntity
         $this->initializeObjectAudit();
         $this->initializeObjectLocale($locale);
         $this->initializeObjectState(true, true, 'active');
+        $this->initializeObjectTitle(trim($displayName));
         $this->currency = $currency;
-        $this->displayName = trim($displayName);
         $this->symbol = $this->nullableTrim($symbol);
     }
 
@@ -63,12 +62,12 @@ final class CurrencyTranslationEntity
 
     public function getDisplayName(): string
     {
-        return $this->displayName;
+        return $this->getFirstTitle() ?? '';
     }
 
     public function setDisplayName(string $displayName): self
     {
-        $this->displayName = trim($displayName);
+        $this->setFirstTitle(trim($displayName));
         $this->touchModified();
 
         return $this;

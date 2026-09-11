@@ -2,10 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Entity\Currency;
+namespace App\Currencing\Entity\Currency;
 
-use App\Repository\Currency\CurrencyRepository;
-use App\ValueObject\Currency\CurrencyCode;
+use App\Currencing\Repository\CurrencyRepository;
+use App\Currencing\ValueObject\CurrencyCode;
+use App\Objecting\EntityTrait\Embeddable\ObjectAuditEmbeddableTrait;
+use App\Objecting\EntityTrait\Embeddable\ObjectIdentityEmbeddableTrait;
+use App\Objecting\EntityTrait\Embeddable\ObjectStateEmbeddableTrait;
+use App\Objecting\EntityTrait\Embeddable\ObjectTitleEmbeddableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -16,9 +20,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Index(name: 'currency_idx', columns: ['code'])]
 class CurrencyEntity
 {
+    use ObjectIdentityEmbeddableTrait;
+    use ObjectAuditEmbeddableTrait;
+    use ObjectStateEmbeddableTrait;
+    use ObjectTitleEmbeddableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 3, unique: true)]
@@ -38,15 +47,12 @@ class CurrencyEntity
     #[Assert\Length(max: 16)]
     private ?string $symbol = null;
 
-    #[ORM\Column(type: 'string', length: 128, nullable: true)]
-    #[Assert\Length(max: 128)]
-    private ?string $displayName = null;
-
-    #[ORM\Column(type: 'boolean')]
-    private bool $active = true;
-
     public function __construct(string|CurrencyCode $code = 'USD')
     {
+        $this->initializeObjectIdentity();
+        $this->initializeObjectAudit();
+        $this->initializeObjectState(true, true, 'active');
+        $this->initializeObjectTitle();
         $this->setCode($code);
     }
 
@@ -120,40 +126,39 @@ class CurrencyEntity
 
     public function getDisplayName(): ?string
     {
-        return $this->displayName;
+        return $this->getFirstTitle();
     }
 
     public function setDisplayName(?string $displayName): self
     {
-        $this->displayName = $this->nullableTrim($displayName);
+        $this->setFirstTitle($this->nullableTrim($displayName));
+        $this->touchModified();
 
         return $this;
     }
 
     public function isActive(): bool
     {
-        return $this->active;
+        return $this->isObjectActive();
     }
 
     public function setActive(bool $active): self
     {
-        $this->active = $active;
+        $this->setObjectActive($active);
+        $this->setObjectStatus($active ? 'active' : 'inactive');
+        $this->touchModified();
 
         return $this;
     }
 
     public function activate(): self
     {
-        $this->active = true;
-
-        return $this;
+        return $this->setActive(true);
     }
 
     public function deactivate(): self
     {
-        $this->active = false;
-
-        return $this;
+        return $this->setActive(false);
     }
 
     private function nullableTrim(?string $value): ?string
