@@ -8,12 +8,12 @@ Doctrine entities.
 
 Neighboring components should pass monetary input through:
 
-- `App\Dto\Currency\CurrencyAmountInputDTO`
+- `App\Currencing\DTO\CurrencyAmountInputDTO`
 - `App\ServiceInterface\Currency\CurrencyAmountInputResolverInterface`
 
 The resolver returns:
 
-- `App\Dto\Currency\CurrencyAmountResolutionDTO`
+- `App\Currencing\DTO\CurrencyAmountResolutionDTO`
 - canonical `CurrencyAmountDTO` in minor units
 - template-safe `CurrencyDisplayDTO`
 - resolved currency minor unit

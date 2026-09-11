@@ -21,11 +21,11 @@ It intentionally does not own FX conversion. Exchange rates and historical conve
 ## Symfony-oriented naming convention
 
 - Entity: `src/Entity/Currency/*`
-- Repository: `src/Repository/Currency/*`
-- DTO: `src/Dto/Currency/*`
-- Value Object: `src/ValueObject/Currency/*`
-- Service: `src/Service/Currency/*`
-- ServiceInterface: `src/ServiceInterface/Currency/*`
+- Repository: `src/Repository/*`
+- DTO: `src/DTO/*`
+- Value Object: `src/ValueObject/*`
+- Service: `src/Service/*`
+- ServiceInterface: `src/ServiceInterface/*`
 - Doctrine table prefix: `currency_*`
 - Canonical table: `currency_currency`
 
@@ -47,13 +47,13 @@ It intentionally does not own FX conversion. Exchange rates and historical conve
 
 - `App\Entity\Currency\CurrencyEntity`
 - `App\ValueObject\Currency\CurrencyCode`
-- `App\Dto\Currency\CurrencyAmountDTO`
-- `App\Dto\Currency\CurrencyDisplayDTO`
-- `App\Dto\Currency\CurrencyChoiceDTO`
-- `App\Dto\Currency\CurrencyMetadataViewDTO`
-- `App\Dto\Currency\CurrencySelectorViewDTO`
-- `App\Dto\Currency\CurrencyAmountInputDTO`
-- `App\Dto\Currency\CurrencyAmountResolutionDTO`
+- `App\Currencing\DTO\CurrencyAmountDTO`
+- `App\Currencing\DTO\CurrencyDisplayDTO`
+- `App\Currencing\DTO\CurrencyChoiceDTO`
+- `App\Currencing\DTO\CurrencyMetadataViewDTO`
+- `App\Currencing\DTO\CurrencySelectorViewDTO`
+- `App\Currencing\DTO\CurrencyAmountInputDTO`
+- `App\Currencing\DTO\CurrencyAmountResolutionDTO`
 
 ## Boundary
 
@@ -278,7 +278,7 @@ integration:
 App\ServiceInterface\Currency\CurrencyTemplateContextProviderInterface
 ```
 
-The contract returns `App\Dto\Currency\CurrencyTemplateContextDTO`, a DTO-derived output model
+The contract returns `App\Currencing\DTO\CurrencyTemplateContextDTO`, a DTO-derived output model
 containing selector data, currency metadata views, route names, and capabilities. It does not
 return Doctrine entities, Twig markup, Symfony FormView objects, or Bridge-specific classes.
 

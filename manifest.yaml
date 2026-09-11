@@ -11,14 +11,14 @@ canonical_rules:
   component_namespace: "App"
   source_tree:
     entity: "src/Entity/Currency"
-    repository: "src/Repository/Currency"
-    dto: "src/Dto/Currency"
-    value_object: "src/ValueObject/Currency"
-    service: "src/Service/Currency"
-    service_interface: "src/ServiceInterface/Currency"
+    repository: "src/Repository"
+    dto: "src/DTO"
+    value_object: "src/ValueObject"
+    service: "src/Service"
+    service_interface: "src/ServiceInterface"
     controller: "src/Service/Http/Currency"
-    form: "src/Form/Currency"
-    validator: "src/Validator/Currency"
+    form: "src/Form"
+    validator: "src/Validator"
   doctrine_table_prefix: "currency"
   canonical_entity_table: "currency_currency"
   forbidden:
@@ -123,7 +123,7 @@ lazyghost_runtime_fix:
 template_bridge_output_contract:
   milestone: m22_template_bridge_output_contract
   service_interface: App\ServiceInterface\Currency\CurrencyTemplateContextProviderInterface
-  dto: App\Dto\Currency\CurrencyTemplateContextDTO
+  dto: App\Currencing\DTO\CurrencyTemplateContextDTO
   route: currencing_template_context
   path: /currencing/template-context
   status: bridge_safe_output_contract_added
