@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Currency;
+namespace App\Currencing\DTO;
 
 /**
  * Template-safe formatted monetary amount.

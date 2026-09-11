@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Currency;
+namespace App\Currencing\DTO;
 
 /**
  * Currency selector model consumed by templating/UI bridge layers.

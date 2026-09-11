@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Currency;
+namespace App\Currencing\DTO;
 
-use App\ValueObject\Currency\CurrencyCode;
+use App\Currencing\ValueObject\CurrencyCode;
 
 /**
  * Describes a currency conversion request without resolving rates.

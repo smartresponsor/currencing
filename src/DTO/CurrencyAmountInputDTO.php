@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Currency;
+namespace App\Currencing\DTO;
 
-use App\Enum\Currency\CurrencyRoundingContext;
-use App\Enum\Currency\CurrencyRoundingMode;
+use App\Currencing\Enum\CurrencyRoundingContext;
+use App\Currencing\Enum\CurrencyRoundingMode;
 
 /**
  * Input DTO used by neighboring components when they hand monetary values to

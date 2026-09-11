@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Currency;
+namespace App\Currencing\DTO;
 
 /**
  * Bridge-safe template context for rendering Currencing surfaces outside the component.

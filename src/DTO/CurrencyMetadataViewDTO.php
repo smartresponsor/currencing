@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Currency;
+namespace App\Currencing\DTO;
 
 /**
  * Read-only currency metadata view for forms, APIs, and UI bridges.

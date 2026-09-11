@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Dto\Currency;
+namespace App\Currencing\Tests\DTO;
 
-use App\Dto\Currency\CurrencyAmountDTO;
-use App\Dto\Currency\CurrencyConversionIntentDTO;
+use App\Currencing\DTO\CurrencyAmountDTO;
+use App\Currencing\DTO\CurrencyConversionIntentDTO;
 use PHPUnit\Framework\TestCase;
 
 final class CurrencyConversionIntentDTOTest extends TestCase
