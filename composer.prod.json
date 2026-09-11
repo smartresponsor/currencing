@@ -1,0 +1,115 @@
+{
+    "name":  "currencing/currency",
+    "description":  "Currencing process app",
+    "type":  "symfony-bundle",
+    "license":  "proprietary",
+    "minimum-stability":  "stable",
+    "prefer-stable":  true,
+    "require":  {
+                    "cruding/crud":  "dev-master",
+                    "doctrine/dbal":  "^4.4",
+                    "doctrine/doctrine-bundle":  "^3.2",
+                    "doctrine/doctrine-migrations-bundle":  "^4.0",
+                    "doctrine/orm":  "^3.3",
+                    "ext-ctype":  "*",
+                    "ext-iconv":  "*",
+                    "ext-intl":  "*",
+                    "easycorp/easyadmin-bundle":  "^5.0",
+                    "interfacing/interface":  "dev-master",
+                    "php":  "^8.4",
+                    "symfony/asset":  "^8.1",
+                    "symfony/console":  "^8.1",
+                    "symfony/dotenv":  "^8.1",
+                    "symfony/flex":  "^2.4",
+                    "symfony/form":  "^8.1",
+                    "symfony/framework-bundle":  "^8.1",
+                    "symfony/runtime":  "^8.1",
+                    "symfony/serializer":  "^8.1",
+                    "symfony/twig-bundle":  "^8.1",
+                    "symfony/validator":  "^8.1",
+                    "symfony/var-exporter":  "^8.1",
+                    "symfony/yaml":  "^8.1",
+                    "twig/extra-bundle":  "^3.21",
+                    "twig/twig":  "^3.21",
+                    "objecting/object":  "dev-master",
+                    "viewing/view":  "dev-master"
+                },
+    "require-dev":  {
+                        "doctrine/doctrine-fixtures-bundle":  "^4.0",
+                        "friendsofphp/php-cs-fixer":  "^3.94",
+                        "phpstan/phpstan":  "^2.1",
+                        "phpunit/phpunit":  "^11.5 || ^12.0"
+                    },
+    "autoload":  {
+                     "psr-4":  {
+                                   "App\\Currencing\\":  "src/"
+                               }
+                 },
+    "autoload-dev":  {
+                         "psr-4":  {
+                                       "App\\Currencing\\Tests\\":  "tests/"
+                                   }
+                     },
+    "config":  {
+                   "allow-plugins":  {
+                                         "php-http/discovery":  true,
+                                         "symfony/flex":  true,
+                                         "symfony/runtime":  true
+                                     },
+                   "sort-packages":  true
+               },
+    "extra":  {
+                  "symfony":  {
+                                  "allow-contrib":  false,
+                                  "require":  "^8.1",
+                                  "bundle":  "App\\Currencing\\CurrencingBundle"
+                              }
+              },
+    "scripts":  {
+                    "auto-scripts":  {
+                                         "cache:clear":  "symfony-cmd",
+                                         "assets:install %PUBLIC_DIR%":  "symfony-cmd",
+                                         "importmap:install":  "symfony-cmd"
+                                     },
+                    "post-install-cmd":  [
+                                             "@auto-scripts"
+                                         ],
+                    "post-update-cmd":  [
+                                            "@auto-scripts"
+                                        ],
+                    "cs:check":  "php-cs-fixer fix --dry-run --diff --verbose",
+                    "cs:fix":  "php-cs-fixer fix --verbose",
+                    "phpstan":  "phpstan analyse -c phpstan.dist.neon",
+                    "currencing:gates":  [
+                                             "php tools/currencing-structure-check.php",
+                                             "php tools/currencing-runtime-smoke-check.php",
+                                             "php tools/currencing-autoload-smoke-check.php",
+                                             "php tools/currencing-service-alias-closure-check.php",
+                                             "php tools/currencing-template-bridge-contract-check.php",
+                                             "php tools/currencing-console-runtime-proof-check.php",
+                                             "php tools/currencing-database-runtime-proof-check.php",
+                                             "php tools/currencing-schema-migration-mirror-check.php",
+                                             "php tools/currencing-api-contract-check.php",
+                                             "php tools/currencing-release-candidate-check.php",
+                                             "php tools/currencing-standalone-runtime-foundation-check.php"
+                                         ]
+                },
+    "repositories":  [
+                         {
+                             "type":  "vcs",
+                             "url":  "git@github.com:smartresponsor/cruding.git"
+                         },
+                         {
+                             "type":  "vcs",
+                             "url":  "git@github.com:smartresponsor/interfacing.git"
+                         },
+                         {
+                             "type":  "vcs",
+                             "url":  "git@github.com:smartresponsor/objecting.git"
+                         },
+                         {
+                             "type":  "vcs",
+                             "url":  "git@github.com:smartresponsor/viewing.git"
+                         }
+                     ]
+}

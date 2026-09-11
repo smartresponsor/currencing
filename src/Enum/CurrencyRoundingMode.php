@@ -1,0 +1,17 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Currencing\Enum;
+
+/**
+ * Business-level rounding modes used when decimal input has more fractional
+ * digits than the target currency supports.
+ */
+enum CurrencyRoundingMode: string
+{
+    case Reject = 'reject';
+    case HalfUp = 'half_up';
+    case Down = 'down';
+    case Up = 'up';
+}

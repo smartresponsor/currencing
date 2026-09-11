@@ -39,7 +39,7 @@ php bin/console doctrine:schema:validate
 Expected mapped entity:
 
 ```text
-App\Entity\Currency\CurrencyEntity
+App\Currencing\Entity\Currency\CurrencyEntity
 ```
 
 Expected schema validation result after database credentials are correct and the schema is generated from entities:

@@ -31,23 +31,23 @@ function read_file_required(string $root, string $relative, array &$errors): str
     return $contents;
 }
 
-$componentPackage = read_file_required($root, 'config/packages/currencing.yaml', $errors);
-$services = read_file_required($root, 'config/services/currencing.yaml', $errors);
+$componentPackage = read_file_required($root, 'config/packages/currency_component.yaml', $errors);
+$services = read_file_required($root, 'config/services/currency_services.yaml', $errors);
 $rootServices = read_file_required($root, 'config/services.yaml', $errors);
 $rootRoutes = read_file_required($root, 'config/routes.yaml', $errors);
-$currencingRoutes = read_file_required($root, 'config/routes/currencing.yaml', $errors);
-$doctrine = read_file_required($root, 'config/packages/doctrine_currencing.yaml', $errors);
+$currencingRoutes = read_file_required($root, 'config/routes/currency_routes.yaml', $errors);
+$doctrine = read_file_required($root, 'config/packages/currency_doctrine.yaml', $errors);
 $twig = read_file_required($root, 'config/packages/twig.yaml', $errors);
 
 $requiredAliases = [
-    'App\\ServiceInterface\\Currency\\CurrencyMetadataProviderInterface' => 'App\\Service\\Currency\\CurrencyIntlMetadataProvider',
-    'App\\ServiceInterface\\Currency\\CurrencyCodeValidatorInterface' => 'App\\Service\\Currency\\CurrencyCodeValidator',
-    'App\\ServiceInterface\\Currency\\CurrencyPrecisionResolverInterface' => 'App\\Service\\Currency\\CurrencyPrecisionResolver',
-    'App\\ServiceInterface\\Currency\\CurrencyAmountNormalizerInterface' => 'App\\Service\\Currency\\CurrencyCanonicalAmountNormalizer',
-    'App\\ServiceInterface\\Currency\\CurrencyAmountInputResolverInterface' => 'App\\Service\\Currency\\CurrencyAmountInputResolver',
-    'App\\ServiceInterface\\Currency\\CurrencyDisplayFormatterInterface' => 'App\\Service\\Currency\\CurrencyDisplayFormatter',
-    'App\\ServiceInterface\\Currency\\CurrencyRoundingPolicyResolverInterface' => 'App\\Service\\Currency\\CurrencyRoundingPolicyResolver',
-    'App\\ServiceInterface\\Currency\\CurrencyConversionBoundaryProviderInterface' => 'App\\Service\\Currency\\CurrencyConversionBoundaryProvider',
+    'App\\Currencing\\ServiceInterface\\CurrencyMetadataProviderInterface' => 'App\\Currencing\\Service\\CurrencyIntlMetadataProvider',
+    'App\\Currencing\\ServiceInterface\\CurrencyCodeValidatorInterface' => 'App\\Currencing\\Service\\CurrencyCodeValidator',
+    'App\\Currencing\\ServiceInterface\\CurrencyPrecisionResolverInterface' => 'App\\Currencing\\Service\\CurrencyPrecisionResolver',
+    'App\\Currencing\\ServiceInterface\\CurrencyAmountNormalizerInterface' => 'App\\Currencing\\Service\\CurrencyCanonicalAmountNormalizer',
+    'App\\Currencing\\ServiceInterface\\CurrencyAmountInputResolverInterface' => 'App\\Currencing\\Service\\CurrencyAmountInputResolver',
+    'App\\Currencing\\ServiceInterface\\CurrencyDisplayFormatterInterface' => 'App\\Currencing\\Service\\CurrencyDisplayFormatter',
+    'App\\Currencing\\ServiceInterface\\CurrencyRoundingPolicyResolverInterface' => 'App\\Currencing\\Service\\CurrencyRoundingPolicyResolver',
+    'App\\Currencing\\ServiceInterface\\CurrencyConversionBoundaryProviderInterface' => 'App\\Currencing\\Service\\CurrencyConversionBoundaryProvider',
 ];
 
 foreach ($requiredAliases as $interface => $implementation) {
@@ -61,15 +61,15 @@ foreach ($requiredAliases as $interface => $implementation) {
 }
 
 if ('' !== $componentPackage && str_contains($componentPackage, 'services:')) {
-    $errors[] = 'config/packages/currencing.yaml must not duplicate service aliases; aliases belong in config/services/currencing.yaml.';
+    $errors[] = 'config/packages/currency_component.yaml must not duplicate service aliases; aliases belong in config/services/currency_services.yaml.';
 }
 
-if ('' !== $rootServices && !str_contains($rootServices, 'services/currencing.yaml')) {
-    $errors[] = 'Root services.yaml must import config/services/currencing.yaml.';
+if ('' !== $rootServices && !str_contains($rootServices, 'services/currency_services.yaml')) {
+    $errors[] = 'Root services.yaml must import config/services/currency_services.yaml.';
 }
 
-if ('' !== $rootRoutes && !str_contains($rootRoutes, 'routes/currencing.yaml')) {
-    $errors[] = 'Root routes.yaml must import config/routes/currencing.yaml.';
+if ('' !== $rootRoutes && !str_contains($rootRoutes, 'routes/currency_routes.yaml')) {
+    $errors[] = 'Root routes.yaml must import config/routes/currency_routes.yaml.';
 }
 
 if ('' !== $currencingRoutes && (!str_contains($currencingRoutes, 'currencing_money_normalize') || !str_contains($currencingRoutes, 'currencing_currency_catalog'))) {
@@ -81,20 +81,20 @@ if (!str_contains($twig, 'src/Resources/views') || !str_contains($twig, 'Currenc
 }
 
 foreach ([
-    'App\\Service\\Http\\Currency\\',
-    'App\\DataFixtures\\Currency\\',
-    'App\\Form\\Currency\\',
-    'App\\Repository\\Currency\\',
-    'App\\Service\\Currency\\',
-    'App\\Validator\\Currency\\',
+    'App\\Currencing\\Service\\Http\\Currency\\',
+    'App\\Currencing\\DataFixtures\\',
+    'App\\Currencing\\Form\\',
+    'App\\Currencing\\Repository\\',
+    'App\\Currencing\\Service\\',
+    'App\\Currencing\\Validator\\',
 ] as $resourceNamespace) {
     if (!str_contains($services, $resourceNamespace)) {
         $errors[] = 'Missing explicit service resource namespace: '.$resourceNamespace;
     }
 }
 
-if (!str_contains($doctrine, 'src/Entity/Currency') || !str_contains($doctrine, "prefix: 'App\\Entity\\Currency'")) {
-    $errors[] = 'Doctrine Currencing mapping must target src/Entity/Currency with App\\Entity\\Currency prefix.';
+if (!str_contains($doctrine, 'src/Entity/Currency') || !str_contains($doctrine, "prefix: 'App\\Currencing\\Entity\\Currency'")) {
+    $errors[] = 'Doctrine Currencing mapping must target src/Entity/Currency with App\\Currencing\\Entity\\Currency prefix.';
 }
 
 $routeExpectations = [
@@ -117,7 +117,7 @@ $routeExpectations = [
 
 foreach ($routeExpectations as $needle) {
     if ('' !== $currencingRoutes && !str_contains($currencingRoutes, $needle)) {
-        $errors[] = 'Route expectation missing in config/routes/currencing.yaml: '.$needle;
+        $errors[] = 'Route expectation missing in config/routes/currency_routes.yaml: '.$needle;
     }
 }
 

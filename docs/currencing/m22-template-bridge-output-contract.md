@@ -10,7 +10,7 @@ implementation.
 ## Added contract
 
 ```text
-src/ServiceInterface/Currency/CurrencyTemplateContextProviderInterface.php
+src/ServiceInterface/CurrencyTemplateContextProviderInterface.php
 ```
 
 Primary method:
@@ -24,7 +24,7 @@ Bridge-side consumers should depend on this interface when integration is in-pro
 ## Added DTO/read model
 
 ```text
-src/Dto/Currency/CurrencyTemplateContextDTO.php
+src/DTO/CurrencyTemplateContextDTO.php
 ```
 
 The context contains:
@@ -43,7 +43,7 @@ Bridge-specific classes.
 ## Added provider
 
 ```text
-src/Service/Currency/CurrencyTemplateContextProvider.php
+src/Service/CurrencyTemplateContextProvider.php
 ```
 
 The provider composes existing selector and metadata view providers. It does not add a new

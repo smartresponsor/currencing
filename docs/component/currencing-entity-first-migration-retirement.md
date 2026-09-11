@@ -1,31 +1,27 @@
-# Currencing entity-first migration retirement
+# Currencing entity and migration ownership
 
 ## Scope
 
-This patch converts the Currencing component away from schema-first migration ownership.
-The component keeps its runtime `Currency` entity and adds the missing legacy concepts from the old monolith as canonical PHP entities.
+Currencing is entity-first, but entity-first does not mean migration-free. Doctrine entity metadata is the design source for the component model, while Currencing owns forward migrations that materialize that design in backend databases.
 
-## Retired schema-first files
+## Canonical schema ownership
 
-- `Currencing/migrations/**`
+- `CurrencyEntity` owns `currency_currency`.
+- `CurrencyTranslationEntity` owns `currency_translation`.
+- Currencing owns its Doctrine primary key `id`; `ObjectIdentityEmbeddableTrait` supplies reusable Objecting identity fields without replacing the consumer primary key.
+- Objecting supplies universal system-field semantics through logical `object_*` field packs, while the physical Currencing columns remain flat and entity-native (`id`, `uuid`, `slug`, `created_at`, `active`, and so on).
+- Local compatibility methods such as `isActive()` and `getDisplayName()` may remain, but they map to Objecting state/title storage instead of duplicate `active` or `display_name` columns.
 
-These files must no longer be the source of truth for the component schema at this stage.
+## Migration mirror
 
-## Existing entity-first coverage
+`migrations/**` is a required backend-owned projection of the entity design. The migration namespace is `DoctrineMigrations\Currencing`, which allows the Host application to register Currencing migrations alongside its own `DoctrineMigrations` path without namespace collisions.
 
-- `Currency` already covered the former `currency_currency` table and kept the runtime `active + code` query path used by current services.
+`tools/currencing-schema-migration-mirror-check.php` boots Doctrine metadata and verifies that mapped Currencing tables/columns are represented by the migration surface.
 
-## Restored from old monolith
+## Responsibility boundary
 
-- `CurrencyEnUs` was normalized into `CurrencyTranslationEntity`.
-- `CurrencyExchange` was restored as `CurrencyExchangeEntity`.
-- The old `CategoryFeatured` class under `Entity/Currency` was not imported as a Currencing entity because it is a category/featured concept, not a currency aggregate.
+`CurrencyExchangeEntity`, exchange-rate repositories, and a `currency_exchange` table do not belong to Currencing. Exchange-rate sourcing and persistence belong to Exchanging. Currencing owns currency identity, metadata, precision, formatting, normalization, and conversion-boundary validation only.
 
-## Objecting adoption
+## Validation
 
-New restored entities use Objecting embeddable traits for system identity, audit, locale/source and state fields.
-Currency's existing `active` column remains for current query compatibility and because it is already part of the public selector/metadata service contract.
-
-## Validation performed
-
-PHP syntax lint was executed for changed PHP files. Full Doctrine metadata validation was not executed because the isolated slice does not include the runtime host/vendor installation.
+The release gate chain includes structural checks, Doctrine runtime checks, the entity/migration mirror check, API contracts, and standalone runtime proof. Full PHPUnit is also required before release.

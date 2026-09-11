@@ -1,24 +1,24 @@
 schema_version: "1.0"
 component:
   name: "Currencing"
-  package_name: "smart-responsor/currencing"
-  namespace: "App"
+  package_name: "currencing/currency"
+  namespace: "App\\Currencing"
   type: "symfony-component"
   status: "architecture-business-ready"
   responsibility: "Shared monetary capability for currency metadata, ISO codes, minor units, formatting, money normalization, and conversion-boundary validation."
 canonical_rules:
   default_namespace: true
-  component_namespace: "App"
+  component_namespace: "App\\Currencing"
   source_tree:
     entity: "src/Entity/Currency"
-    repository: "src/Repository/Currency"
-    dto: "src/Dto/Currency"
-    value_object: "src/ValueObject/Currency"
-    service: "src/Service/Currency"
-    service_interface: "src/ServiceInterface/Currency"
+    repository: "src/Repository"
+    dto: "src/DTO"
+    value_object: "src/ValueObject"
+    service: "src/Service"
+    service_interface: "src/ServiceInterface"
     controller: "src/Service/Http/Currency"
-    form: "src/Form/Currency"
-    validator: "src/Validator/Currency"
+    form: "src/Form"
+    validator: "src/Validator"
   doctrine_table_prefix: "currency"
   canonical_entity_table: "currency_currency"
   forbidden:
@@ -77,8 +77,8 @@ quality_gates:
 
 
 symfony_config:
-  services: "config/services/currencing.yaml"
-  doctrine_mapping: "config/packages/doctrine_currencing.yaml"
+  services: "config/services/currency_services.yaml"
+  doctrine_mapping: "config/packages/currency_doctrine.yaml"
   twig: "config/packages/twig.yaml"
 
 
@@ -95,7 +95,7 @@ release_candidate:
 
 runtime_foundation:
   milestone: m17_runtime_rc_proof_foundation
-  namespace: App\\
+  namespace: App\\Currencing\\
   database_platform: postgresql_first
   status: file_config_ready_pending_local_bin_console_proof
 
@@ -122,8 +122,8 @@ lazyghost_runtime_fix:
 
 template_bridge_output_contract:
   milestone: m22_template_bridge_output_contract
-  service_interface: App\ServiceInterface\Currency\CurrencyTemplateContextProviderInterface
-  dto: App\Dto\Currency\CurrencyTemplateContextDTO
+  service_interface: App\Currencing\ServiceInterface\CurrencyTemplateContextProviderInterface
+  dto: App\Currencing\DTO\CurrencyTemplateContextDTO
   route: currencing_template_context
   path: /currencing/template-context
   status: bridge_safe_output_contract_added

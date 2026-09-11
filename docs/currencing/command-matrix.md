@@ -29,7 +29,7 @@ composer update symfony/var-exporter --with-dependencies
 composer dump-autoload
 php bin/console cache:clear
 php bin/console debug:router | findstr currencing
-php bin/console debug:container App\ServiceInterface\Currency
+php bin/console debug:container App\Currencing\ServiceInterface\Currency
 ```
 
 ## Doctrine gates
@@ -72,4 +72,4 @@ php tools/currencing-template-bridge-contract-check.php
 php bin/console debug:router | findstr currencing_template_context
 ```
 
-Bridge/Interfacing should consume `App\ServiceInterface\Currency\CurrencyTemplateContextProviderInterface` for in-process composition, or `GET /currencing/template-context` for HTTP read-model composition.
+Bridge/Interfacing should consume `App\Currencing\ServiceInterface\CurrencyTemplateContextProviderInterface` for in-process composition, or `GET /currencing/template-context` for HTTP read-model composition.

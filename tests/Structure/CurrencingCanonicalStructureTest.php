@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Structure;
+namespace App\Currencing\Tests\Structure;
 
 use PHPUnit\Framework\TestCase;
 
@@ -12,11 +12,11 @@ final class CurrencingCanonicalStructureTest extends TestCase
     {
         foreach ([
             'src/Entity/Currency',
-            'src/Repository/Currency',
-            'src/Dto/Currency',
-            'src/ValueObject/Currency',
-            'src/Service/Currency',
-            'src/ServiceInterface/Currency',
+            'src/Repository',
+            'src/DTO',
+            'src/ValueObject',
+            'src/Service',
+            'src/ServiceInterface',
             'src/Service/Http/Currency',
             'docs/currencing',
         ] as $directory) {
@@ -47,7 +47,7 @@ final class CurrencingCanonicalStructureTest extends TestCase
 
     public function testCanonicalTypeSuffixesAreEnforced(): void
     {
-        foreach (glob($this->root().'/src/Dto/Currency/*.php') ?: [] as $file) {
+        foreach (glob($this->root().'/src/DTO/*.php') ?: [] as $file) {
             self::assertStringEndsWith('DTO.php', $file, $file);
         }
 

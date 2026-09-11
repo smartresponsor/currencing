@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Service\Http\Currency;
+namespace App\Currencing\Tests\Service\Http\Currency;
 
 use PHPUnit\Framework\TestCase;
 
@@ -13,7 +13,7 @@ final class CurrencyDemoSurfaceStructureTest extends TestCase
 {
     public function testDemoRouteExists(): void
     {
-        $routes = file_get_contents(dirname(__DIR__, 4).'/config/routes/currencing.yaml');
+        $routes = file_get_contents(dirname(__DIR__, 4).'/config/routes/currency_routes.yaml');
 
         self::assertIsString($routes);
         self::assertStringContainsString('/currencing/demo', $routes);
@@ -22,7 +22,7 @@ final class CurrencyDemoSurfaceStructureTest extends TestCase
 
     public function testAdminPreviewRouteExists(): void
     {
-        $routes = file_get_contents(dirname(__DIR__, 4).'/config/routes/currencing.yaml');
+        $routes = file_get_contents(dirname(__DIR__, 4).'/config/routes/currency_routes.yaml');
 
         self::assertIsString($routes);
         self::assertStringContainsString('/currencing/admin-preview/currencies', $routes);

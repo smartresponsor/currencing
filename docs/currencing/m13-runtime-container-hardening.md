@@ -12,9 +12,10 @@ php tools/currencing-runtime-smoke-check.php
 
 The smoke gate verifies:
 
-- critical service interface aliases exist in `config/packages/currencing.yaml`;
+- critical service interface aliases exist in `config/services/currency_services.yaml`;
+- `config/packages/currency_component.yaml` remains parameter-only;
 - Twig namespace `Currencing` points to `src/Resources/views`;
-- expected routes are present in controller attributes;
+- expected routes are present in `config/routes/currency_routes.yaml`;
 - M9 demo templates exist;
 - `Currency` entity references `CurrencyRepository::class`.
 

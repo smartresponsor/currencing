@@ -3,7 +3,7 @@
 ## Main entity
 
 ```text
-App\Entity\Currency\CurrencyEntity
+App\Currencing\Entity\Currency\CurrencyEntity
 ```
 
 Canonical table:

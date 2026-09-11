@@ -21,39 +21,39 @@ It intentionally does not own FX conversion. Exchange rates and historical conve
 ## Symfony-oriented naming convention
 
 - Entity: `src/Entity/Currency/*`
-- Repository: `src/Repository/Currency/*`
-- DTO: `src/Dto/Currency/*`
-- Value Object: `src/ValueObject/Currency/*`
-- Service: `src/Service/Currency/*`
-- ServiceInterface: `src/ServiceInterface/Currency/*`
+- Repository: `src/Repository/*`
+- DTO: `src/DTO/*`
+- Value Object: `src/ValueObject/*`
+- Service: `src/Service/*`
+- ServiceInterface: `src/ServiceInterface/*`
 - Doctrine table prefix: `currency_*`
 - Canonical table: `currency_currency`
 
 ## Main contracts
 
-- `App\ServiceInterface\Currency\CurrencyMetadataProviderInterface`
-- `App\ServiceInterface\Currency\CurrencyCodeValidatorInterface`
-- `App\ServiceInterface\Currency\CurrencyPrecisionResolverInterface`
-- `App\ServiceInterface\Currency\CurrencyAmountNormalizerInterface`
-- `App\ServiceInterface\Currency\CurrencyNormalizerInterface`
-- `App\ServiceInterface\Currency\CurrencyFormatterInterface`
-- `App\ServiceInterface\Currency\CurrencyDisplayFormatterInterface`
-- `App\ServiceInterface\Currency\CurrencyChoiceProviderInterface`
-- `App\ServiceInterface\Currency\CurrencyMetadataViewProviderInterface`
-- `App\ServiceInterface\Currency\CurrencySelectorViewProviderInterface`
-- `App\ServiceInterface\Currency\CurrencyAmountInputResolverInterface`
+- `App\Currencing\ServiceInterface\CurrencyMetadataProviderInterface`
+- `App\Currencing\ServiceInterface\CurrencyCodeValidatorInterface`
+- `App\Currencing\ServiceInterface\CurrencyPrecisionResolverInterface`
+- `App\Currencing\ServiceInterface\CurrencyAmountNormalizerInterface`
+- `App\Currencing\ServiceInterface\CurrencyNormalizerInterface`
+- `App\Currencing\ServiceInterface\CurrencyFormatterInterface`
+- `App\Currencing\ServiceInterface\CurrencyDisplayFormatterInterface`
+- `App\Currencing\ServiceInterface\CurrencyChoiceProviderInterface`
+- `App\Currencing\ServiceInterface\CurrencyMetadataViewProviderInterface`
+- `App\Currencing\ServiceInterface\CurrencySelectorViewProviderInterface`
+- `App\Currencing\ServiceInterface\CurrencyAmountInputResolverInterface`
 
 ## Main model
 
-- `App\Entity\Currency\CurrencyEntity`
-- `App\ValueObject\Currency\CurrencyCode`
-- `App\Dto\Currency\CurrencyAmountDTO`
-- `App\Dto\Currency\CurrencyDisplayDTO`
-- `App\Dto\Currency\CurrencyChoiceDTO`
-- `App\Dto\Currency\CurrencyMetadataViewDTO`
-- `App\Dto\Currency\CurrencySelectorViewDTO`
-- `App\Dto\Currency\CurrencyAmountInputDTO`
-- `App\Dto\Currency\CurrencyAmountResolutionDTO`
+- `App\Currencing\Entity\Currency\CurrencyEntity`
+- `App\Currencing\ValueObject\CurrencyCode`
+- `App\Currencing\DTO\CurrencyAmountDTO`
+- `App\Currencing\DTO\CurrencyDisplayDTO`
+- `App\Currencing\DTO\CurrencyChoiceDTO`
+- `App\Currencing\DTO\CurrencyMetadataViewDTO`
+- `App\Currencing\DTO\CurrencySelectorViewDTO`
+- `App\Currencing\DTO\CurrencyAmountInputDTO`
+- `App\Currencing\DTO\CurrencyAmountResolutionDTO`
 
 ## Boundary
 
@@ -133,7 +133,7 @@ Currencing now includes machine-readable and human-readable delivery metadata:
 
 ```text
 manifest.yaml
-agent.md
+AGENTS.md
 docs/currencing/install.md
 docs/currencing/inventory.md
 docs/currencing/readiness.md
@@ -176,8 +176,8 @@ php bin/console cache:clear
 Currencing now includes explicit Symfony config:
 
 ```text
-config/services/currencing.yaml
-config/packages/doctrine_currencing.yaml
+config/services/currency_services.yaml
+config/packages/currency_doctrine.yaml
 ```
 
 And a new framework-free smoke gate:
@@ -234,7 +234,7 @@ Currencing now includes a framework-free service alias closure gate:
 php tools/currencing-service-alias-closure-check.php
 ```
 
-It scans constructor-injected `App\ServiceInterface\Currency\*Interface` contracts and verifies explicit aliases in `config/services/currencing.yaml` before local Symfony container proof.
+It scans constructor-injected `App\Currencing\ServiceInterface\*Interface` contracts and verifies explicit aliases in `config/services/currency_services.yaml` before local Symfony container proof.
 
 ## M19 Console Runtime Proof Gate
 
@@ -275,10 +275,10 @@ Currencing exposes an outbound templates/UI composition contract for Bridge/Inte
 integration:
 
 ```text
-App\ServiceInterface\Currency\CurrencyTemplateContextProviderInterface
+App\Currencing\ServiceInterface\CurrencyTemplateContextProviderInterface
 ```
 
-The contract returns `App\Dto\Currency\CurrencyTemplateContextDTO`, a DTO-derived output model
+The contract returns `App\Currencing\DTO\CurrencyTemplateContextDTO`, a DTO-derived output model
 containing selector data, currency metadata views, route names, and capabilities. It does not
 return Doctrine entities, Twig markup, Symfony FormView objects, or Bridge-specific classes.
 

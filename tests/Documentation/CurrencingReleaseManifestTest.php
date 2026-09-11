@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Documentation;
+namespace App\Currencing\Tests\Documentation;
 
 use PHPUnit\Framework\TestCase;
 
@@ -22,7 +22,7 @@ final class CurrencingReleaseManifestTest extends TestCase
         $manifest = file_get_contents(__DIR__.'/../../manifest.yaml');
 
         self::assertIsString($manifest);
-        self::assertStringContainsString('component_namespace: "App"', $manifest);
+        self::assertStringContainsString('component_namespace: "App\\\\Currencing"', $manifest);
         self::assertStringContainsString('currency_currency', $manifest);
         self::assertStringContainsString('Currencing must not depend on Exchanging', $manifest);
     }

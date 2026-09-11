@@ -1,0 +1,3 @@
+parameters:
+  currencing.component_name: 'Currencing'
+  currencing.component_boundary: 'currency_metadata_minor_units_normalization_formatting'

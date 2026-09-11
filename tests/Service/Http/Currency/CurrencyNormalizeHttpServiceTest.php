@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Service\Http\Currency;
+namespace App\Currencing\Tests\Service\Http\Currency;
 
-use App\Dto\Currency\CurrencyAmountDTO;
-use App\Dto\Currency\CurrencyAmountInputDTO;
-use App\Dto\Currency\CurrencyAmountResolutionDTO;
-use App\Dto\Currency\CurrencyDisplayDTO;
-use App\Service\Http\Currency\CurrencyNormalizeHttpService;
-use App\ServiceInterface\Currency\CurrencyAmountInputResolverInterface;
+use App\Currencing\DTO\CurrencyAmountDTO;
+use App\Currencing\DTO\CurrencyAmountInputDTO;
+use App\Currencing\DTO\CurrencyAmountResolutionDTO;
+use App\Currencing\DTO\CurrencyDisplayDTO;
+use App\Currencing\Service\Http\Currency\CurrencyNormalizeHttpService;
+use App\Currencing\ServiceInterface\CurrencyAmountInputResolverInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -50,7 +50,7 @@ final class CurrencyNormalizeHttpServiceTest extends TestCase
         $resolver = new class implements CurrencyAmountInputResolverInterface {
             public function resolve(CurrencyAmountInputDTO $input): CurrencyAmountResolutionDTO
             {
-                self::fail('Resolver should not be called for invalid payload.');
+                throw new \LogicException('Resolver should not be called for invalid payload.');
             }
         };
 

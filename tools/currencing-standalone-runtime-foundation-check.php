@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Currencing standalone runtime foundation gate.
  *
- * This gate keeps the repository RC-ready as a default-Symfony App\... project
+ * This gate keeps the repository RC-ready as a canonical App\Currencing\... component.
  * without booting Composer or the Symfony container.
  */
 $root = dirname(__DIR__);
@@ -34,7 +34,7 @@ function m17_read_required(string $root, string $relative, array &$errors): stri
 $composer = m17_read_required($root, 'composer.json', $errors);
 foreach ([
     '"php": "^8.4"',
-    '"App\\\\": "src/"',
+    '"App\\\\Currencing\\\\": "src/"',
     'symfony/framework-bundle',
     'doctrine/doctrine-bundle',
     'doctrine/orm',
@@ -48,8 +48,8 @@ foreach ([
 }
 
 $kernel = m17_read_required($root, 'src/Kernel.php', $errors);
-if ('' !== $kernel && (!str_contains($kernel, 'namespace App;') || !str_contains($kernel, 'MicroKernelTrait'))) {
-    $errors[] = 'src/Kernel.php must be a default Symfony App\\ Kernel using MicroKernelTrait.';
+if ('' !== $kernel && (!str_contains($kernel, 'namespace App\\Currencing;') || !str_contains($kernel, 'MicroKernelTrait'))) {
+    $errors[] = 'src/Kernel.php must be the canonical App\\Currencing\\ Kernel using MicroKernelTrait.';
 }
 
 $bundles = m17_read_required($root, 'config/bundles.php', $errors);
@@ -64,14 +64,14 @@ foreach ([
     }
 }
 
-$routes = m17_read_required($root, 'config/routes/currencing.yaml', $errors);
+$routes = m17_read_required($root, 'config/routes/currency_routes.yaml', $errors);
 if ('' !== $routes && (!str_contains($routes, 'currencing_money_normalize') || !str_contains($routes, 'currencing_currency_catalog'))) {
-    $errors[] = 'config/routes/currencing.yaml must declare canonical endpoint route names.';
+    $errors[] = 'config/routes/currency_routes.yaml must declare canonical endpoint route names.';
 }
 
 $rootRoutes = m17_read_required($root, 'config/routes.yaml', $errors);
-if ('' !== $rootRoutes && !str_contains($rootRoutes, 'routes/currencing.yaml')) {
-    $errors[] = 'config/routes.yaml must import routes/currencing.yaml.';
+if ('' !== $rootRoutes && !str_contains($rootRoutes, 'routes/currency_routes.yaml')) {
+    $errors[] = 'config/routes.yaml must import routes/currency_routes.yaml.';
 }
 
 $services = m17_read_required($root, 'config/services.yaml', $errors);
@@ -80,8 +80,8 @@ $consoleProofGate = m17_read_required($root, 'tools/currencing-console-runtime-p
 $databaseProofGate = m17_read_required($root, 'tools/currencing-database-runtime-proof-check.php', $errors);
 $templateBridgeGate = m17_read_required($root, 'tools/currencing-template-bridge-contract-check.php', $errors);
 $envLocalExample = m17_read_required($root, '.env.local.example', $errors);
-if ('' !== $services && !str_contains($services, 'services/currencing.yaml')) {
-    $errors[] = 'config/services.yaml must import services/currencing.yaml.';
+if ('' !== $services && !str_contains($services, 'services/currency_services.yaml')) {
+    $errors[] = 'config/services.yaml must import services/currency_services.yaml.';
 }
 
 if ('' !== $aliasGate && !str_contains($aliasGate, 'Currencing service alias closure gate')) {
@@ -104,9 +104,9 @@ if ('' !== $envLocalExample && !str_contains($envLocalExample, 'postgresql://cur
     $errors[] = '.env.local.example must provide a dedicated local PostgreSQL proof DSN.';
 }
 
-$componentPackage = m17_read_required($root, 'config/packages/currencing.yaml', $errors);
+$componentPackage = m17_read_required($root, 'config/packages/currency_component.yaml', $errors);
 if ('' !== $componentPackage && str_contains($componentPackage, 'services:')) {
-    $errors[] = 'config/packages/currencing.yaml must not duplicate service aliases; use config/services/currencing.yaml.';
+    $errors[] = 'config/packages/currency_component.yaml must not duplicate service aliases; use config/services/currency_services.yaml.';
 }
 
 $doctrine = m17_read_required($root, 'config/packages/doctrine.yaml', $errors);
@@ -114,9 +114,9 @@ if ('' !== $doctrine && (!str_contains($doctrine, 'DATABASE_URL') || !str_contai
     $errors[] = 'config/packages/doctrine.yaml must define DATABASE_URL DBAL config and keep auto_mapping disabled.';
 }
 
-$doctrineMapping = m17_read_required($root, 'config/packages/doctrine_currencing.yaml', $errors);
-if ('' !== $doctrineMapping && (!str_contains($doctrineMapping, 'src/Entity/Currency') || !str_contains($doctrineMapping, "prefix: 'App\\Entity\\Currency'"))) {
-    $errors[] = 'config/packages/doctrine_currencing.yaml must map src/Entity/Currency to App\\Entity\\Currency.';
+$doctrineMapping = m17_read_required($root, 'config/packages/currency_doctrine.yaml', $errors);
+if ('' !== $doctrineMapping && (!str_contains($doctrineMapping, 'src/Entity/Currency') || !str_contains($doctrineMapping, "prefix: 'App\\Currencing\\Entity\\Currency'"))) {
+    $errors[] = 'config/packages/currency_doctrine.yaml must map src/Entity/Currency to App\\Currencing\\Entity\\Currency.';
 }
 
 $currencyEntity = m17_read_required($root, 'src/Entity/Currency/CurrencyEntity.php', $errors);
@@ -124,8 +124,8 @@ if ('' !== $currencyEntity && !str_contains($currencyEntity, "name: 'currency_cu
     $errors[] = 'CurrencyEntity must own the canonical currency_currency table for entity-first schema generation.';
 }
 
-if (is_dir($root.'/migrations')) {
-    $errors[] = 'Legacy migrations directory must not remain after the entity-first schema transition.';
+if (!is_dir($root.'/migrations')) {
+    $errors[] = 'Backend-owned migrations directory must mirror the entity-first Doctrine schema.';
 }
 
 if ([] !== $errors) {

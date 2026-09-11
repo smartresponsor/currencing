@@ -6,13 +6,13 @@ host-app ambiguity before real container compilation.
 ## Added config
 
 ```text
-config/services/currencing.yaml
-config/packages/doctrine_currencing.yaml
+config/services/currency_services.yaml
+config/packages/currency_doctrine.yaml
 ```
 
 ## Service readiness
 
-`config/services/currencing.yaml` explicitly registers Currencing type layers:
+`config/services/currency_services.yaml` explicitly registers Currencing type layers:
 
 - controllers;
 - fixtures;
@@ -24,11 +24,11 @@ config/packages/doctrine_currencing.yaml
 
 ## Doctrine readiness
 
-`config/packages/doctrine_currencing.yaml` maps:
+`config/packages/currency_doctrine.yaml` maps:
 
 ```text
 dir: src/Entity/Currency
-prefix: App\Entity\Currency
+prefix: App\Currencing\Entity\Currency
 alias: Currencing
 ```
 
