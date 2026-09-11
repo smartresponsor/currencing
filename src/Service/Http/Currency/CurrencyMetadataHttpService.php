@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Http\Currency;
+namespace App\Currencing\Service\Http\Currency;
 
-use App\ServiceInterface\Currency\CurrencyMetadataViewProviderInterface;
+use App\Currencing\ServiceInterface\CurrencyMetadataViewProviderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 

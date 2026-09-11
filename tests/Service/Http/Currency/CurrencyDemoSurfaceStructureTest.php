@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Service\Http\Currency;
+namespace App\Currencing\Tests\Service\Http\Currency;
 
 use PHPUnit\Framework\TestCase;
 

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Http\Currency;
+namespace App\Currencing\Service\Http\Currency;
 
-use App\Dto\Currency\CurrencyAmountInputDTO;
-use App\Enum\Currency\CurrencyRoundingContext;
-use App\Enum\Currency\CurrencyRoundingMode;
-use App\ServiceInterface\Currency\CurrencyAmountInputResolverInterface;
+use App\Currencing\DTO\CurrencyAmountInputDTO;
+use App\Currencing\Enum\CurrencyRoundingContext;
+use App\Currencing\Enum\CurrencyRoundingMode;
+use App\Currencing\ServiceInterface\CurrencyAmountInputResolverInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 

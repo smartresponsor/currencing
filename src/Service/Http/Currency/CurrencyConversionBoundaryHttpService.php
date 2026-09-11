@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Http\Currency;
+namespace App\Currencing\Service\Http\Currency;
 
-use App\ServiceInterface\Currency\CurrencyConversionBoundaryProviderInterface;
+use App\Currencing\ServiceInterface\CurrencyConversionBoundaryProviderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
