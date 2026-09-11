@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Currencing standalone runtime foundation gate.
  *
- * This gate keeps the repository RC-ready as a default-Symfony App\... project
+ * This gate keeps the repository RC-ready as a canonical App\Currencing\... component.
  * without booting Composer or the Symfony container.
  */
 $root = dirname(__DIR__);
@@ -34,7 +34,7 @@ function m17_read_required(string $root, string $relative, array &$errors): stri
 $composer = m17_read_required($root, 'composer.json', $errors);
 foreach ([
     '"php": "^8.4"',
-    '"App\\\\": "src/"',
+    '"App\\\\Currencing\\\\": "src/"',
     'symfony/framework-bundle',
     'doctrine/doctrine-bundle',
     'doctrine/orm',
@@ -48,8 +48,8 @@ foreach ([
 }
 
 $kernel = m17_read_required($root, 'src/Kernel.php', $errors);
-if ('' !== $kernel && (!str_contains($kernel, 'namespace App;') || !str_contains($kernel, 'MicroKernelTrait'))) {
-    $errors[] = 'src/Kernel.php must be a default Symfony App\\ Kernel using MicroKernelTrait.';
+if ('' !== $kernel && (!str_contains($kernel, 'namespace App\\Currencing;') || !str_contains($kernel, 'MicroKernelTrait'))) {
+    $errors[] = 'src/Kernel.php must be the canonical App\\Currencing\\ Kernel using MicroKernelTrait.';
 }
 
 $bundles = m17_read_required($root, 'config/bundles.php', $errors);
@@ -115,8 +115,8 @@ if ('' !== $doctrine && (!str_contains($doctrine, 'DATABASE_URL') || !str_contai
 }
 
 $doctrineMapping = m17_read_required($root, 'config/packages/doctrine_currencing.yaml', $errors);
-if ('' !== $doctrineMapping && (!str_contains($doctrineMapping, 'src/Entity/Currency') || !str_contains($doctrineMapping, "prefix: 'App\\Entity\\Currency'"))) {
-    $errors[] = 'config/packages/doctrine_currencing.yaml must map src/Entity/Currency to App\\Entity\\Currency.';
+if ('' !== $doctrineMapping && (!str_contains($doctrineMapping, 'src/Entity/Currency') || !str_contains($doctrineMapping, "prefix: 'App\\Currencing\\Entity\\Currency'"))) {
+    $errors[] = 'config/packages/doctrine_currencing.yaml must map src/Entity/Currency to App\\Currencing\\Entity\\Currency.';
 }
 
 $currencyEntity = m17_read_required($root, 'src/Entity/Currency/CurrencyEntity.php', $errors);
@@ -124,8 +124,8 @@ if ('' !== $currencyEntity && !str_contains($currencyEntity, "name: 'currency_cu
     $errors[] = 'CurrencyEntity must own the canonical currency_currency table for entity-first schema generation.';
 }
 
-if (is_dir($root.'/migrations')) {
-    $errors[] = 'Legacy migrations directory must not remain after the entity-first schema transition.';
+if (!is_dir($root.'/migrations')) {
+    $errors[] = 'Backend-owned migrations directory must mirror the entity-first Doctrine schema.';
 }
 
 if ([] !== $errors) {

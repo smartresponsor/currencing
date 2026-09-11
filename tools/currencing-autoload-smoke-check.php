@@ -12,15 +12,15 @@ $root = dirname(__DIR__);
 $errors = [];
 
 $expectedClasses = [
-    'src/Entity/Currency/CurrencyEntity.php' => 'App\\Entity\\Currency\\CurrencyEntity',
-    'src/Repository/Currency/CurrencyRepository.php' => 'App\\Repository\\Currency\\CurrencyRepository',
-    'src/Service/Currency/CurrencyAmountInputResolver.php' => 'App\\Service\\Currency\\CurrencyAmountInputResolver',
-    'src/Service/Currency/CurrencyRoundingPolicyResolver.php' => 'App\\Service\\Currency\\CurrencyRoundingPolicyResolver',
-    'src/Service/Currency/CurrencyConversionBoundaryProvider.php' => 'App\\Service\\Currency\\CurrencyConversionBoundaryProvider',
-    'src/Service/Currency/CurrencyTemplateContextProvider.php' => 'App\\Service\\Currency\\CurrencyTemplateContextProvider',
-    'src/Dto/Currency/CurrencyTemplateContextDTO.php' => 'App\\Dto\\Currency\\CurrencyTemplateContextDTO',
-    'src/Service/Http/Currency/CurrencyTemplateContextHttpService.php' => 'App\\Service\\Http\\Currency\\CurrencyTemplateContextHttpService',
-    'src/Service/Http/Currency/CurrencyNormalizeHttpService.php' => 'App\\Service\\Http\\Currency\\CurrencyNormalizeHttpService',
+    'src/Entity/Currency/CurrencyEntity.php' => 'App\\Currencing\\Entity\\Currency\\CurrencyEntity',
+    'src/Repository/CurrencyRepository.php' => 'App\\Currencing\\Repository\\CurrencyRepository',
+    'src/Service/CurrencyAmountInputResolver.php' => 'App\\Currencing\\Service\\CurrencyAmountInputResolver',
+    'src/Service/CurrencyRoundingPolicyResolver.php' => 'App\\Currencing\\Service\\CurrencyRoundingPolicyResolver',
+    'src/Service/CurrencyConversionBoundaryProvider.php' => 'App\\Currencing\\Service\\CurrencyConversionBoundaryProvider',
+    'src/Service/CurrencyTemplateContextProvider.php' => 'App\\Currencing\\Service\\CurrencyTemplateContextProvider',
+    'src/DTO/CurrencyTemplateContextDTO.php' => 'App\\Currencing\\DTO\\CurrencyTemplateContextDTO',
+    'src/Service/Http/Currency/CurrencyTemplateContextHttpService.php' => 'App\\Currencing\\Service\\Http\\Currency\\CurrencyTemplateContextHttpService',
+    'src/Service/Http/Currency/CurrencyNormalizeHttpService.php' => 'App\\Currencing\\Service\\Http\\Currency\\CurrencyNormalizeHttpService',
 ];
 
 foreach ($expectedClasses as $relative => $fqcn) {

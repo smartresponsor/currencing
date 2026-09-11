@@ -40,14 +40,14 @@ $doctrine = read_file_required($root, 'config/packages/doctrine_currencing.yaml'
 $twig = read_file_required($root, 'config/packages/twig.yaml', $errors);
 
 $requiredAliases = [
-    'App\\ServiceInterface\\Currency\\CurrencyMetadataProviderInterface' => 'App\\Service\\Currency\\CurrencyIntlMetadataProvider',
-    'App\\ServiceInterface\\Currency\\CurrencyCodeValidatorInterface' => 'App\\Service\\Currency\\CurrencyCodeValidator',
-    'App\\ServiceInterface\\Currency\\CurrencyPrecisionResolverInterface' => 'App\\Service\\Currency\\CurrencyPrecisionResolver',
-    'App\\ServiceInterface\\Currency\\CurrencyAmountNormalizerInterface' => 'App\\Service\\Currency\\CurrencyCanonicalAmountNormalizer',
-    'App\\ServiceInterface\\Currency\\CurrencyAmountInputResolverInterface' => 'App\\Service\\Currency\\CurrencyAmountInputResolver',
-    'App\\ServiceInterface\\Currency\\CurrencyDisplayFormatterInterface' => 'App\\Service\\Currency\\CurrencyDisplayFormatter',
-    'App\\ServiceInterface\\Currency\\CurrencyRoundingPolicyResolverInterface' => 'App\\Service\\Currency\\CurrencyRoundingPolicyResolver',
-    'App\\ServiceInterface\\Currency\\CurrencyConversionBoundaryProviderInterface' => 'App\\Service\\Currency\\CurrencyConversionBoundaryProvider',
+    'App\\Currencing\\ServiceInterface\\CurrencyMetadataProviderInterface' => 'App\\Currencing\\Service\\CurrencyIntlMetadataProvider',
+    'App\\Currencing\\ServiceInterface\\CurrencyCodeValidatorInterface' => 'App\\Currencing\\Service\\CurrencyCodeValidator',
+    'App\\Currencing\\ServiceInterface\\CurrencyPrecisionResolverInterface' => 'App\\Currencing\\Service\\CurrencyPrecisionResolver',
+    'App\\Currencing\\ServiceInterface\\CurrencyAmountNormalizerInterface' => 'App\\Currencing\\Service\\CurrencyCanonicalAmountNormalizer',
+    'App\\Currencing\\ServiceInterface\\CurrencyAmountInputResolverInterface' => 'App\\Currencing\\Service\\CurrencyAmountInputResolver',
+    'App\\Currencing\\ServiceInterface\\CurrencyDisplayFormatterInterface' => 'App\\Currencing\\Service\\CurrencyDisplayFormatter',
+    'App\\Currencing\\ServiceInterface\\CurrencyRoundingPolicyResolverInterface' => 'App\\Currencing\\Service\\CurrencyRoundingPolicyResolver',
+    'App\\Currencing\\ServiceInterface\\CurrencyConversionBoundaryProviderInterface' => 'App\\Currencing\\Service\\CurrencyConversionBoundaryProvider',
 ];
 
 foreach ($requiredAliases as $interface => $implementation) {
@@ -81,20 +81,20 @@ if (!str_contains($twig, 'src/Resources/views') || !str_contains($twig, 'Currenc
 }
 
 foreach ([
-    'App\\Service\\Http\\Currency\\',
-    'App\\DataFixtures\\Currency\\',
-    'App\\Form\\Currency\\',
-    'App\\Repository\\Currency\\',
-    'App\\Service\\Currency\\',
-    'App\\Validator\\Currency\\',
+    'App\\Currencing\\Service\\Http\\Currency\\',
+    'App\\Currencing\\DataFixtures\\',
+    'App\\Currencing\\Form\\',
+    'App\\Currencing\\Repository\\',
+    'App\\Currencing\\Service\\',
+    'App\\Currencing\\Validator\\',
 ] as $resourceNamespace) {
     if (!str_contains($services, $resourceNamespace)) {
         $errors[] = 'Missing explicit service resource namespace: '.$resourceNamespace;
     }
 }
 
-if (!str_contains($doctrine, 'src/Entity/Currency') || !str_contains($doctrine, "prefix: 'App\\Entity\\Currency'")) {
-    $errors[] = 'Doctrine Currencing mapping must target src/Entity/Currency with App\\Entity\\Currency prefix.';
+if (!str_contains($doctrine, 'src/Entity/Currency') || !str_contains($doctrine, "prefix: 'App\\Currencing\\Entity\\Currency'")) {
+    $errors[] = 'Doctrine Currencing mapping must target src/Entity/Currency with App\\Currencing\\Entity\\Currency prefix.';
 }
 
 $routeExpectations = [

@@ -58,8 +58,8 @@ if ('' !== $composer) {
             }
         }
 
-        if (($decoded['autoload']['psr-4']['App\\'] ?? null) !== 'src/') {
-            $errors[] = 'composer.json must autoload App\\ from src/.';
+        if (($decoded['autoload']['psr-4']['App\\Currencing\\'] ?? null) !== 'src/') {
+            $errors[] = 'composer.json must autoload App\\Currencing\\ from src/.';
         }
 
         $gateScript = $decoded['scripts']['currencing:gates'] ?? [];
@@ -83,8 +83,8 @@ if ('' !== $composer) {
 
 $console = m19_read_required($root, 'bin/console', $errors);
 foreach ([
-    "require_once dirname(__DIR__) . '/vendor/autoload_runtime.php'",
-    'use App\\Kernel;',
+    "require_once dirname(__DIR__).'/vendor/autoload_runtime.php'",
+    'use App\\Currencing\\Kernel;',
     'return static function (array $context): Application',
 ] as $needle) {
     if ('' !== $console && !str_contains($console, $needle)) {
@@ -94,8 +94,8 @@ foreach ([
 
 $frontController = m19_read_required($root, 'public/index.php', $errors);
 foreach ([
-    "require_once dirname(__DIR__) . '/vendor/autoload_runtime.php'",
-    'use App\\Kernel;',
+    "require_once dirname(__DIR__).'/vendor/autoload_runtime.php'",
+    'use App\\Currencing\\Kernel;',
     'return static function (array $context): Kernel',
 ] as $needle) {
     if ('' !== $frontController && !str_contains($frontController, $needle)) {
@@ -104,7 +104,7 @@ foreach ([
 }
 
 $kernel = m19_read_required($root, 'src/Kernel.php', $errors);
-foreach (['namespace App;', 'MicroKernelTrait', 'final class Kernel extends BaseKernel'] as $needle) {
+foreach (['namespace App\\Currencing;', 'MicroKernelTrait', 'final class Kernel extends BaseKernel'] as $needle) {
     if ('' !== $kernel && !str_contains($kernel, $needle)) {
         $errors[] = 'src/Kernel.php missing marker: '.$needle;
     }
@@ -146,7 +146,7 @@ foreach (['DATABASE_URL', "server_version: '16'", 'auto_mapping: false'] as $nee
 }
 
 $mapping = m19_read_required($root, 'config/packages/doctrine_currencing.yaml', $errors);
-foreach (["dir: '%kernel.project_dir%/src/Entity/Currency'", "prefix: 'App\\Entity\\Currency'", 'alias: Currencing'] as $needle) {
+foreach (["dir: '%kernel.project_dir%/src/Entity/Currency'", "prefix: 'App\\Currencing\\Entity\\Currency'", 'alias: Currencing'] as $needle) {
     if ('' !== $mapping && !str_contains($mapping, $needle)) {
         $errors[] = 'config/packages/doctrine_currencing.yaml missing marker: '.$needle;
     }
@@ -157,7 +157,7 @@ $currencyServices = m19_read_required($root, 'config/services/currencing.yaml', 
 if ('' !== $services && !str_contains($services, 'services/currencing.yaml')) {
     $errors[] = 'config/services.yaml must import services/currencing.yaml.';
 }
-foreach (['App\\Service\\Http\\Currency\\:', 'controller.service_arguments', 'App\\ServiceInterface\\Currency\\CurrencyMetadataProviderInterface', 'App\\ServiceInterface\\Currency\\CurrencyTemplateContextProviderInterface'] as $needle) {
+foreach (['App\\Currencing\\Service\\Http\\Currency\\:', 'controller.service_arguments', 'App\\Currencing\\ServiceInterface\\CurrencyMetadataProviderInterface', 'App\\Currencing\\ServiceInterface\\CurrencyTemplateContextProviderInterface'] as $needle) {
     if ('' !== $currencyServices && !str_contains($currencyServices, $needle)) {
         $errors[] = 'config/services/currencing.yaml missing marker: '.$needle;
     }

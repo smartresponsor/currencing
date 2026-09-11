@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Runtime;
+namespace App\Currencing\Tests\Runtime;
 
 use PHPUnit\Framework\TestCase;
 

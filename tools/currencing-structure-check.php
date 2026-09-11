@@ -11,6 +11,17 @@ declare(strict_types=1);
 $root = dirname(__DIR__);
 $errors = [];
 
+$composer = file_get_contents($root.'/composer.json');
+if (!is_string($composer)) {
+    $errors[] = 'Cannot read composer.json.';
+} else {
+    foreach (['cruding/crud', 'objecting/object', 'viewing/view', 'interfacing/interface', 'easycorp/easyadmin-bundle'] as $requiredPackage) {
+        if (!str_contains($composer, '"'.$requiredPackage.'"')) {
+            $errors[] = 'Missing canonical backend stack dependency: '.$requiredPackage;
+        }
+    }
+}
+
 $forbiddenDirectories = [
     $root.'/src/Domain',
     $root.'/Domain',
@@ -25,11 +36,11 @@ foreach ($forbiddenDirectories as $directory) {
 
 $requiredDirectories = [
     'src/Entity/Currency',
-    'src/Repository/Currency',
-    'src/Dto/Currency',
-    'src/ValueObject/Currency',
-    'src/Service/Currency',
-    'src/ServiceInterface/Currency',
+    'src/Repository',
+    'src/DTO',
+    'src/ValueObject',
+    'src/Service',
+    'src/ServiceInterface',
     'src/Service/Http/Currency',
     'docs/currencing',
 ];
@@ -55,19 +66,15 @@ foreach ($phpFiles as $file) {
         continue;
     }
 
-    if (!str_contains($contents, 'namespace App;') && !str_contains($contents, 'namespace App\\')) {
-        $errors[] = 'Non-canonical namespace in: '.$relative;
+    if (!str_contains($contents, 'namespace App\\Currencing;') && !str_contains($contents, 'namespace App\\Currencing\\')) {
+        $errors[] = 'Non-canonical Currencing namespace in: '.$relative;
     }
 
-    if (str_contains($contents, 'namespace App\\Currencing\\') || str_contains($contents, 'use App\\Currencing\\')) {
-        $errors[] = 'Forbidden non-default component namespace in: '.$relative;
+    if (1 === preg_match('/namespace\s+App\\\\(?!Currencing(?:\\\\|;))/', $contents)) {
+        $errors[] = 'Forbidden bare App namespace in: '.$relative;
     }
 
-    if (1 === preg_match('/namespace\s+App\\\\Domain\\\\|namespace\s+App\\\\Currency\\\\/', $contents)) {
-        $errors[] = 'Forbidden legacy namespace in: '.$relative;
-    }
-
-    if (1 === preg_match('/class\s+\w*CurrencyConverter\b|interface\s+\w*ExchangeRateProvider\b|class\s+\w*ExchangeRateProvider\b/', $contents)) {
+    if (1 === preg_match('/class\s+\w*CurrencyConverter\b|interface\s+\w*ExchangeRateProvider\b|class\s+\w*ExchangeRateProvider\b|class\s+CurrencyExchangeEntity\b|interface\s+CurrencyExchangeRepositoryInterface\b|class\s+CurrencyExchangeRepository\b/', $contents)) {
         $errors[] = 'Forbidden FX/converter responsibility inside Currencing: '.$relative;
     }
 }
