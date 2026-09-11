@@ -77,3 +77,12 @@
 - Canon038 is not factually complete while the four legacy YAML filenames still physically exist, even though they have zero callers and their canonical replacements are active and verified.
 - Required cleanup when deletion/rename capability is authorized: remove `config/packages/currencing.yaml`, `config/packages/doctrine_currencing.yaml`, `config/routes/currencing.yaml`, and `config/services/currencing.yaml` without changing their already-migrated callers.
 
+### Iteration 4 — debt closure and integration
+
+- Signed commit created: `f904e72792508cc08ee0ca969899ae9ca34f3131` (`Canonize Currencing config identity`).
+- Commit includes 35 Currencing-owned files and excludes all four pre-existing `.gating/**` modifications.
+- Post-commit worktree contains only the four pre-existing `.gating/**` modifications; Currencing task changes are committed.
+- Push attempt through the authorized safe Git writer was blocked by `working_tree_dirty` because those four unrelated `.gating/**` files remain modified. They were not stashed, reset, staged, or committed because they predate this task and are outside this task's ownership.
+- Branch after commit: `release/currencing-canonicalization-20260910`, ahead of upstream by one commit at this point.
+
+
