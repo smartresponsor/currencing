@@ -167,4 +167,14 @@
 - The authorized Currencing scope has no remaining code/runtime defect identified in this run.
 - Integration tail is bounded and external to Currencing ownership: publish commit `6098cbe452402cd5b249fe5d7431b500c9b97ef3` only after the pre-existing `.gating/**` worktree changes are independently resolved or moved by their owner, then open/merge the normal remote integration path.
 
+### Follow-up — `.gating/**` worktree closure
+
+- User explicitly authorized resolving the previously out-of-scope `.gating/**` worktree.
+- The dirty set was classified as a coherent Gating update: PHPUnit 13 tooling, Canon039/Canon040 registration/calibration, coverage/cache ignores, and targeted rule corrections.
+- Fixed one factual Windows portability defect in `.gating/composer.json`: `test:unit` now invokes `@php vendor/bin/phpunit tests/Unit` instead of relying on a global `phpunit` command.
+- Installed `.gating` dependencies from the existing lock file successfully.
+- `.gating` verification: `composer validate --strict` pass; `composer test:unit` pass (1 test / 2 assertions); `composer test` calibration pass; `composer phpstan` pass; `composer cs:check` pass.
+- `.gating` `rector:check` reports four pre-existing modernization candidates outside the original dirty set; they were not auto-applied to avoid expanding this closure wave.
+- `.gating` self `composer gate` is not a valid consumer-copy acceptance gate because its local profile targets `App\\Example`, while the embedded tool namespace is `Gating\\Gate`; Canon039 itself passes and Canon040 correctly warns when persistent coverage evidence is absent.
+
 
