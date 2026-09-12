@@ -7,7 +7,7 @@
     "runtimeProofIncluded": true,
     "runtimeProofStatus": "green-local-runtime-proof-reported",
     "notes": [
-      "Score excludes runtime proof, PHPStan, PHPUnit execution, vendor-backed CI, and browser proof.",
+      "Component-local RC proof includes runtime gates, PHPUnit, PHPStan, coding-style checks, and strict Composer validation; host/browser/remote CI proofs remain integration-environment concerns.",
       "Currencing has a stable Entity-first Symfony-oriented model, DTO/VO boundary, API contract, structural gates, and Exchanging boundary.",
       "M19 adds a static console runtime proof gate for composer/bin/console/front-controller/config/template coherence before vendor-backed Symfony boot.",
       "M20 fixes the first local Symfony boot blocker by adding symfony/var-exporter for Doctrine LazyGhost compatibility.",
