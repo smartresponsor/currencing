@@ -152,4 +152,19 @@
 - `composer validate --strict --no-interaction`: pass.
 - No additional in-scope runtime/code failures were found; `.gating/**` remains explicitly excluded from this task.
 
+### Iteration 4 — debt closure and integration
+
+- Inspected the Currencing-owned diffs and confirmed they are limited to factual documentation/readiness closure plus this orchestration journal.
+- Attempted to create a dedicated `rc/currencing-readiness-20260912` branch, but the guarded branch-switch capability rejected the operation because the worktree contains pre-existing `.gating/**` changes.
+- Created signed commit `6098cbe452402cd5b249fe5d7431b500c9b97ef3` (`docs: align Currencing RC readiness`) with exactly four Currencing-owned files; none of the 13 `.gating/**` changes were staged or committed.
+- Push/set-upstream was attempted through Console MCP and correctly blocked by `working_tree_dirty`; the current branch remains one commit ahead of `origin/master`.
+- No stash, reset, checkout, deletion, or unrelated commit was used to bypass the guard.
+
+### Iteration 5 — final acceptance and handoff
+
+- Component-local RC acceptance is green: strict Composer validation, all 11 Currencing gates, PHPUnit 42/42 with 549 assertions, PHPStan with no errors, and PHP-CS-Fixer dry-run with 0 fixable files.
+- Canon038 legacy YAML names are absent from active source/config; only historical journal references remain.
+- The authorized Currencing scope has no remaining code/runtime defect identified in this run.
+- Integration tail is bounded and external to Currencing ownership: publish commit `6098cbe452402cd5b249fe5d7431b500c9b97ef3` only after the pre-existing `.gating/**` worktree changes are independently resolved or moved by their owner, then open/merge the normal remote integration path.
+
 
