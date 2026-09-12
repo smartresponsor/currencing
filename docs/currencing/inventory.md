@@ -25,6 +25,7 @@ CurrencyAmountResolutionDTO
 CurrencyRoundingPolicyDTO
 CurrencyConversionIntentDTO
 CurrencyConversionBoundaryDTO
+CurrencyTemplateContextDTO
 ```
 
 ## Key value objects
@@ -66,6 +67,7 @@ CurrencyAmountInputResolverInterface
 CurrencyDisplayFormatterInterface
 CurrencyRoundingPolicyResolverInterface
 CurrencyConversionBoundaryProviderInterface
+CurrencyTemplateContextProviderInterface
 ```
 
 ## Controllers/routes
@@ -78,6 +80,7 @@ POST /currencing/money/normalize
 GET  /currencing/demo
 GET  /currencing/admin-preview/currencies
 GET  /currencing/conversion-boundary
+GET  /currencing/template-context
 ```
 
 ## Boundary

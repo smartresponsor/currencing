@@ -21,17 +21,16 @@ Implemented:
 - Exchanging boundary handshake;
 - lightweight demo/read surface.
 
-## Not part of current readiness percentage
+## Current verification posture
 
-These are final hardening/proof tasks, not architectural/business-completeness blockers:
+Local repository proof is green for the component-owned RC gates, PHPUnit, PHPStan, coding-style checks, and strict Composer validation.
 
-- host-app runtime proof;
-- browser proof;
-- real database migration execution;
-- full PHPUnit execution in target environment;
-- PHPStan/Psalm level proof;
-- vendor-backed CI;
-- final cache/runtime cleanup.
+The remaining environment/integration proofs are intentionally outside the component-local acceptance boundary:
+
+- host-application integration proof;
+- browser/UI proof in the assembled product;
+- production database migration execution;
+- vendor-backed remote CI/deployment proof.
 
 ## Risks to check during runtime hardening
 

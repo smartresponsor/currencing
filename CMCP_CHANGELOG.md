@@ -85,4 +85,96 @@
 - Push attempt through the authorized safe Git writer was blocked by `working_tree_dirty` because those four unrelated `.gating/**` files remain modified. They were not stashed, reset, staged, or committed because they predate this task and are outside this task's ownership.
 - Branch after commit: `release/currencing-canonicalization-20260910`, ahead of upstream by one commit at this point.
 
+## engine-20260912081325-currencing-887257
+
+### Iteration 1 — reconnaissance and baseline
+
+- Workspace: `D:\\PhpstormProjects\\www\\Currencing`.
+- Baseline branch: `checkpoint/verify-master-after-yaml-retire`.
+- Baseline HEAD: `24e8b0feb8fecfddf4f3e6fedf74e3386c80b080`, tracking `origin/master`, ahead `0`, behind `0`.
+- Pre-existing worktree changes: 13 `.gating/**` changes; they are unrelated shared-gate work and remain outside Currencing ownership for this task.
+- `composer validate --strict --no-interaction`: pass.
+- `composer currencing:gates`: pass, all 11 repository gates green.
+- Legacy Canon038 config names are absent from active source/config and survive only as historical journal references.
+
+### Sources read and contracts applied
+
+- Currencing: `AGENTS.md`, `README.md`, `composer.json`, `manifest.yaml`, `CMCP_CHANGELOG.md`, readiness/inventory/release metadata, active `currency_*` Symfony config, repository status and scripts.
+- Objecting: `AGENTS.md`, `README.md`, `composer.json`; Currencing keeps entity-native identity/system fields and consumes Objecting field packs without leaking Doctrine entities across boundaries.
+- Cruding: `AGENTS.md`, `README.md`, `composer.json`; generic CRUD mechanics/routes remain outside Currencing.
+- Viewing: `AGENTS.md`, `README.md`, `composer.json`; rendering/fallback stays in the presentation boundary.
+- Interfacing: `AGENTS.md`, `README.md`, `composer.json`; Currencing exports DTO/service/template context rather than owning shell composition.
+- Gating: `AGENTS.md`, `README.md`, `composer.json`; executable enforcement is separate from normative Canonization text.
+- Canonization: `AGENTS.md`, `README.md`, `composer.json`, architecture guard matrix, and `Canon038ConfigYamlSubjectPrefixRule.md`; previous mapped rules Canon000/007/008/010/017/018/019/033 remain applicable and are revalidated against current package identity/tree.
+
+### Target-to-canon mapping
+
+- Canon000/018: `currencing/currency` => component namespace `App\\Currencing\\` and subject prefix `Currency*`.
+- Canon007: PSR-4 identity remains `App\\Currencing\\ => src/` with role-first tree.
+- Canon008/023: Objecting, Cruding, Viewing and Interfacing are explicit Composer dependencies with local symlink path repositories.
+- Canon017: current docs/release metadata must describe the actual current runtime and verification state.
+- Canon019: no `src/Domain`, Port, Adapter, Adaptor, Resource or Surface architecture root.
+- Canon033: dev/prod Composer identity parity applies when the production manifest exists.
+- Canon038: active component-owned config filenames use the `currency_` subject prefix; retired `currencing*.yaml` names are no longer active.
+
+### Market / maturity opening mixin
+
+- Mature money libraries such as Brick Money treat currency, context/scale and explicit rounding as first-class immutable semantics; Symfony Intl exposes canonical currency metadata including fraction digits and cash rounding metadata.
+- SaaS/enterprise payment systems generally separate currency metadata/normalization from exchange-rate sourcing and quote pricing. Currencing's boundary is therefore correctly centered on metadata, precision, normalization, formatting and policy, with FX ownership remaining in Exchanging.
+- Baseline expectation: exact decimal/minor-unit handling, explicit rounding policy, stable ISO metadata, deterministic validation and non-leaky integration DTOs.
+- Advanced growth expectation: expose cash-fraction/cash-rounding metadata and richer diagnostics without moving FX pricing/provider responsibility into Currencing.
+
+### RC-critical workstream selected
+
+1. Close factual documentation/readiness drift around the already-shipped template-context surface and current verification status.
+2. Run PHPUnit, PHPStan and coding-style gates against the current master-equivalent tree.
+3. Repair only factual in-scope failures; keep all `.gating/**` changes untouched.
+4. Integrate a coherent Currencing-only change set and verify final branch/worktree state.
+
+### Growth workstream — non-blocking
+
+- Consider a later cash-rounding metadata API/DX extension using Symfony Intl cash fraction/rounding information.
+- Keep exchange-rate sourcing, historical FX and conversion pricing out of Currencing.
+
+### Iteration 2 — material implementation
+
+- Updated `docs/currencing/inventory.md` to include the shipped `CurrencyTemplateContextDTO`, `CurrencyTemplateContextProviderInterface`, and `GET /currencing/template-context` surface.
+- Updated `docs/currencing/readiness.md` so component-local verification no longer lists PHPUnit/PHPStan as outstanding after they have been executed successfully.
+- Updated `delivery/release/currencing-rc-readiness.json` to reflect the current local RC proof while leaving host/browser/remote CI concerns explicitly external.
+- No source/runtime behavior was broadened; the change is factual Canon017 documentation/readiness closure only.
+
+### Iteration 3 — verification and fix
+
+- `composer currencing:gates`: pass after documentation/readiness edits, all 11 repository gates green.
+- `composer test`: pass, 42 tests / 549 assertions on PHP 8.4.13.
+- `composer phpstan`: pass, 96 files, no errors.
+- `composer cs:check`: pass, 0 fixable files across 104 files.
+- `composer validate --strict --no-interaction`: pass.
+- No additional in-scope runtime/code failures were found; `.gating/**` remains explicitly excluded from this task.
+
+### Iteration 4 — debt closure and integration
+
+- Inspected the Currencing-owned diffs and confirmed they are limited to factual documentation/readiness closure plus this orchestration journal.
+- Attempted to create a dedicated `rc/currencing-readiness-20260912` branch, but the guarded branch-switch capability rejected the operation because the worktree contains pre-existing `.gating/**` changes.
+- Created signed commit `6098cbe452402cd5b249fe5d7431b500c9b97ef3` (`docs: align Currencing RC readiness`) with exactly four Currencing-owned files; none of the 13 `.gating/**` changes were staged or committed.
+- Push/set-upstream was attempted through Console MCP and correctly blocked by `working_tree_dirty`; the current branch remains one commit ahead of `origin/master`.
+- No stash, reset, checkout, deletion, or unrelated commit was used to bypass the guard.
+
+### Iteration 5 — final acceptance and handoff
+
+- Component-local RC acceptance is green: strict Composer validation, all 11 Currencing gates, PHPUnit 42/42 with 549 assertions, PHPStan with no errors, and PHP-CS-Fixer dry-run with 0 fixable files.
+- Canon038 legacy YAML names are absent from active source/config; only historical journal references remain.
+- The authorized Currencing scope has no remaining code/runtime defect identified in this run.
+- Integration tail is bounded and external to Currencing ownership: publish commit `6098cbe452402cd5b249fe5d7431b500c9b97ef3` only after the pre-existing `.gating/**` worktree changes are independently resolved or moved by their owner, then open/merge the normal remote integration path.
+
+### Follow-up — `.gating/**` worktree closure
+
+- User explicitly authorized resolving the previously out-of-scope `.gating/**` worktree.
+- The dirty set was classified as a coherent Gating update: PHPUnit 13 tooling, Canon039/Canon040 registration/calibration, coverage/cache ignores, and targeted rule corrections.
+- Fixed one factual Windows portability defect in `.gating/composer.json`: `test:unit` now invokes `@php vendor/bin/phpunit tests/Unit` instead of relying on a global `phpunit` command.
+- Installed `.gating` dependencies from the existing lock file successfully.
+- `.gating` verification: `composer validate --strict` pass; `composer test:unit` pass (1 test / 2 assertions); `composer test` calibration pass; `composer phpstan` pass; `composer cs:check` pass.
+- `.gating` `rector:check` reports four pre-existing modernization candidates outside the original dirty set; they were not auto-applied to avoid expanding this closure wave.
+- `.gating` self `composer gate` is not a valid consumer-copy acceptance gate because its local profile targets `App\\Example`, while the embedded tool namespace is `Gating\\Gate`; Canon039 itself passes and Canon040 correctly warns when persistent coverage evidence is absent.
+
 
