@@ -5,9 +5,9 @@
   "readiness": {
     "architectureBusinessCompletenessPercent": 94,
     "runtimeProofIncluded": true,
-    "runtimeProofStatus": "green-local-runtime-proof-reported",
+    "runtimeProofStatus": "green-component-and-browser-boundary-proof-with-local-database-demo-blocked",
     "notes": [
-      "Component-local RC proof includes runtime gates, PHPUnit, PHPStan, coding-style checks, and strict Composer validation; host/browser/remote CI proofs remain integration-environment concerns.",
+      "Component-local RC proof includes runtime gates, PHPUnit, PHPStan, coding-style checks, strict Composer validation, PHPUnit/Xdebug coverage generation, and a Playwright real-browser conversion-boundary proof; the database-backed demo still depends on reconciling the unmanaged local PostgreSQL baseline.",
       "Currencing has a stable Entity-first Symfony-oriented model, DTO/VO boundary, API contract, structural gates, and Exchanging boundary.",
       "M19 adds a static console runtime proof gate for composer/bin/console/front-controller/config/template coherence before vendor-backed Symfony boot.",
       "M20 fixes the first local Symfony boot blocker by adding symfony/var-exporter for Doctrine LazyGhost compatibility.",
@@ -113,9 +113,9 @@
       "mitigation": "M20 requires symfony/var-exporter and extends the static console runtime proof gate."
     },
     {
-      "risk": "Local PostgreSQL credentials still point to placeholder app/app",
-      "severity": "medium",
-      "mitigation": "Copy .env.local.example to .env.local, generate schema from entities, and configure a valid local PostgreSQL role/database before doctrine:schema:validate."
+      "risk": "Local PostgreSQL schema predates the current Entity/Objecting field-pack shape and has no migration ledger baseline",
+      "severity": "high",
+      "mitigation": "Reconcile the existing development schema and doctrine_migration_versions baseline explicitly before applying the initial migration; do not run the current CREATE TABLE migration blindly over the existing currency_currency table."
     },
     {
       "risk": "Bridge consumes API response instead of service contract without preserving route-name indirection",

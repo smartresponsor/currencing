@@ -177,4 +177,78 @@
 - `.gating` `rector:check` reports four pre-existing modernization candidates outside the original dirty set; they were not auto-applied to avoid expanding this closure wave.
 - `.gating` self `composer gate` is not a valid consumer-copy acceptance gate because its local profile targets `App\\Example`, while the embedded tool namespace is `Gating\\Gate`; Canon039 itself passes and Canon040 correctly warns when persistent coverage evidence is absent.
 
+## repository-implementation-20260913-currencing
+
+### Iteration 1 — reconnaissance and baseline
+
+- Workspace: `D:\\PhpstormProjects\\www\\Currencing`.
+- Baseline branch/HEAD: `fix/gating-quality-green-20260912` at `1d8cf5a3904ecb4e1506ab04a92053465780a7ef`, tracking origin with ahead/behind `0/0`.
+- Pre-existing worktree: 33 `.gating/**` changes, including in-progress Canon041/Canon042 Gating mirrors; these are treated as unrelated shared-gate work and must not be staged, rewritten, or absorbed by Currencing.
+- Baseline `composer validate --strict --no-interaction`: pass.
+- Baseline `composer currencing:gates`: pass, 11/11 component-local gates.
+
+### Sources read and canonical mapping
+
+- Currencing: `AGENTS.md`, `README.md`, `composer.json`, `composer.prod.json`, `manifest.yaml`, `CMCP_CHANGELOG.md`, `config/bundles.php`, readiness/inventory/release metadata and declared gate surface.
+- Objecting, Cruding, Viewing and Interfacing: current `AGENTS.md` where present, `README.md`, `composer.json` and relevant manifest/package contracts; existing direct dependencies and local path/symlink wiring are confirmed.
+- Collectioning and Tabling: current `README.md` and `composer.json`; both are Symfony bundles with package identities `collectioning/collection` and `tabling/table` and canonical bundle classes under `App\\Collectioning\\` and `App\\Tabling\\`.
+- Canonization: authoritative `Canon022StandaloneApplicationDependencyBaselineRule.md`, `Canon039PhpTestToolingRule.md`, `Canon040PhpTestCoverageRule.md`, `Canon041BehavioralUiTestToolingRule.md`, `Canon042BehavioralUiCoverageRule.md`, plus `GUARD_MATRIX.md` and repository agent projection.
+- Gating: current repository execution contract plus the pre-existing embedded `.gating/**` work confirms Canon041/042 are being materialized as executable mirrors, but those uncommitted shared changes are not Currencing-owned.
+
+### Target-to-canon mapping
+
+- Canon022 applies because Currencing owns `bin/console` + `config/bundles.php`: direct runtime baseline must include Cruding, Collectioning, Tabling, Viewing, Interfacing, Objecting and EasyAdmin. Currencing currently omits direct `collectioning/collection` and `tabling/table`; transitive availability through Cruding is explicitly insufficient.
+- Canon023 applies to local development dependencies: new Collectioning/Tabling direct dependencies require sibling Composer path repositories with `symlink: true`.
+- Canon024/033 apply to production manifest parity: `composer.prod.json` must receive matching direct package identities via production VCS repositories without local path repos.
+- Canon039 applies and existing PHPUnit dependency/script is present, but the current repository lacks the full persistent branch-coverage contract required by the latest textual rule.
+- Canon041 applies because Currencing directly requires FrameworkBundle and is standalone: repository-local `symfony/test-pack`, `symfony/panther`, `@playwright/test`, Playwright config and reproducible execution scripts are required.
+- Canon042 requires persistent repository-local behavioral/UI coverage evidence produced by a reproducible workflow; missing evidence is warning-level, so it is a measurable follow-up rather than a reason to fabricate coverage.
+
+### Market / maturity opening mixin
+
+- Mature PHP money libraries model currency/amounts with exact arithmetic and explicit rounding instead of floats; mature rate ecosystems separate currency metadata from exchange-rate providers and commonly add cache/provider abstractions. Currencing's existing exclusion of FX sourcing/conversion therefore remains correct.
+- RC safeguards relevant here are deterministic dependency/runtime topology and executable multi-layer test tooling; speculative FX features stay outside scope.
+
+### RC-critical workstream selected
+
+1. Close Canon022/023/024/033 direct dependency parity for Collectioning and Tabling in dev/prod manifests and bundle registration where runtime requires it.
+2. Close Canon039/041 test-tooling contract with standard Symfony functional/browser tooling and repository-local Playwright execution surfaces.
+3. Add deterministic behavioral/UI evidence production only to the extent it can be factually derived from declared Currencing surfaces; never invent percentages.
+4. Re-run component gates, PHPUnit, PHPStan, coding style, Composer validation and applicable canon/Gating checks; keep all `.gating/**` changes untouched.
+
+### Growth workstream — non-blocking
+
+- Later expose Symfony Intl cash-fraction/cash-rounding metadata as an API/DX maturity feature if consumers need it.
+- Keep FX rates, historical conversion and quote pricing in Exchanging, not Currencing.
+
+### Iteration 2 — material implementation
+
+- Added direct `collectioning/collection` and `tabling/table` runtime dependencies plus local symlink path repositories in `composer.json`; mirrored the package identities through production VCS repositories in `composer.prod.json` and registered both Symfony bundles in the standalone runtime.
+- Added Symfony Test Pack and Panther development dependencies, repository-local Playwright dependency/configuration, a reproducible npm lock file, and generated-artifact ignores.
+- Canonicalized the PHPUnit configuration from the legacy `phpunit.dist.xml` filename to `phpunit.xml.dist`, added source/coverage ownership and the Panther extension, and added persistent Xdebug path/branch coverage execution via `composer test:coverage`.
+- Added a Symfony `WebTestCase` for `/currencing/conversion-boundary` and a Playwright real-browser boundary test with an automatically managed local PHP web server.
+- Composer dependency resolution installed Collectioning/Tabling from the local sibling repositories and refreshed the lock graph; npm tooling installed successfully.
+
+### Iteration 3 — verification and fix
+
+- Initial PHPUnit verification exposed two real defects in the new proof path: an omitted test-class closing brace and a stale test-kernel identity (`App\\Kernel` versus the actual `App\\Currencing\\Kernel`). The syntax defect was fixed and the canonical PHPUnit config now binds the actual kernel explicitly because `.env.test` is path-policy protected.
+- Real HTTP dispatch then exposed a pre-existing runtime wiring defect: the broad `App\\Currencing\\Service\\` resource overrode `controller.service_arguments` tags on `Service/Http/Currency`. `config/services/currency_services.yaml` now excludes `Service/Http/` from the broad registration, preserving the dedicated controller registration.
+- `composer test`: pass, 43 tests / 552 assertions after fixes.
+- `composer currencing:gates`: pass, 11/11 component gates.
+- `composer phpstan`: pass, no errors.
+- `composer cs:check`: initial line-ending finding in the new functional test was fixed with the repository formatter; repeat passes with 0 fixable files.
+- `composer validate --strict --no-interaction`: pass.
+- `composer test:coverage`: pass with Xdebug 3.5.1. Measured repository coverage is Lines 45.55% (307/674), Methods 30.54% (62/203), Branches 71.12% (234/329). Canon040 therefore leaves high line/method test debt; branch coverage clears its 70% threshold. These measurements are factual and no synthetic coverage evidence was created.
+- npm audit initially required a lock file; a package-lock-only Playwright update created the reproducible lock, after which `npm audit --audit-level=high` passes with 0 vulnerabilities.
+- First Playwright run correctly failed because no web server was running. After adding Playwright-managed standalone `php -S` lifecycle, the database-backed demo reached Doctrine and exposed local schema drift rather than a browser/tooling failure.
+- PostgreSQL diagnostics show `currency_currency` has the legacy seven-column shape and zero rows, `currency_translation` is absent, and `doctrine_migration_versions` is empty. The guarded Doctrine dry-run sees the initial `Version20260905234900` CREATE migration as pending; it was deliberately not executed over the already-existing table.
+- Browser E2E was therefore bounded to the DB-independent `/currencing/conversion-boundary` contract; `npm test` now passes 1/1 in a real browser while the stale local database remains explicitly documented integration debt.
+
+### Iteration 4 — debt closure and integration preparation
+
+- Read Canon037 directly after Symfony repeatedly regenerated `config/reference.php`. Canon037 explicitly forbids this generated artifact from Git history; `.gitignore` now excludes it and Console MCP performed index-only untracking while preserving the local generated file for diagnostics/runtime.
+- Updated readiness documentation and release metadata with the real browser proof, measured Canon040 coverage debt, and exact local PostgreSQL migration-ledger/schema blocker. The former placeholder-credential risk is removed because database connectivity is now proven.
+- Canon042 evidence remains intentionally unmaterialized: the current repository has executable PHP and browser proof but does not yet own a complete, defensible functional/behavioral/UI/critical denominator producer. Missing evidence is warning-level under the textual canon; fabricated counters are prohibited.
+- Generic named `gating` execution is not available through the safe-check registry in this session (`Unknown check name: gating`); current acceptance uses the consulted textual Canonization rules plus executable Currencing/Composer/PHPUnit/PHPStan/PHP-CS-Fixer/npm/Playwright gates.
+- Pre-existing `.gating/**` changes remain untouched and excluded from Currencing integration ownership.
 
