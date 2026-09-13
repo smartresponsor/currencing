@@ -251,4 +251,16 @@
 - Canon042 evidence remains intentionally unmaterialized: the current repository has executable PHP and browser proof but does not yet own a complete, defensible functional/behavioral/UI/critical denominator producer. Missing evidence is warning-level under the textual canon; fabricated counters are prohibited.
 - Generic named `gating` execution is not available through the safe-check registry in this session (`Unknown check name: gating`); current acceptance uses the consulted textual Canonization rules plus executable Currencing/Composer/PHPUnit/PHPStan/PHP-CS-Fixer/npm/Playwright gates.
 - Pre-existing `.gating/**` changes remain untouched and excluded from Currencing integration ownership.
+- Signed Currencing integration commit created: `09fa8129acca5b8ae42b6a182e2fb4b8989b6f6d` (`Harden Currencing RC contracts`). It contains the Currencing-owned dependency, runtime, test-tooling, Canon037, documentation and lock/config changes; `.gating/**` is excluded.
+- Push attempt through the authorized Console MCP writer was blocked by `working_tree_dirty` because the 33 unrelated `.gating/**` changes remain present. No stash/reset or cross-boundary commit was used to bypass that guard.
+
+### Iteration 5 — final acceptance and handoff
+
+- Post-commit `composer currencing:gates`: pass, 11/11.
+- Post-commit `composer test`: pass, 43/43 tests with 552 assertions.
+- Post-commit `npm test`: pass, 1/1 Playwright real-browser boundary test with repository-managed web server.
+- Final pre-commit quality evidence also remains green: strict Composer validation, PHPStan no errors, PHP-CS-Fixer 0 fixable files, npm audit 0 vulnerabilities, and Xdebug coverage production succeeds.
+- Canon022/023/024/033 direct dependency and package-wiring gaps are closed; Canon039 and Canon041 tooling contracts are executable; Canon037 generated-reference tracking is closed by index-only untracking plus ignore coverage.
+- Remaining non-hard debt is explicit rather than hidden: Canon040 line/method coverage is 45.55%/30.54% (branches 71.12%), Canon042 has no fabricated denominator/evidence file, and the local PostgreSQL demo path remains blocked by an unmanaged legacy schema with an empty migration ledger. The pending initial CREATE migration was not applied destructively over that existing table.
+- Currencing-owned repository changes are committed. The only worktree dirt after the final handoff commit is expected to remain the pre-existing `.gating/**` work; remote publication stays guard-blocked until that separate work is resolved by its owner.
 
