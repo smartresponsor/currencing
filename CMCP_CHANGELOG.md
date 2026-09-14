@@ -264,3 +264,55 @@
 - Remaining non-hard debt is explicit rather than hidden: Canon040 line/method coverage is 45.55%/30.54% (branches 71.12%), Canon042 has no fabricated denominator/evidence file, and the local PostgreSQL demo path remains blocked by an unmanaged legacy schema with an empty migration ledger. The pending initial CREATE migration was not applied destructively over that existing table.
 - Currencing-owned repository changes are committed. The only worktree dirt after the final handoff commit is expected to remain the pre-existing `.gating/**` work; remote publication stays guard-blocked until that separate work is resolved by its owner.
 
+## repository-implementation-20260914-currencing
+
+### Reconnaissance and baseline
+
+- Workspace: `D:\\PhpstormProjects\\www\\Currencing`; baseline branch `fix/gating-quality-green-20260912`, HEAD `0a787bd40686a1fdc199257a82f4e1c1ae7d53f9`, tracking origin and ahead by 2 commits.
+- Pre-existing worktree dirt is confined to shared `.gating/**` changes (39 paths at baseline) and remains outside Currencing ownership.
+- Read Currencing `AGENTS.md`, `README.md`, `composer.json`, prior orchestration journal, plus current Objecting, Cruding, Viewing, Interfacing, Collectioning, Tabling, Gating and Canonization contracts.
+- Consulted normative Canonization material: `GUARD_MATRIX.md`, Canon043, Canon044 and Canon045, alongside previously applicable Canon000/007/008/017/018/019/022/023/024/033/037/038/039/040/041/042.
+
+### Target-to-canon mapping
+
+- Canon043: every locally linked first-party sibling must use exact `dev-master`; root development stability is `dev`; every path repository pins `options.versions[package] = dev-master`.
+- Canon044: Currencing Entity mappings must keep Objecting-owned persisted system fields entity-native (`uuid`, `slug`, `created_at`, etc.), never `object_*`/`objecting_*` columns or mapped properties.
+- Canon045: root development Composer repositories must expose the full reachable local first-party closure. Current contour covers direct siblings plus known transitive edges Cruding→Collectioning/Tabling, Tabling→Collectioning and Viewing→Interfacing.
+
+### Market / maturity opening mixin
+
+- Mature money implementations keep exact amount/currency/rounding semantics explicit; enterprise payment APIs operate in currency minor units whose scale varies by currency.
+- Currencing therefore remains bounded to identity/metadata/precision/normalization/formatting/rounding policy and must not absorb FX sourcing, historical rates or quote pricing.
+
+### RC-critical workstream
+
+1. Close Canon043 development Composer identity drift without changing business behavior.
+2. Re-resolve the lock graph against canonical sibling branch identities.
+3. Verify Canon044/045 and the complete repository-declared quality/test/browser gate contour.
+4. Integrate only Currencing-owned files; keep shared `.gating/**` work excluded.
+
+### Growth workstream — non-blocking
+
+- Later consider explicit cash-fraction/cash-rounding metadata exposure if a consumer needs it; keep FX ownership in Exchanging.
+
+### Implementation
+
+- Changed development `minimum-stability` from `stable` to `dev`.
+- Canonicalized Collectioning and Tabling dependency constraints to exact `dev-master`.
+- Added `options.versions` package identity pins for Collectioning, Cruding, Interfacing, Objecting, Tabling and Viewing local path repositories.
+- Package-scoped Composer update refreshed the lock graph; first-party packages now resolve on `dev-master`. The same resolution also advanced `doctrine/orm` from 3.7.0 to 3.7.1 as an allowed dependency update of the selected graph.
+- Hardened `playwright.config.js` so local E2E proof uses an isolated Currencing port (`8127` by default) and never reuses an unrelated pre-existing server. This closes a factual acceptance-gate defect discovered when port 8000 was serving another workspace application.
+
+### Verification and acceptance
+
+- `composer validate --strict --check-lock --no-interaction`: pass.
+- Canon044 targeted scans under `src/`: no `object_` or `objecting_` mapped-field candidates found.
+- `composer currencing:gates`: pass, 11/11 component gates.
+- `composer test`: pass, 43 tests / 552 assertions.
+- `composer phpstan`: pass, no errors across 97 analyzed files.
+- `composer cs:check`: pass, 0 fixable files across 105 files.
+- `composer test:coverage`: pass; measured Lines 45.55% (307/674), Methods 30.54% (62/203), Branches 71.12% (234/329). Canon040 line/method debt remains explicit and non-hard; branch threshold is satisfied.
+- `npm test`: pass, 1/1 real-browser Currencing boundary test after E2E server isolation.
+- `npm audit --audit-level=high`: pass, 0 vulnerabilities at all reported severities.
+- Direct execution of the embedded `.gating/gate.ps1` is blocked by Console MCP policy because repository PowerShell execution is restricted to `tool/` or `bin/`; no bypass was attempted. Normative Canon043/044/045 text was applied directly, while executable component gates and targeted deterministic evidence are green.
+

@@ -3,10 +3,10 @@
   "description": "Currencing process app",
   "type": "symfony-bundle",
   "license": "proprietary",
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "collectioning/collection": "dev-main || dev-master",
+    "collectioning/collection": "dev-master",
     "cruding/crud": "dev-master",
     "doctrine/dbal": "^4.4",
     "doctrine/doctrine-bundle": "^3.2",
@@ -30,7 +30,7 @@
     "symfony/validator": "^8.1",
     "symfony/var-exporter": "^8.1",
     "symfony/yaml": "^8.1",
-    "tabling/table": "dev-backend-table-actions || dev-backend-table-metadata || dev-initial-platform-primitive || dev-main || dev-master",
+    "tabling/table": "dev-master",
     "twig/extra-bundle": "^3.21",
     "twig/twig": "^3.21",
     "objecting/object": "dev-master",
@@ -109,17 +109,20 @@
     ]
   },
   "repositories": [
-    {"type": "path", "url": "../Collectioning", "options": {"symlink": true}},
-    {"type": "path", "url": "../Cruding", "options": {"symlink": true}},
-    {"type": "path", "url": "../Interfacing", "options": {"symlink": true}},
+    {"type": "path", "url": "../Collectioning", "options": {"symlink": true, "versions": {"collectioning/collection": "dev-master"}}},
+    {"type": "path", "url": "../Cruding", "options": {"symlink": true, "versions": {"cruding/crud": "dev-master"}}},
+    {"type": "path", "url": "../Interfacing", "options": {"symlink": true, "versions": {"interfacing/interface": "dev-master"}}},
     {
       "type": "path",
       "url": "../Objecting",
       "options": {
-        "symlink": true
+        "symlink": true,
+        "versions": {
+          "objecting/object": "dev-master"
+        }
       }
     },
-    {"type": "path", "url": "../Tabling", "options": {"symlink": true}},
-    {"type": "path", "url": "../Viewing", "options": {"symlink": true}}
+    {"type": "path", "url": "../Tabling", "options": {"symlink": true, "versions": {"tabling/table": "dev-master"}}},
+    {"type": "path", "url": "../Viewing", "options": {"symlink": true, "versions": {"viewing/view": "dev-master"}}}
   ]
 }
