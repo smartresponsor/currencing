@@ -11,6 +11,7 @@ composer.phar
 /.phpunit.cache/
 /.idea/
 /.codebase-memory/
+/.console-mcp/
 .vscode/
 .DS_Store
 
