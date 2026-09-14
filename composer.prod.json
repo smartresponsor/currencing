@@ -6,6 +6,7 @@
     "minimum-stability":  "stable",
     "prefer-stable":  true,
     "require":  {
+                    "collectioning/collection":  "dev-main || dev-master",
                     "cruding/crud":  "dev-master",
                     "doctrine/dbal":  "^4.4",
                     "doctrine/doctrine-bundle":  "^3.2",
@@ -29,6 +30,7 @@
                     "symfony/validator":  "^8.1",
                     "symfony/var-exporter":  "^8.1",
                     "symfony/yaml":  "^8.1",
+                    "tabling/table":  "dev-backend-table-actions || dev-backend-table-metadata || dev-initial-platform-primitive || dev-main || dev-master",
                     "twig/extra-bundle":  "^3.21",
                     "twig/twig":  "^3.21",
                     "objecting/object":  "dev-master",
@@ -97,6 +99,10 @@
     "repositories":  [
                          {
                              "type":  "vcs",
+                             "url":  "git@github.com:smartresponsor/collectioning.git"
+                         },
+                         {
+                             "type":  "vcs",
                              "url":  "git@github.com:smartresponsor/cruding.git"
                          },
                          {
@@ -106,6 +112,10 @@
                          {
                              "type":  "vcs",
                              "url":  "git@github.com:smartresponsor/objecting.git"
+                         },
+                         {
+                             "type":  "vcs",
+                             "url":  "git@github.com:smartresponsor/tabling-.git"
                          },
                          {
                              "type":  "vcs",

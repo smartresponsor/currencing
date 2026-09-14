@@ -23,7 +23,15 @@ final readonly class CurrencyNormalizeHttpService
 
     public function __invoke(Request $request): JsonResponse
     {
-        $payload = $this->payload($request);
+        try {
+            $payload = $this->payload($request);
+        } catch (\Throwable $exception) {
+            return new JsonResponse([
+                'component' => 'currencing',
+                'resource' => 'money_normalization',
+                'error' => $exception->getMessage(),
+            ], JsonResponse::HTTP_BAD_REQUEST);
+        }
 
         if (!array_key_exists('amount', $payload) || !array_key_exists('currencyCode', $payload)) {
             return new JsonResponse([

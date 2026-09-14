@@ -18,6 +18,8 @@ services:
 
   App\Currencing\Service\:
     resource: '../../src/Service/'
+    exclude:
+      - '../../src/Service/Http/'
 
   App\Currencing\Validator\:
     resource: '../../src/Validator/'
