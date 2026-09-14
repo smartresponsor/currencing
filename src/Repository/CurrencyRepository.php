@@ -27,7 +27,7 @@ final class CurrencyRepository extends ServiceEntityRepository implements Curren
 
     public function findOneActiveByCode(string|CurrencyCode $code): ?CurrencyEntity
     {
-        return $this->findOneBy(['code' => $this->normalizeCode($code), 'objectState.objectActive' => true]);
+        return $this->findOneBy(['code' => $this->normalizeCode($code), 'objectState.active' => true]);
     }
 
     public function hasActiveCode(string|CurrencyCode $code): bool
@@ -35,7 +35,7 @@ final class CurrencyRepository extends ServiceEntityRepository implements Curren
         return $this->createQueryBuilder('currency')
             ->select('COUNT(currency.id)')
             ->andWhere('currency.code = :code')
-            ->andWhere('currency.objectState.objectActive = true')
+            ->andWhere('currency.objectState.active = true')
             ->setParameter('code', $this->normalizeCode($code))
             ->getQuery()
             ->getSingleScalarResult() > 0;
@@ -47,7 +47,7 @@ final class CurrencyRepository extends ServiceEntityRepository implements Curren
     public function findActiveOrderedByCode(): array
     {
         return $this->createQueryBuilder('currency')
-            ->andWhere('currency.objectState.objectActive = true')
+            ->andWhere('currency.objectState.active = true')
             ->orderBy('currency.code', 'ASC')
             ->getQuery()
             ->getResult();
@@ -60,7 +60,7 @@ final class CurrencyRepository extends ServiceEntityRepository implements Curren
     {
         $rows = $this->createQueryBuilder('currency')
             ->select('currency.code')
-            ->andWhere('currency.objectState.objectActive = true')
+            ->andWhere('currency.objectState.active = true')
             ->orderBy('currency.code', 'ASC')
             ->getQuery()
             ->getScalarResult();

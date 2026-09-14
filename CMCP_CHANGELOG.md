@@ -326,3 +326,12 @@
 - Follow-up coverage: Lines 51.47% (350/680), Methods 35.47% (72/203), Branches 84.04% (279/332), Paths 22.00% (132/600). Line coverage is now above the Canon040 high-debt 50% boundary; method coverage remains the principal non-hard debt.
 - `composer currencing:gates`: pass, 11/11; PHPStan: pass; PHP-CS-Fixer: pass after normalizing one test-file line ending; changed-PHP lint: pass for all 3 changed PHP files; Playwright: pass, 1/1 real-browser test on isolated port 8127.
 
+### PostgreSQL reconciliation and post-merge parity repair
+
+- The prior squash merge into `master` was not content-equivalent to the accepted feature head: early RC files such as the canonical PHPUnit/Playwright/generated-reference surfaces were absent. This repair branch therefore starts from accepted head `8f0803b52dc089297b4562fda4b4f47c4a7c5be1` so the next PR restores exact RC parity rather than reconstructing it piecemeal.
+- The local legacy `currency_currency` table contained zero rows and the migration ledger was empty. The initial migration now supports an additive empty-legacy reconciliation path and explicitly aborts if a non-canonical legacy table contains rows; no table drop/recreate was used.
+- Guarded migrations established `currency_translation`, canonical Objecting columns/indexes/FK, and a three-version Doctrine ledger. A read-only `schema:diff` script exposed final PostgreSQL identity/default/index-name drift, which was materialized through forward migrations.
+- Full `doctrine:schema:validate` now passes mapping and database synchronization; `composer schema:diff` reports nothing to update.
+- Real standalone `/currencing/demo` initially exposed a stale DQL path `objectState.objectActive`; `CurrencyRepository` now queries the actual embeddable property `objectState.active`, after which `/currencing/demo` returns HTTP 200.
+- Playwright's managed server moved from default port 8127 to 8128 so the E2E lifecycle remains isolated from the Console MCP-managed demo runtime while preserving the `CURRENCING_E2E_PORT` override.
+
