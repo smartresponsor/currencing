@@ -316,3 +316,13 @@
 - `npm audit --audit-level=high`: pass, 0 vulnerabilities at all reported severities.
 - Direct execution of the embedded `.gating/gate.ps1` is blocked by Console MCP policy because repository PowerShell execution is restricted to `tool/` or `bin/`; no bypass was attempted. Normative Canon043/044/045 text was applied directly, while executable component gates and targeted deterministic evidence are green.
 
+### Follow-up coverage hardening
+
+- Continued strictly inside Currencing after the RC commit; shared `.gating/**` remains untouched.
+- Expanded `CurrencyRoundingPolicyResolverTest` to cover every canonical rounding context and the unknown-policy failure path, targeting real policy-contract behavior rather than synthetic coverage.
+- Added DTO/value-object contract assertions for `CurrencyChoiceDTO`, `CurrencyRoundingPolicyDTO`, and `CurrencyRoundingPolicyName`, plus public HTTP normalization validation-path coverage for JSON/form payloads, optional strings, rounding mode, and rounding context.
+- The new malformed-JSON case exposed a real boundary defect: `CurrencyNormalizeHttpService::payload()` executed before the endpoint try/catch, so invalid JSON escaped as an uncaught `InvalidArgumentException`. The HTTP service now translates payload-decoding failures into the canonical HTTP 400 JSON error contract.
+- Follow-up PHPUnit: pass, 66 tests / 620 assertions.
+- Follow-up coverage: Lines 51.47% (350/680), Methods 35.47% (72/203), Branches 84.04% (279/332), Paths 22.00% (132/600). Line coverage is now above the Canon040 high-debt 50% boundary; method coverage remains the principal non-hard debt.
+- `composer currencing:gates`: pass, 11/11; PHPStan: pass; PHP-CS-Fixer: pass after normalizing one test-file line ending; changed-PHP lint: pass for all 3 changed PHP files; Playwright: pass, 1/1 real-browser test on isolated port 8127.
+
