@@ -5,9 +5,9 @@
   "readiness": {
     "architectureBusinessCompletenessPercent": 94,
     "runtimeProofIncluded": true,
-    "runtimeProofStatus": "green-component-and-browser-boundary-proof-with-local-database-demo-blocked",
+    "runtimeProofStatus": "green-component-browser-and-local-postgresql-demo-proof",
     "notes": [
-      "Component-local RC proof includes runtime gates, PHPUnit, PHPStan, coding-style checks, strict Composer validation, PHPUnit/Xdebug coverage generation, and a Playwright real-browser conversion-boundary proof; the database-backed demo still depends on reconciling the unmanaged local PostgreSQL baseline.",
+      "Component-local RC proof includes runtime gates, PHPUnit, PHPStan, coding-style checks, strict Composer validation, PHPUnit/Xdebug coverage generation, Playwright real-browser conversion-boundary proof, synchronized local PostgreSQL schema validation, and an HTTP 200 database-backed /currencing/demo proof.",
       "Currencing has a stable Entity-first Symfony-oriented model, DTO/VO boundary, API contract, structural gates, and Exchanging boundary.",
       "M19 adds a static console runtime proof gate for composer/bin/console/front-controller/config/template coherence before vendor-backed Symfony boot.",
       "M20 fixes the first local Symfony boot blocker by adding symfony/var-exporter for Doctrine LazyGhost compatibility.",
@@ -113,9 +113,9 @@
       "mitigation": "M20 requires symfony/var-exporter and extends the static console runtime proof gate."
     },
     {
-      "risk": "Local PostgreSQL schema predates the current Entity/Objecting field-pack shape and has no migration ledger baseline",
-      "severity": "high",
-      "mitigation": "Reconcile the existing development schema and doctrine_migration_versions baseline explicitly before applying the initial migration; do not run the current CREATE TABLE migration blindly over the existing currency_currency table."
+      "risk": "A legacy PostgreSQL database may predate the current Entity/Objecting field-pack shape",
+      "severity": "medium",
+      "mitigation": "The initial migration now uses additive reconciliation only for an empty legacy table and aborts when non-canonical legacy rows exist; verify with doctrine:schema:validate and composer schema:diff after migration."
     },
     {
       "risk": "Bridge consumes API response instead of service contract without preserving route-name indirection",

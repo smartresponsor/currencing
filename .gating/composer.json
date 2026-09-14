@@ -40,7 +40,7 @@
       "@phpstan",
       "@rector:check",
       "@test",
-      "@php bin/gating self-check"
+      "@gate"
     ]
   }
 }

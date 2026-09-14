@@ -94,6 +94,7 @@
       "php tools/currencing-schema-migration-mirror-check.php",
       "php bin/console doctrine:schema:validate --skip-sync"
     ],
+    "schema:diff": "php bin/console doctrine:schema:update --dump-sql",
     "currencing:gates": [
       "php tools/currencing-structure-check.php",
       "php tools/currencing-runtime-smoke-check.php",

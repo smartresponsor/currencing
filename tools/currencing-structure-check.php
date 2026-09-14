@@ -104,7 +104,7 @@ foreach ($migrations as $migration) {
         continue;
     }
 
-    if (preg_match_all("/CREATE TABLE\s+([a-zA-Z0-9_]+)/i", $contents, $matches) > 0) {
+    if (preg_match_all("/CREATE TABLE\s+(?:IF NOT EXISTS\s+)?([a-zA-Z0-9_]+)/i", $contents, $matches) > 0) {
         foreach ($matches[1] as $tableName) {
             if (!str_starts_with(strtolower($tableName), 'currency_')) {
                 $errors[] = 'Migration creates non-currency-prefixed table '.$tableName.' in '.$relative;

@@ -1,6 +1,6 @@
 const { defineConfig } = require('@playwright/test');
 
-const port = process.env.CURRENCING_E2E_PORT || '8127';
+const port = process.env.CURRENCING_E2E_PORT || '8128';
 const baseURL = process.env.CURRENCING_BASE_URL || `http://127.0.0.1:${port}`;
 
 module.exports = defineConfig({

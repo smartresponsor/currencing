@@ -39,7 +39,7 @@ try {
 
         $table = $classMetadata->getTableName();
         $mappedTables[] = $table;
-        if (!preg_match('/CREATE TABLE\s+'.preg_quote($table, '/').'\s*\(/i', $migrationSources)) {
+        if (!preg_match('/CREATE TABLE\s+(?:IF NOT EXISTS\s+)?'.preg_quote($table, '/').'\s*\(/i', $migrationSources)) {
             $errors[] = 'Migration mirror is missing table '.$table.'.';
             continue;
         }
