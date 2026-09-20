@@ -16,6 +16,10 @@ final class CurrencyDecimalParser implements CurrencyDecimalParserInterface
         int $minorUnit,
         CurrencyRoundingMode $roundingMode,
     ): int {
+        if ($minorUnit < 0 || $minorUnit > 8) {
+            throw new \InvalidArgumentException('Currency minor unit must be between 0 and 8.');
+        }
+
         $decimal = $this->normalizeInput($amount);
         $negative = str_starts_with($decimal, '-');
         $unsigned = ltrim($decimal, '+-');
@@ -31,24 +35,29 @@ final class CurrencyDecimalParser implements CurrencyDecimalParserInterface
         }
 
         $fraction = str_pad(substr($fraction, 0, $minorUnit), $minorUnit, '0');
-        $minor = ((int) $whole) * (10 ** $minorUnit) + ('' === $fraction ? 0 : (int) $fraction);
+        $minorDigits = $this->normalizeUnsignedInteger($whole.$fraction);
 
-        return $negative ? -$minor : $minor;
+        return $this->toSignedInteger($minorDigits, $negative, $decimal);
     }
 
     public function formatFromMinorUnits(int $amountMinor, int $minorUnit): string
     {
-        $negative = $amountMinor < 0;
-        $absolute = abs($amountMinor);
-        $factor = 10 ** $minorUnit;
-        $whole = intdiv($absolute, $factor);
-        $fraction = $absolute % $factor;
-
-        if (0 === $minorUnit) {
-            return ($negative ? '-' : '').(string) $whole;
+        if ($minorUnit < 0 || $minorUnit > 8) {
+            throw new \InvalidArgumentException('Currency minor unit must be between 0 and 8.');
         }
 
-        return sprintf('%s%d.%s', $negative ? '-' : '', $whole, str_pad((string) $fraction, $minorUnit, '0', STR_PAD_LEFT));
+        $negative = $amountMinor < 0;
+        $digits = ltrim((string) $amountMinor, '-');
+
+        if (0 === $minorUnit) {
+            return ($negative ? '-' : '').$digits;
+        }
+
+        $digits = str_pad($digits, $minorUnit + 1, '0', STR_PAD_LEFT);
+        $whole = substr($digits, 0, -$minorUnit);
+        $fraction = substr($digits, -$minorUnit);
+
+        return sprintf('%s%s.%s', $negative ? '-' : '', $whole, $fraction);
     }
 
     private function normalizeInput(string|int|float $amount): string
@@ -69,7 +78,7 @@ final class CurrencyDecimalParser implements CurrencyDecimalParserInterface
 
     private function roundUnsignedDecimal(string $whole, string $fraction, int $minorUnit, CurrencyRoundingMode $roundingMode): string
     {
-        $kept = substr($fraction, 0, $minorUnit);
+        $kept = str_pad(substr($fraction, 0, $minorUnit), $minorUnit, '0');
         $discarded = substr($fraction, $minorUnit);
         $increment = match ($roundingMode) {
             CurrencyRoundingMode::Down => false,
@@ -78,17 +87,59 @@ final class CurrencyDecimalParser implements CurrencyDecimalParserInterface
             CurrencyRoundingMode::Reject => false,
         };
 
-        $minor = ((int) $whole) * (10 ** $minorUnit) + ('' === $kept ? 0 : (int) str_pad($kept, $minorUnit, '0'));
+        $minorDigits = $this->normalizeUnsignedInteger($whole.$kept);
         if ($increment) {
-            ++$minor;
+            $minorDigits = $this->incrementUnsignedInteger($minorDigits);
         }
 
         if (0 === $minorUnit) {
-            return (string) $minor;
+            return $minorDigits;
         }
 
-        $factor = 10 ** $minorUnit;
+        $minorDigits = str_pad($minorDigits, $minorUnit + 1, '0', STR_PAD_LEFT);
 
-        return intdiv($minor, $factor).'.'.str_pad((string) ($minor % $factor), $minorUnit, '0', STR_PAD_LEFT);
+        return substr($minorDigits, 0, -$minorUnit).'.'.substr($minorDigits, -$minorUnit);
+    }
+
+    private function normalizeUnsignedInteger(string $digits): string
+    {
+        $normalized = ltrim($digits, '0');
+
+        return '' === $normalized ? '0' : $normalized;
+    }
+
+    private function incrementUnsignedInteger(string $digits): string
+    {
+        $digits = $this->normalizeUnsignedInteger($digits);
+        $carry = 1;
+
+        for ($index = strlen($digits) - 1; $index >= 0 && 1 === $carry; --$index) {
+            $value = ((int) $digits[$index]) + $carry;
+            $digits[$index] = (string) ($value % 10);
+            $carry = intdiv($value, 10);
+        }
+
+        return 1 === $carry ? '1'.$digits : $digits;
+    }
+
+    private function toSignedInteger(string $minorDigits, bool $negative, string $sourceAmount): int
+    {
+        $positiveLimit = (string) PHP_INT_MAX;
+        $negativeLimit = $this->incrementUnsignedInteger($positiveLimit);
+        $limit = $negative ? $negativeLimit : $positiveLimit;
+
+        if (strlen($minorDigits) > strlen($limit)
+            || (strlen($minorDigits) === strlen($limit) && strcmp($minorDigits, $limit) > 0)
+        ) {
+            throw CurrencyInvalidAmountException::outOfRange($sourceAmount);
+        }
+
+        if ($negative && $minorDigits === $negativeLimit) {
+            return PHP_INT_MIN;
+        }
+
+        $minor = (int) $minorDigits;
+
+        return $negative ? -$minor : $minor;
     }
 }

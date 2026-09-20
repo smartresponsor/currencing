@@ -20,4 +20,12 @@ final class CurrencyInvalidAmountException extends \InvalidArgumentException
             $minorUnit,
         ));
     }
+
+    public static function outOfRange(string $amount): self
+    {
+        return new self(sprintf(
+            'Monetary amount "%s" exceeds the supported integer minor-unit range.',
+            $amount,
+        ));
+    }
 }

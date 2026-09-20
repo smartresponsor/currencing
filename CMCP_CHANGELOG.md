@@ -335,3 +335,59 @@
 - Real standalone `/currencing/demo` initially exposed a stale DQL path `objectState.objectActive`; `CurrencyRepository` now queries the actual embeddable property `objectState.active`, after which `/currencing/demo` returns HTTP 200.
 - Playwright's managed server moved from default port 8127 to 8128 so the E2E lifecycle remains isolated from the Console MCP-managed demo runtime while preserving the `CURRENCING_E2E_PORT` override.
 
+## repository-implementation-20260920-currencing
+
+### Reconnaissance and baseline
+
+- Workspace: `D:\\PhpstormProjects\\www\\Currencing`; branch `fix/currencing-rc-parity-db-rebased-20260914`, baseline HEAD `5a66cbb00c2e924405279cd03afbcbdd4c163ab7`, ahead of upstream by one commit.
+- Pre-existing worktree dirt: 20 modified `.gating/**` files. They are shared Gating work and remain outside this Currencing change set.
+- Read current Currencing `AGENTS.md`, `README.md`, `composer.json`, `manifest.yaml`, readiness/inventory/RC docs, runtime money services, entity, exception and parser tests.
+- Read the current Objecting, Cruding, Viewing, Interfacing, Gating and Canonization repository contracts available through their AGENTS/README/Composer/manifest surfaces.
+- Consulted normative Canonization rules Canon011, Canon012, Canon013, Canon017, Canon018, Canon021, Canon022, Canon030, Canon043, Canon044 and Canon045, including their Evidence Contracts.
+
+### Target-to-canon mapping
+
+- Canon011: monetary boundary failures stay explicit; integer-range overflow becomes `CurrencyInvalidAmountException` rather than a PHP arithmetic `TypeError`.
+- Canon012: money normalization stays typed through DTOs, enums and service interfaces.
+- Canon013: RC logic is deterministic production behavior, not placeholder success.
+- Canon017/018: current runtime identity remains `currencing/currency` => `App\\Currencing\\` plus `Currency*`.
+- Canon021: no generic CRUD is introduced; Cruding ownership is unchanged.
+- Canon022/043/045: existing platform dependencies and local `dev-master` path-repository contour are preserved.
+- Canon030/044: no Doctrine schema or Objecting field mapping change is introduced.
+
+### Market / maturity opening mixin
+
+- Mature money libraries keep amount/currency/rounding exact and avoid accidental floating-point arithmetic in normalization.
+- RC therefore requires deterministic minor-unit integer-range handling. FX sourcing, historical rates and quote pricing remain outside Currencing.
+- Growth remains separate: cash-fraction/cash-rounding metadata exposure is a later API/DX capability.
+
+### RC-critical workstream selected
+
+- Harden `CurrencyDecimalParser` against integer overflow and `PHP_INT_MIN` formatting failure.
+- Add boundary regression coverage and verify without absorbing pre-existing `.gating/**` work.
+
+### Implementation
+
+- Replaced intermediate integer multiplication/rounding with decimal-string scaling and carry arithmetic.
+- Added supported minor-unit range validation and signed integer boundary conversion.
+- Added `CurrencyInvalidAmountException::outOfRange()`.
+- Added tests for `PHP_INT_MAX`, `PHP_INT_MIN`, overflow rejection and rounding at the integer boundary.
+
+### Verification and dependency blocker
+
+- Changed-PHP syntax lint passes for all observed changed PHP files, including all three Currencing files in this wave.
+- `composer validate --strict --check-lock --no-interaction`: pass.
+- `composer phpstan`: pass, no errors across 97 analyzed files.
+- `composer currencing:gates`: pass, all 11 declared Currencing gates green.
+- Full `composer test` executes 69 tests and 625 assertions; 68 tests complete successfully, while the standalone functional boot test errors before request dispatch because the current Cruding dependency container definition loses the explicit tagged-iterator argument for `CrudBulkMutationHandlerResolver`.
+- Cruding's own `config/services.yaml` defines the resolver with `$handlers: !tagged_iterator cruding.bulk_mutation_handler`, but a later broad `App\\Cruding\\Resolver\\` resource registration redefines the same service. This is a Cruding-owned dependency defect; Currencing must not hard-code Cruding's internal resolver to mask it.
+- `composer cs:check` is not globally green because it reports pre-existing formatting/line-ending debt in files outside this wave (including two existing migrations and `CurrencyRepository.php`). No broad formatter was run, to avoid absorbing unrelated changes.
+
+### RC status
+
+- The selected Currencing monetary boundary defect is implemented and covered by regression tests.
+- Component-local structural/runtime/API/schema/readiness gates are green.
+- Full standalone PHPUnit acceptance remains externally blocked by the current Cruding service-definition regression; fixing Cruding requires a separate task in its owning repository.
+
+
+
