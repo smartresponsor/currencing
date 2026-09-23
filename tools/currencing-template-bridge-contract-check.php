@@ -33,7 +33,7 @@ function m22_read_required(string $root, string $relative, array &$errors): stri
 
 $contextDto = m22_read_required($root, 'src/DTO/CurrencyTemplateContextDTO.php', $errors);
 $contextInterface = m22_read_required($root, 'src/ServiceInterface/CurrencyTemplateContextProviderInterface.php', $errors);
-$contextProvider = m22_read_required($root, 'src/Service/CurrencyTemplateContextProvider.php', $errors);
+$contextProvider = m22_read_required($root, 'src/Provider/CurrencyTemplateContextProvider.php', $errors);
 $contextController = m22_read_required($root, 'src/Service/Http/Currency/CurrencyTemplateContextHttpService.php', $errors);
 $routes = m22_read_required($root, 'config/routes/currency_routes.yaml', $errors);
 $services = m22_read_required($root, 'config/services/currency_services.yaml', $errors);
@@ -54,7 +54,7 @@ $requiredNeedles = [
         'interface CurrencyTemplateContextProviderInterface',
         'public function context(?string $selectedCode = null, ?string $locale = null): CurrencyTemplateContextDTO',
     ],
-    'src/Service/CurrencyTemplateContextProvider.php' => [
+    'src/Provider/CurrencyTemplateContextProvider.php' => [
         'final class CurrencyTemplateContextProvider implements CurrencyTemplateContextProviderInterface',
         'CurrencySelectorViewProviderInterface',
         'CurrencyMetadataViewProviderInterface',
@@ -69,7 +69,7 @@ $requiredNeedles = [
 $contentsByFile = [
     'src/DTO/CurrencyTemplateContextDTO.php' => $contextDto,
     'src/ServiceInterface/CurrencyTemplateContextProviderInterface.php' => $contextInterface,
-    'src/Service/CurrencyTemplateContextProvider.php' => $contextProvider,
+    'src/Provider/CurrencyTemplateContextProvider.php' => $contextProvider,
     'src/Service/Http/Currency/CurrencyTemplateContextHttpService.php' => $contextController,
 ];
 
@@ -85,7 +85,7 @@ if ('' !== $services && !str_contains($services, 'App\\Currencing\\ServiceInterf
     $errors[] = 'Missing service alias for CurrencyTemplateContextProviderInterface.';
 }
 
-foreach (['/currencing/template-context', 'currencing_template_context'] as $needle) {
+foreach (['/currencing/template/context', 'currencing_template_context'] as $needle) {
     if ('' !== $routes && !str_contains($routes, $needle)) {
         $errors[] = 'Route map is missing bridge template context item: '.$needle;
     }

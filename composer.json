@@ -43,7 +43,8 @@
     "phpunit/phpunit": "^11.5 || ^12.0",
     "symfony/browser-kit": "^8.1",
     "symfony/css-selector": "^8.1",
-    "symfony/panther": "^2.4"
+    "symfony/panther": "^2.4",
+    "gating/gate": "dev-master"
   },
   "autoload": {
     "psr-4": {
@@ -107,12 +108,46 @@
       "php tools/currencing-api-contract-check.php",
       "php tools/currencing-release-candidate-check.php",
       "php tools/currencing-standalone-runtime-foundation-check.php"
+    ],
+    "gate": "@php vendor/bin/gating check --target=.",
+    "quality": [
+      "@cs:check",
+      "@phpstan",
+      "@test",
+      "@gate"
     ]
   },
   "repositories": [
-    {"type": "path", "url": "../Collectioning", "options": {"symlink": true, "versions": {"collectioning/collection": "dev-master"}}},
-    {"type": "path", "url": "../Cruding", "options": {"symlink": true, "versions": {"cruding/crud": "dev-master"}}},
-    {"type": "path", "url": "../Interfacing", "options": {"symlink": true, "versions": {"interfacing/interface": "dev-master"}}},
+    {
+      "type": "path",
+      "url": "../Collectioning",
+      "options": {
+        "symlink": true,
+        "versions": {
+          "collectioning/collection": "dev-master"
+        }
+      }
+    },
+    {
+      "type": "path",
+      "url": "../Cruding",
+      "options": {
+        "symlink": true,
+        "versions": {
+          "cruding/crud": "dev-master"
+        }
+      }
+    },
+    {
+      "type": "path",
+      "url": "../Interfacing",
+      "options": {
+        "symlink": true,
+        "versions": {
+          "interfacing/interface": "dev-master"
+        }
+      }
+    },
     {
       "type": "path",
       "url": "../Objecting",
@@ -123,7 +158,35 @@
         }
       }
     },
-    {"type": "path", "url": "../Tabling", "options": {"symlink": true, "versions": {"tabling/table": "dev-master"}}},
-    {"type": "path", "url": "../Viewing", "options": {"symlink": true, "versions": {"viewing/view": "dev-master"}}}
+    {
+      "type": "path",
+      "url": "../Tabling",
+      "options": {
+        "symlink": true,
+        "versions": {
+          "tabling/table": "dev-master"
+        }
+      }
+    },
+    {
+      "type": "path",
+      "url": "../Viewing",
+      "options": {
+        "symlink": true,
+        "versions": {
+          "viewing/view": "dev-master"
+        }
+      }
+    },
+    {
+      "type": "path",
+      "url": "../Gating",
+      "options": {
+        "symlink": true,
+        "versions": {
+          "gating/gate": "dev-master"
+        }
+      }
+    }
   ]
 }

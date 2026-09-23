@@ -9,7 +9,7 @@ use App\Currencing\DTO\CurrencyAmountInputDTO;
 use App\Currencing\DTO\CurrencyDisplayDTO;
 use App\Currencing\DTO\CurrencyRoundingPolicyDTO;
 use App\Currencing\Enum\CurrencyRoundingMode;
-use App\Currencing\Service\CurrencyAmountInputResolver;
+use App\Currencing\Resolver\CurrencyAmountInputResolver;
 use App\Currencing\ServiceInterface\CurrencyAmountNormalizerInterface;
 use App\Currencing\ServiceInterface\CurrencyDisplayFormatterInterface;
 use App\Currencing\ServiceInterface\CurrencyPrecisionResolverInterface;

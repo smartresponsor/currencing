@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Currencing\Service;
+namespace App\Currencing\Resolver;
 
 use App\Currencing\DTO\CurrencyAmountInputDTO;
 use App\Currencing\DTO\CurrencyAmountResolutionDTO;

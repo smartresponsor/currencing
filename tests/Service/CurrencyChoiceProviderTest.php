@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Currencing\Tests\Service;
 
-use App\Currencing\Service\CurrencyChoiceProvider;
+use App\Currencing\Provider\CurrencyChoiceProvider;
 use App\Currencing\ServiceInterface\CurrencyMetadataProviderInterface;
 use PHPUnit\Framework\TestCase;
 

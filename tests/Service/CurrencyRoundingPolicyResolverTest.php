@@ -9,7 +9,7 @@ use App\Currencing\DTO\CurrencyChoiceDTO;
 use App\Currencing\DTO\CurrencyRoundingPolicyDTO;
 use App\Currencing\Enum\CurrencyRoundingContext;
 use App\Currencing\Enum\CurrencyRoundingMode;
-use App\Currencing\Service\CurrencyRoundingPolicyResolver;
+use App\Currencing\Resolver\CurrencyRoundingPolicyResolver;
 use App\Currencing\ValueObject\CurrencyRoundingPolicyName;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;

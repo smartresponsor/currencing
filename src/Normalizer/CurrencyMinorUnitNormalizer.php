@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Currencing\Service;
+namespace App\Currencing\Normalizer;
 
 use App\Currencing\Enum\CurrencyRoundingMode;
 use App\Currencing\ServiceInterface\CurrencyDecimalParserInterface;

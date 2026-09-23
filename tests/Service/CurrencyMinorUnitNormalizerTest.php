@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Currencing\Tests\Service;
 
 use App\Currencing\Exception\CurrencyUnsupportedCodeException;
+use App\Currencing\Normalizer\CurrencyMinorUnitNormalizer;
+use App\Currencing\Resolver\CurrencyPrecisionResolver;
 use App\Currencing\Service\CurrencyCodeValidator;
 use App\Currencing\Service\CurrencyDecimalParser;
-use App\Currencing\Service\CurrencyMinorUnitNormalizer;
-use App\Currencing\Service\CurrencyPrecisionResolver;
 use App\Currencing\ServiceInterface\CurrencyMetadataProviderInterface;
 use PHPUnit\Framework\TestCase;
 

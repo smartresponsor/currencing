@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Currencing\Tests\Service;
 
-use App\Currencing\Service\CurrencyConversionBoundaryProvider;
+use App\Currencing\Provider\CurrencyConversionBoundaryProvider;
 use PHPUnit\Framework\TestCase;
 
 final class CurrencyConversionBoundaryProviderTest extends TestCase

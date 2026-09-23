@@ -43,7 +43,7 @@ Bridge-specific classes.
 ## Added provider
 
 ```text
-src/Service/CurrencyTemplateContextProvider.php
+src/Provider/CurrencyTemplateContextProvider.php
 ```
 
 The provider composes existing selector and metadata view providers. It does not add a new
@@ -52,7 +52,7 @@ business responsibility; it only packages existing output into a bridge-safe con
 ## Added HTTP read surface
 
 ```text
-GET /currencing/template-context
+GET /currencing/template/context
 route: currencing_template_context
 ```
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Currencing\Service;
+namespace App\Currencing\Provider;
 
 use App\Currencing\DTO\CurrencyMetadataViewDTO;
 use App\Currencing\ServiceInterface\CurrencyMetadataProviderInterface;

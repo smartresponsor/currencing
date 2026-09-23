@@ -16,6 +16,15 @@ services:
   App\Currencing\Repository\:
     resource: '../../src/Repository/'
 
+  App\Currencing\Normalizer\:
+    resource: '../../src/Normalizer/'
+
+  App\Currencing\Provider\:
+    resource: '../../src/Provider/'
+
+  App\Currencing\Resolver\:
+    resource: '../../src/Resolver/'
+
   App\Currencing\Service\:
     resource: '../../src/Service/'
     exclude:
@@ -25,22 +34,22 @@ services:
     resource: '../../src/Validator/'
 
   App\Currencing\ServiceInterface\CurrencyMetadataProviderInterface:
-    alias: App\Currencing\Service\CurrencyIntlMetadataProvider
+    alias: App\Currencing\Provider\CurrencyIntlMetadataProvider
 
   App\Currencing\ServiceInterface\CurrencyCodeValidatorInterface:
     alias: App\Currencing\Service\CurrencyCodeValidator
 
   App\Currencing\ServiceInterface\CurrencyPrecisionResolverInterface:
-    alias: App\Currencing\Service\CurrencyPrecisionResolver
+    alias: App\Currencing\Resolver\CurrencyPrecisionResolver
 
   App\Currencing\ServiceInterface\CurrencyDecimalParserInterface:
     alias: App\Currencing\Service\CurrencyDecimalParser
 
   App\Currencing\ServiceInterface\CurrencyAmountNormalizerInterface:
-    alias: App\Currencing\Service\CurrencyCanonicalAmountNormalizer
+    alias: App\Currencing\Normalizer\CurrencyCanonicalAmountNormalizer
 
   App\Currencing\ServiceInterface\CurrencyNormalizerInterface:
-    alias: App\Currencing\Service\CurrencyMinorUnitNormalizer
+    alias: App\Currencing\Normalizer\CurrencyMinorUnitNormalizer
 
   App\Currencing\ServiceInterface\CurrencyFormatterInterface:
     alias: App\Currencing\Service\CurrencyIntlFormatter
@@ -49,22 +58,22 @@ services:
     alias: App\Currencing\Service\CurrencyDisplayFormatter
 
   App\Currencing\ServiceInterface\CurrencyChoiceProviderInterface:
-    alias: App\Currencing\Service\CurrencyChoiceProvider
+    alias: App\Currencing\Provider\CurrencyChoiceProvider
 
   App\Currencing\ServiceInterface\CurrencyMetadataViewProviderInterface:
-    alias: App\Currencing\Service\CurrencyMetadataViewProvider
+    alias: App\Currencing\Provider\CurrencyMetadataViewProvider
 
   App\Currencing\ServiceInterface\CurrencySelectorViewProviderInterface:
-    alias: App\Currencing\Service\CurrencySelectorViewProvider
+    alias: App\Currencing\Provider\CurrencySelectorViewProvider
 
   App\Currencing\ServiceInterface\CurrencyAmountInputResolverInterface:
-    alias: App\Currencing\Service\CurrencyAmountInputResolver
+    alias: App\Currencing\Resolver\CurrencyAmountInputResolver
 
   App\Currencing\ServiceInterface\CurrencyRoundingPolicyResolverInterface:
-    alias: App\Currencing\Service\CurrencyRoundingPolicyResolver
+    alias: App\Currencing\Resolver\CurrencyRoundingPolicyResolver
 
   App\Currencing\ServiceInterface\CurrencyConversionBoundaryProviderInterface:
-    alias: App\Currencing\Service\CurrencyConversionBoundaryProvider
+    alias: App\Currencing\Provider\CurrencyConversionBoundaryProvider
 
   App\Currencing\ServiceInterface\CurrencyTemplateContextProviderInterface:
-    alias: App\Currencing\Service\CurrencyTemplateContextProvider
+    alias: App\Currencing\Provider\CurrencyTemplateContextProvider

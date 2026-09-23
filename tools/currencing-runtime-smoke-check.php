@@ -40,14 +40,14 @@ $doctrine = read_file_required($root, 'config/packages/currency_doctrine.yaml', 
 $twig = read_file_required($root, 'config/packages/twig.yaml', $errors);
 
 $requiredAliases = [
-    'App\\Currencing\\ServiceInterface\\CurrencyMetadataProviderInterface' => 'App\\Currencing\\Service\\CurrencyIntlMetadataProvider',
+    'App\\Currencing\\ServiceInterface\\CurrencyMetadataProviderInterface' => 'App\\Currencing\\Provider\\CurrencyIntlMetadataProvider',
     'App\\Currencing\\ServiceInterface\\CurrencyCodeValidatorInterface' => 'App\\Currencing\\Service\\CurrencyCodeValidator',
-    'App\\Currencing\\ServiceInterface\\CurrencyPrecisionResolverInterface' => 'App\\Currencing\\Service\\CurrencyPrecisionResolver',
-    'App\\Currencing\\ServiceInterface\\CurrencyAmountNormalizerInterface' => 'App\\Currencing\\Service\\CurrencyCanonicalAmountNormalizer',
-    'App\\Currencing\\ServiceInterface\\CurrencyAmountInputResolverInterface' => 'App\\Currencing\\Service\\CurrencyAmountInputResolver',
+    'App\\Currencing\\ServiceInterface\\CurrencyPrecisionResolverInterface' => 'App\\Currencing\\Resolver\\CurrencyPrecisionResolver',
+    'App\\Currencing\\ServiceInterface\\CurrencyAmountNormalizerInterface' => 'App\\Currencing\\Normalizer\\CurrencyCanonicalAmountNormalizer',
+    'App\\Currencing\\ServiceInterface\\CurrencyAmountInputResolverInterface' => 'App\\Currencing\\Resolver\\CurrencyAmountInputResolver',
     'App\\Currencing\\ServiceInterface\\CurrencyDisplayFormatterInterface' => 'App\\Currencing\\Service\\CurrencyDisplayFormatter',
-    'App\\Currencing\\ServiceInterface\\CurrencyRoundingPolicyResolverInterface' => 'App\\Currencing\\Service\\CurrencyRoundingPolicyResolver',
-    'App\\Currencing\\ServiceInterface\\CurrencyConversionBoundaryProviderInterface' => 'App\\Currencing\\Service\\CurrencyConversionBoundaryProvider',
+    'App\\Currencing\\ServiceInterface\\CurrencyRoundingPolicyResolverInterface' => 'App\\Currencing\\Resolver\\CurrencyRoundingPolicyResolver',
+    'App\\Currencing\\ServiceInterface\\CurrencyConversionBoundaryProviderInterface' => 'App\\Currencing\\Provider\\CurrencyConversionBoundaryProvider',
 ];
 
 foreach ($requiredAliases as $interface => $implementation) {
@@ -85,6 +85,9 @@ foreach ([
     'App\\Currencing\\DataFixtures\\',
     'App\\Currencing\\Form\\',
     'App\\Currencing\\Repository\\',
+    'App\\Currencing\\Normalizer\\',
+    'App\\Currencing\\Provider\\',
+    'App\\Currencing\\Resolver\\',
     'App\\Currencing\\Service\\',
     'App\\Currencing\\Validator\\',
 ] as $resourceNamespace) {
@@ -101,17 +104,17 @@ $routeExpectations = [
     '/currencing/currencies',
     'currencing_currency_catalog',
     'currencing_currency_metadata',
-    '/currencing/currency-selector',
+    '/currencing/currency/selector',
     'currencing_currency_selector',
-    '/currencing/template-context',
+    '/currencing/template/context',
     'currencing_template_context',
     '/currencing/money/normalize',
     'currencing_money_normalize',
     '/currencing/demo',
     'currencing_demo_index',
-    '/currencing/admin-preview/currencies',
+    '/currencing/admin/preview/currencies',
     'currencing_admin_preview_currencies',
-    '/currencing/conversion-boundary',
+    '/currencing/conversion/boundary',
     'currencing_conversion_boundary',
 ];
 

@@ -35,7 +35,7 @@ Those belong to Exchanging.
 - DTO: `src/DTO/CurrencyRoundingPolicyDTO.php`
 - Enum: `src/Enum/CurrencyRoundingContext.php`
 - VO: `src/ValueObject/CurrencyRoundingPolicyName.php`
-- Service: `src/Service/CurrencyRoundingPolicyResolver.php`
+- Resolver: `src/Resolver/CurrencyRoundingPolicyResolver.php`
 - Interface: `src/ServiceInterface/CurrencyRoundingPolicyResolverInterface.php`
 
 ## Default behavior

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Currencing\Service;
+namespace App\Currencing\Resolver;
 
 use App\Currencing\ServiceInterface\CurrencyCodeValidatorInterface;
 use App\Currencing\ServiceInterface\CurrencyMetadataProviderInterface;
