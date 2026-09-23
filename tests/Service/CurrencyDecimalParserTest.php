@@ -60,4 +60,65 @@ final class CurrencyDecimalParserTest extends TestCase
         $this->expectException(CurrencyInvalidAmountException::class);
         $parser->parseToMinorUnits('9223372036854775.8075', 'USD', 3, CurrencyRoundingMode::HalfUp);
     }
+
+    public function testNormalizesFloatWhitespaceCommaAndExplicitPlusInputs(): void
+    {
+        $parser = new CurrencyDecimalParser();
+
+        self::assertSame(1234, $parser->parseToMinorUnits(' 12,34 ', 'USD', 2, CurrencyRoundingMode::Reject));
+        self::assertSame(1250, $parser->parseToMinorUnits(12.5, 'USD', 2, CurrencyRoundingMode::Reject));
+        self::assertSame(1234, $parser->parseToMinorUnits('+12.34', 'USD', 2, CurrencyRoundingMode::Reject));
+        self::assertSame(0, $parser->parseToMinorUnits('0.00', 'USD', 2, CurrencyRoundingMode::Reject));
+    }
+
+    public function testSupportsUpAndHalfUpRoundingWithoutIncrementWhenDiscardedDigitsAreZero(): void
+    {
+        $parser = new CurrencyDecimalParser();
+
+        self::assertSame(124, $parser->parseToMinorUnits('1.231', 'USD', 2, CurrencyRoundingMode::Up));
+        self::assertSame(123, $parser->parseToMinorUnits('1.230', 'USD', 2, CurrencyRoundingMode::Up));
+        self::assertSame(123, $parser->parseToMinorUnits('1.234', 'USD', 2, CurrencyRoundingMode::HalfUp));
+        self::assertSame(124, $parser->parseToMinorUnits('1.235', 'USD', 2, CurrencyRoundingMode::HalfUp));
+        self::assertSame(13, $parser->parseToMinorUnits('12.5', 'JPY', 0, CurrencyRoundingMode::HalfUp));
+    }
+
+    public function testFormatsNegativeAndSubUnitMinorAmounts(): void
+    {
+        $parser = new CurrencyDecimalParser();
+
+        self::assertSame('-0.05', $parser->formatFromMinorUnits(-5, 2));
+        self::assertSame('0.05', $parser->formatFromMinorUnits(5, 2));
+    }
+
+    public function testRejectsInvalidAmountSyntax(): void
+    {
+        $parser = new CurrencyDecimalParser();
+
+        $this->expectException(CurrencyInvalidAmountException::class);
+        $parser->parseToMinorUnits('12.3.4', 'USD', 2, CurrencyRoundingMode::Reject);
+    }
+
+    public function testRejectsUnsupportedMinorUnitOnParse(): void
+    {
+        $parser = new CurrencyDecimalParser();
+
+        $this->expectException(\InvalidArgumentException::class);
+        $parser->parseToMinorUnits('1', 'USD', 9, CurrencyRoundingMode::Reject);
+    }
+
+    public function testRejectsUnsupportedMinorUnitOnFormat(): void
+    {
+        $parser = new CurrencyDecimalParser();
+
+        $this->expectException(\InvalidArgumentException::class);
+        $parser->formatFromMinorUnits(1, -1);
+    }
+
+    public function testRejectsNegativeOverflow(): void
+    {
+        $parser = new CurrencyDecimalParser();
+
+        $this->expectException(CurrencyInvalidAmountException::class);
+        $parser->parseToMinorUnits('-92233720368547758.09', 'USD', 2, CurrencyRoundingMode::Reject);
+    }
 }

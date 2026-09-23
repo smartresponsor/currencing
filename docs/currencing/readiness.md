@@ -25,7 +25,7 @@ Implemented:
 
 Local repository proof is green for the component-owned RC gates, PHPUnit, PHPStan, coding-style checks, strict Composer validation, PHPUnit/Xdebug coverage production, and a repository-local Playwright real-browser test of the standalone conversion-boundary route.
 
-The current coverage evidence is factual rather than inferred: lines 51.47%, methods 35.47%, branches 84.04%. Canon040 line coverage is now above the 50% high-debt boundary and branch coverage clears the 70% canonical threshold; method coverage remains the principal non-hard remediation debt.
+The current coverage evidence is factual rather than inferred: lines 53.75% (380/707), methods 36.23% (75/207), branches 86.63% (324/374). Canon040 line coverage remains above the 50% high-debt boundary and branch coverage clears the 70% canonical threshold; line and method coverage remain non-hard remediation debt against the canonical 80% targets. The current PHPUnit suite passes 76 tests with 643 assertions.
 
 The remaining environment/integration proofs are:
 

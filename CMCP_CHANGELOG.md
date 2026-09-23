@@ -389,5 +389,15 @@
 - Component-local structural/runtime/API/schema/readiness gates are green.
 - Full standalone PHPUnit acceptance remains externally blocked by the current Cruding service-definition regression; fixing Cruding requires a separate task in its owning repository.
 
+### 2026-09-22 continuation — acceptance closure
+
+- Re-ran the current environment rather than carrying forward the earlier Cruding blocker. Full PHPUnit now passes: 76 tests / 643 assertions. The prior Cruding DI failure is therefore no longer a current Currencing acceptance blocker.
+- Closed repository-owned coding-style debt by normalizing two Currencing migrations and `CurrencyRepository.php`, then running the configured PHP-CS-Fixer. The fixer additionally normalized `tools/currencing-schema-migration-mirror-check.php` and `tools/currencing-structure-check.php`; `.gating/**` remained untouched.
+- Added real parser tests for float/comma/whitespace normalization, explicit plus sign, Up/HalfUp branches, zero discarded digits, zero/sub-unit formatting, invalid syntax, invalid minor-unit bounds and negative overflow.
+- Current `composer test:coverage` evidence: Lines 53.75% (380/707), Methods 36.23% (75/207), Branches 86.63% (324/374), Paths 21.36% (151/707). Canon040 branch threshold is green; line and method coverage remain warning-level remediation debt below the 80% canonical targets.
+- Final local verification in this continuation: `composer test` pass; `composer test:coverage` pass; `composer phpstan` pass; `composer cs:check` pass; `composer currencing:gates` pass 11/11; strict Composer validation pass; Playwright 1/1 pass; npm audit reports zero vulnerabilities.
+- Updated `docs/currencing/readiness.md` to the current factual test/coverage evidence.
+
+
 
 
