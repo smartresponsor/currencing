@@ -2,6 +2,7 @@
 
 return [
     App\Currencing\CurrencingBundle::class => ['all' => true],
+    App\Objecting\ObjectBundle::class => ['all' => true],
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
     Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
     Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
