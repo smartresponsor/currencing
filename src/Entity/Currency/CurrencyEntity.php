@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'currency_currency')]
 #[ORM\UniqueConstraint(name: 'uniq_currency_currency_code', columns: ['code'])]
 #[ORM\Index(name: 'idx_currency_currency_active_code', columns: ['active', 'code'])]
-#[ORM\Index(name: 'currency_idx', columns: ['code'])]
 class CurrencyEntity
 {
     use ObjectIdentityEmbeddableTrait;
