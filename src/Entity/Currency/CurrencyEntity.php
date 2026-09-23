@@ -30,7 +30,7 @@ class CurrencyEntity
     // @phpstan-ignore property.unusedType (Doctrine assigns generated identifiers after persistence.)
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 3, unique: true)]
+    #[ORM\Column(type: 'string', length: 3)]
     #[Assert\NotBlank]
     #[Assert\Currency]
     private string $code;
