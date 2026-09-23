@@ -12,7 +12,7 @@ final class CurrencyConversionBoundaryFunctionalTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/currencing/conversion-boundary');
+        $client->request('GET', '/currencing/conversion/boundary');
 
         self::assertResponseIsSuccessful();
 

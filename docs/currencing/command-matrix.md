@@ -43,12 +43,12 @@ php bin/console doctrine:schema:validate
 
 ```text
 GET  /currencing/currencies
-GET  /currencing/currency-selector
-GET  /currencing/template-context
+GET  /currencing/currency/selector
+GET  /currencing/template/context
 POST /currencing/money/normalize
-GET  /currencing/conversion-boundary
+GET  /currencing/conversion/boundary
 GET  /currencing/demo
-GET  /currencing/admin-preview/currencies
+GET  /currencing/admin/preview/currencies
 ```
 
 
@@ -72,4 +72,4 @@ php tools/currencing-template-bridge-contract-check.php
 php bin/console debug:router | findstr currencing_template_context
 ```
 
-Bridge/Interfacing should consume `App\Currencing\ServiceInterface\CurrencyTemplateContextProviderInterface` for in-process composition, or `GET /currencing/template-context` for HTTP read-model composition.
+Bridge/Interfacing should consume `App\Currencing\ServiceInterface\CurrencyTemplateContextProviderInterface` for in-process composition, or `GET /currencing/template/context` for HTTP read-model composition.

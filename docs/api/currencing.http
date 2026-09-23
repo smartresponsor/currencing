@@ -7,11 +7,11 @@ GET http://localhost:8000/currencing/currencies/USD
 Accept: application/json
 
 ### Read selector data
-GET http://localhost:8000/currencing/currency-selector
+GET http://localhost:8000/currencing/currency/selector
 Accept: application/json
 
 ### Read Bridge-safe template context
-GET http://localhost:8000/currencing/template-context?selectedCode=USD&locale=en_US
+GET http://localhost:8000/currencing/template/context?selectedCode=USD&locale=en_US
 Accept: application/json
 
 ### Normalize money amount
@@ -27,5 +27,5 @@ Accept: application/json
 }
 
 ### Read Currencing/Exchanging boundary
-GET http://localhost:8000/currencing/conversion-boundary
+GET http://localhost:8000/currencing/conversion/boundary
 Accept: application/json

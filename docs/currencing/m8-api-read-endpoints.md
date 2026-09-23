@@ -7,7 +7,7 @@ M8 adds small Symfony read/normalization controllers over the existing DTO/servi
 ```text
 GET  /currencing/currencies
 GET  /currencing/currencies/{code}
-GET  /currencing/currency-selector
+GET  /currencing/currency/selector
 POST /currencing/money/normalize
 ```
 

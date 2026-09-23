@@ -398,6 +398,17 @@
 - Final local verification in this continuation: `composer test` pass; `composer test:coverage` pass; `composer phpstan` pass; `composer cs:check` pass; `composer currencing:gates` pass 11/11; strict Composer validation pass; Playwright 1/1 pass; npm audit reports zero vulnerabilities.
 - Updated `docs/currencing/readiness.md` to the current factual test/coverage evidence.
 
+### 2026-09-22 — Gating role-root and route-contract closure
+
+- Integrated current Gating into the Currencing development Composer contract and verified Canon023/Canon053 against the canonical sibling-symlink exception set.
+- Migrated Provider, Resolver, and Normalizer implementations out of `src/Service/` into their canonical typed Symfony role roots and updated service wiring, tests, tools, and current documentation.
+- Retired the four legacy non-canonical `currencing*.yaml` config aliases from the active source tree; canonical `currency_*` config remains authoritative.
+- Migrated compound route paths to slash-separated concepts: `/currencing/admin/preview/currencies`, `/currencing/conversion/boundary`, `/currencing/currency/selector`, and `/currencing/template/context`; route names remain stable.
+- Verification: `composer currencing:gates` green (11/11); PHPUnit green (76 tests, 643 assertions); PHPStan green; PHP-CS-Fixer dry-run green; strict Composer validation green; Playwright green (1/1); Gating green with 69 rules and 0 hard failures.
+- Refreshed Canon040 evidence: lines 53.7% (380/707), methods 36.2% (75/207), branches 86.6% (324/374). Gating classifies method coverage as `HIGH_TEST_DEBT`; this remains warning-level remediation debt, not an RC hard failure.
+- Canon042 still warns because Currencing has no repository-owned generator for `var/coverage/behavioral-ui.json`; no evidence file was fabricated manually.
+- Concurrent/unowned repository changes remain excluded from this integration unless independently verified as part of Currencing ownership.
+
 
 
 

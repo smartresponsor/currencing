@@ -125,5 +125,5 @@ template_bridge_output_contract:
   service_interface: App\Currencing\ServiceInterface\CurrencyTemplateContextProviderInterface
   dto: App\Currencing\DTO\CurrencyTemplateContextDTO
   route: currencing_template_context
-  path: /currencing/template-context
+  path: /currencing/template/context
   status: bridge_safe_output_contract_added

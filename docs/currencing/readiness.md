@@ -23,9 +23,9 @@ Implemented:
 
 ## Current verification posture
 
-Local repository proof is green for the component-owned RC gates, PHPUnit, PHPStan, coding-style checks, strict Composer validation, PHPUnit/Xdebug coverage production, and a repository-local Playwright real-browser test of the standalone conversion-boundary route.
+Local repository proof is green for the component-owned RC gates, PHPUnit, PHPStan, coding-style checks, strict Composer validation, PHPUnit/Xdebug coverage production, the repository-local Playwright real-browser test of the standalone conversion-boundary route, and Gating with zero hard failures. Canonical compound route concepts now use slash-separated segments.
 
-The current coverage evidence is factual rather than inferred: lines 53.75% (380/707), methods 36.23% (75/207), branches 86.63% (324/374). Canon040 line coverage remains above the 50% high-debt boundary and branch coverage clears the 70% canonical threshold; line and method coverage remain non-hard remediation debt against the canonical 80% targets. The current PHPUnit suite passes 76 tests with 643 assertions.
+The current coverage evidence is factual rather than inferred: lines 53.75% (380/707), methods 36.23% (75/207), branches 86.63% (324/374). Canon040 branch coverage clears the 70% canonical threshold, while line and method coverage remain below the canonical 80% targets. Because method coverage is below the 50% high-debt boundary, Gating explicitly classifies the repository as `HIGH_TEST_DEBT`; this remains warning-level remediation debt rather than a hard RC gate. The current PHPUnit suite passes 76 tests with 643 assertions.
 
 The remaining environment/integration proofs are:
 

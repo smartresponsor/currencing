@@ -49,7 +49,7 @@ paths:
                 $ref: '#/components/schemas/CurrencyMetadataViewDTO'
         "404":
           description: Currency metadata not found
-  /currencing/currency-selector:
+  /currencing/currency/selector:
     get:
       operationId: getCurrencingCurrencySelector
       summary: Read template-safe currency selector data
@@ -61,7 +61,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CurrencySelectorViewDTO'
-  /currencing/template-context:
+  /currencing/template/context:
     get:
       operationId: getCurrencingTemplateContext
       x-route-name: currencing_template_context
@@ -113,7 +113,7 @@ paths:
                 $ref: '#/components/schemas/CurrencyAmountResolutionDTO'
         "400":
           description: Invalid amount, unsupported currency, or invalid policy
-  /currencing/conversion-boundary:
+  /currencing/conversion/boundary:
     get:
       operationId: getCurrencingConversionBoundary
       summary: Read Currencing versus Exchanging responsibility boundary

@@ -98,7 +98,7 @@ Currencing now exposes small Symfony read/normalization endpoints:
 ```text
 GET  /currencing/currencies
 GET  /currencing/currencies/{code}
-GET  /currencing/currency-selector
+GET  /currencing/currency/selector
 POST /currencing/money/normalize
 ```
 
@@ -109,7 +109,7 @@ Currencing includes a lightweight verification surface:
 
 ```text
 GET /currencing/demo
-GET /currencing/admin-preview/currencies
+GET /currencing/admin/preview/currencies
 ```
 
 These routes are intentionally read/demo oriented. They prove currency selector output,
@@ -120,7 +120,7 @@ heavy admin module or leaking Doctrine entities into presentation code.
 Currencing now exposes an explicit conversion boundary:
 
 ```text
-GET /currencing/conversion-boundary
+GET /currencing/conversion/boundary
 ```
 
 Currencing may validate conversion intent shape, but it does not fetch rates or calculate
@@ -285,7 +285,7 @@ return Doctrine entities, Twig markup, Symfony FormView objects, or Bridge-speci
 HTTP read surface:
 
 ```text
-GET /currencing/template-context
+GET /currencing/template/context
 route: currencing_template_context
 ```
 

@@ -11,7 +11,7 @@ module.exports = defineConfig({
   reporter: 'list',
   webServer: {
     command: `php -S 127.0.0.1:${port} -t public public/index.php`,
-    url: `${baseURL}/currencing/conversion-boundary`,
+    url: `${baseURL}/currencing/conversion/boundary`,
     reuseExistingServer: false,
     timeout: 120000,
   },

@@ -75,12 +75,12 @@ CurrencyTemplateContextProviderInterface
 ```text
 GET  /currencing/currencies
 GET  /currencing/currencies/{code}
-GET  /currencing/currency-selector
+GET  /currencing/currency/selector
 POST /currencing/money/normalize
 GET  /currencing/demo
-GET  /currencing/admin-preview/currencies
-GET  /currencing/conversion-boundary
-GET  /currencing/template-context
+GET  /currencing/admin/preview/currencies
+GET  /currencing/conversion/boundary
+GET  /currencing/template/context
 ```
 
 ## Boundary

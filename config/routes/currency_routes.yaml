@@ -1,10 +1,10 @@
 currencing_admin_preview_currencies:
-  path: /currencing/admin-preview/currencies
+  path: /currencing/admin/preview/currencies
   controller: 'App\Currencing\Service\Http\Currency\CurrencyAdminPreviewHttpService'
   methods: [GET]
 
 currencing_conversion_boundary:
-  path: /currencing/conversion-boundary
+  path: /currencing/conversion/boundary
   controller: 'App\Currencing\Service\Http\Currency\CurrencyConversionBoundaryHttpService'
   methods: [GET]
 
@@ -26,12 +26,12 @@ currencing_currency_metadata:
   methods: [GET]
 
 currencing_currency_selector:
-  path: /currencing/currency-selector
+  path: /currencing/currency/selector
   controller: 'App\Currencing\Service\Http\Currency\CurrencySelectorHttpService'
   methods: [GET]
 
 currencing_template_context:
-  path: /currencing/template-context
+  path: /currencing/template/context
   controller: 'App\Currencing\Service\Http\Currency\CurrencyTemplateContextHttpService'
   methods: [GET]
 

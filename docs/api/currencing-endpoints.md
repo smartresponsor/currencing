@@ -5,9 +5,9 @@
 ```text
 GET /currencing/currencies
 GET /currencing/currencies/{code}
-GET /currencing/currency-selector
-GET /currencing/template-context
-GET /currencing/conversion-boundary
+GET /currencing/currency/selector
+GET /currencing/template/context
+GET /currencing/conversion/boundary
 ```
 
 ## Command-like read/normalization endpoint
@@ -52,5 +52,5 @@ contracts.
 
 ## Template bridge context
 
-`GET /currencing/template-context` exposes a DTO-derived, Bridge-safe output model for templates/UI composition. It contains selector data, metadata views, route names, and capabilities. It does not expose Doctrine entities, Twig markup, FormView objects, or Bridge-specific classes.
+`GET /currencing/template/context` exposes a DTO-derived, Bridge-safe output model for templates/UI composition. It contains selector data, metadata views, route names, and capabilities. It does not expose Doctrine entities, Twig markup, FormView objects, or Bridge-specific classes.
 

@@ -37,10 +37,10 @@ $manifestContents = must_read($root, 'delivery/release/currencing-endpoints.json
 $expectedPaths = [
     '/currencing/currencies',
     '/currencing/currencies/{code}',
-    '/currencing/currency-selector',
-    '/currencing/template-context',
+    '/currencing/currency/selector',
+    '/currencing/template/context',
     '/currencing/money/normalize',
-    '/currencing/conversion-boundary',
+    '/currencing/conversion/boundary',
 ];
 
 foreach ($expectedPaths as $path) {

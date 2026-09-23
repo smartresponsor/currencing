@@ -120,7 +120,7 @@
     {
       "risk": "Bridge consumes API response instead of service contract without preserving route-name indirection",
       "severity": "low",
-      "mitigation": "Use CurrencyTemplateContextProviderInterface for in-process composition or /currencing/template-context for HTTP read models; Bridge resolves route names to concrete URLs."
+      "mitigation": "Use CurrencyTemplateContextProviderInterface for in-process composition or /currencing/template/context for HTTP read models; Bridge resolves route names to concrete URLs."
     }
   ],
   "latestMilestone": "M22 Template Bridge Output Contract",

@@ -43,7 +43,7 @@ conversion intents, but it does not fetch rates or calculate converted amounts.
 ## Endpoint
 
 ```text
-GET /currencing/conversion-boundary
+GET /currencing/conversion/boundary
 ```
 
 This endpoint exposes the boundary as JSON for host applications, documentation automation,

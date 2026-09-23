@@ -17,7 +17,7 @@ capability, so the UI surface should prove that the component is wired correctly
 
 ```text
 GET /currencing/demo
-GET /currencing/admin-preview/currencies
+GET /currencing/admin/preview/currencies
 ```
 
 ## Boundary

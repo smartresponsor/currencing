@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 
 test('serves the Currencing conversion boundary in a real browser', async ({ page }) => {
-  const response = await page.goto('/currencing/conversion-boundary');
+  const response = await page.goto('/currencing/conversion/boundary');
 
   expect(response).not.toBeNull();
   expect(response.ok()).toBeTruthy();

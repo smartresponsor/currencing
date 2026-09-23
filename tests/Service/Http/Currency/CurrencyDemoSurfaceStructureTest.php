@@ -25,7 +25,7 @@ final class CurrencyDemoSurfaceStructureTest extends TestCase
         $routes = file_get_contents(dirname(__DIR__, 4).'/config/routes/currency_routes.yaml');
 
         self::assertIsString($routes);
-        self::assertStringContainsString('/currencing/admin-preview/currencies', $routes);
+        self::assertStringContainsString('/currencing/admin/preview/currencies', $routes);
         self::assertStringContainsString('currencing_admin_preview_currencies', $routes);
     }
 

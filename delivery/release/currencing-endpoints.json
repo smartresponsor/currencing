@@ -17,13 +17,13 @@
     },
     {
       "method": "GET",
-      "path": "/currencing/currency-selector",
+      "path": "/currencing/currency/selector",
       "route": "currencing_currency_selector",
       "purpose": "read selector view"
     },
     {
       "method": "GET",
-      "path": "/currencing/template-context",
+      "path": "/currencing/template/context",
       "route": "currencing_template_context",
       "purpose": "read Bridge-safe template context"
     },
@@ -35,7 +35,7 @@
     },
     {
       "method": "GET",
-      "path": "/currencing/conversion-boundary",
+      "path": "/currencing/conversion/boundary",
       "route": "currencing_conversion_boundary",
       "purpose": "read Currencing/Exchanging boundary"
     },
@@ -47,7 +47,7 @@
     },
     {
       "method": "GET",
-      "path": "/currencing/admin-preview/currencies",
+      "path": "/currencing/admin/preview/currencies",
       "route": "currencing_admin_preview_currencies",
       "purpose": "catalog preview"
     }
