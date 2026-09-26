@@ -1,6 +1,6 @@
 # Currencing agent instructions
 
-Currencing is a separate Smart Responsor Symfony-oriented component.
+Currencing is a separate Symfony-oriented component in the multi-domain SaaS platform.
 
 ## Canon
 

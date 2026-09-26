@@ -1,6 +1,6 @@
 # Currencing delivery package
 
-This folder describes the current delivery state for Smart Responsor import/review tooling.
+This folder describes the current delivery state for platform import/review tooling.
 
 ## Component
 

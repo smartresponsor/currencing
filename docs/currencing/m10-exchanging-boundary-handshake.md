@@ -47,7 +47,7 @@ GET /currencing/conversion/boundary
 ```
 
 This endpoint exposes the boundary as JSON for host applications, documentation automation,
-and future Smart Responsor import/review tooling.
+and future platform import/review tooling.
 
 ## Non-goals
 

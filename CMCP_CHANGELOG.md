@@ -1,5 +1,40 @@
 # CMCP orchestration journal
 
+## engine-20260926090603-currencing-e19e24
+
+### Reconnaissance and baseline
+
+- Workspace: `D:\\PhpstormProjects\\www\\Currencing`; branch `fix/currencing-rc-parity-db-rebased-20260914`, baseline HEAD `0ec5db6d07861d6cf5d193d3858065ee9b8de853`, ahead of upstream by four commits.
+- Preserved pre-existing worktree state: shared/unowned `.gating/**` material, `composer.json` license edit, and untracked root `LICENSE`/`NOTICE`; no reset, clean, stash, overwrite, or cross-boundary absorption was used.
+- Read current Currencing `AGENTS.md`, `README.md`, `composer.json`, orchestration journal, and the mandatory Objecting/Cruding/Viewing/Interfacing/Gating/Canonization contour available through Console MCP.
+- Consulted normative Canonization material: `.canonization/Governance/Architecture/Rule/Canon055PlatformIdentityTerminologyRule.md`, `GUARD_MATRIX.md`, and the Canon055 materialization journal.
+- Market baseline: mature money libraries keep currency scale/minor units, rounding policy, and monetary context explicit; Currencing remains bounded to metadata/normalization/formatting/policy and does not absorb FX sourcing.
+
+### Target-to-canon mapping
+
+- Canon055: consumer aliases such as Smart Responsor may identify that explicit consumer/domain, but must not name the shared platform, architecture, component family, or generic tooling.
+- Currencing findings were three current human-facing documentation lines where Smart Responsor incorrectly named shared component/platform tooling context.
+- Canon021/Objecting/Viewing/Interfacing boundaries remain unchanged: this wave is documentation-only and introduces no CRUD, Entity, presentation, shell, or FX behavior.
+
+### RC-critical workstream
+
+- Replace the three ambiguous consumer-identity references with subject-accurate neutral platform/component wording.
+- Re-run the executable Gating mirror plus repository-declared quality/test gates.
+
+### Growth workstream — non-blocking
+
+- Later evaluate explicit cash-rounding/cash-fraction metadata parity where consumer requirements justify it; keep exchange-rate sourcing and quote computation in Exchanging.
+
+### Implementation and verification
+
+- Replaced the three Canon055 findings with neutral platform/component wording while preserving the actual sentence subjects.
+- No PHP, Symfony runtime, Doctrine mapping, routes, templates, forms, navigation, or browser-visible UI changed; runtime restart and visual/browser evidence are not applicable to this wave.
+- `composer gate`: pass; Canon055 reports no consumer identity promoted to platform identity, with 0 failed and 0 warning rules.
+- `composer currencing:gates`: pass, 11/11 component gates.
+- `composer test`: pass, 76 tests / 643 assertions.
+- `composer phpstan`: pass, no errors across 97 analyzed files.
+- `composer cs:check`: pass, 0 fixable files across 109 files.
+
 ## engine-20260911142557-currencing-c7ae81
 
 ### Iteration 1 — reconnaissance and baseline
